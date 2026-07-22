@@ -114,25 +114,27 @@ function ToolsMarquee() {
 
   return (
     <div
-      className="relative z-10 mt-14 overflow-hidden border-y py-6"
+      className="relative z-10 mt-10 overflow-hidden border-y py-4 sm:mt-14 sm:py-6"
       style={{ borderColor: "var(--island-border)" }}
       aria-hidden
     >
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[var(--bg)] to-transparent sm:w-28" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[var(--bg)] to-transparent sm:w-28" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[var(--bg)] to-transparent sm:w-28" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[var(--bg)] to-transparent sm:w-28" />
 
       <div
-        className={`marquee-track flex w-max items-center gap-14 whitespace-nowrap px-6 sm:gap-16 ${
+        className={`marquee-track flex w-max items-center gap-8 whitespace-nowrap px-4 sm:gap-16 sm:px-6 ${
           reduce ? "" : "is-running"
         }`}
       >
         {loop.map((tool, i) => (
           <span
             key={`${tool.name}-${i}`}
-            className="inline-flex shrink-0 items-center gap-3 opacity-90 transition-opacity duration-300 hover:opacity-100"
+            className="inline-flex shrink-0 items-center gap-2 opacity-90 transition-opacity duration-300 hover:opacity-100 sm:gap-3"
           >
-            <span className="flex h-9 w-9 items-center justify-center">{tool.icon}</span>
-            <span className="font-display text-base font-semibold tracking-tight text-[var(--text)] sm:text-lg">
+            <span className="flex h-7 w-7 items-center justify-center sm:h-9 sm:w-9">
+              {tool.icon}
+            </span>
+            <span className="font-display text-sm font-semibold tracking-tight text-[var(--text)] sm:text-lg">
               {tool.name}
             </span>
           </span>
@@ -178,25 +180,25 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden pb-16 pt-32 sm:pb-20 sm:pt-40"
+      className="relative overflow-hidden pb-10 pt-24 sm:pb-20 sm:pt-40"
     >
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-70" />
       <div
-        className="orb left-[-10%] top-20 h-[420px] w-[420px] animate-float"
+        className="orb left-[-20%] top-16 h-[280px] w-[280px] animate-float sm:left-[-10%] sm:top-20 sm:h-[420px] sm:w-[420px]"
         style={{
           background:
             "radial-gradient(circle, rgba(0,230,118,0.55), transparent 70%)",
         }}
       />
       <div
-        className="orb right-[-5%] top-40 h-[380px] w-[380px] animate-float-alt"
+        className="orb right-[-15%] top-32 h-[240px] w-[240px] animate-float-alt sm:right-[-5%] sm:top-40 sm:h-[380px] sm:w-[380px]"
         style={{
           background:
             "radial-gradient(circle, rgba(16,185,129,0.45), transparent 70%)",
         }}
       />
       <div
-        className="orb bottom-10 left-1/3 h-[300px] w-[300px] animate-float"
+        className="orb bottom-10 left-1/3 hidden h-[300px] w-[300px] animate-float sm:block"
         style={{
           background:
             "radial-gradient(circle, rgba(6,78,59,0.5), transparent 70%)",
@@ -209,7 +211,7 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-6 inline-flex items-center rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em]"
+          className="mb-5 inline-flex max-w-full items-center rounded-full border px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] sm:mb-6 sm:px-4 sm:text-xs sm:tracking-[0.18em]"
           style={{
             borderColor: "var(--island-border)",
             background: "var(--island)",
@@ -219,7 +221,7 @@ export function Hero() {
           <span className="dark:text-brand">{t.hero.badge}</span>
         </motion.div>
 
-        <h1 className="max-w-4xl font-display text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+        <h1 className="max-w-4xl font-display text-[1.85rem] font-bold leading-[1.15] tracking-tight xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
           <WordReveal text={t.hero.title1} />
           <br />
           <span className="text-gradient">
@@ -228,7 +230,7 @@ export function Hero() {
         </h1>
 
         <motion.p
-          className="mt-6 max-w-2xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg"
+          className="mt-5 max-w-2xl text-sm leading-relaxed text-[var(--text-muted)] sm:mt-6 sm:text-lg"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 0.5 }}
@@ -237,22 +239,22 @@ export function Hero() {
         </motion.p>
 
         <motion.div
-          className="mt-8 flex flex-wrap justify-center gap-3"
+          className="mt-7 flex w-full max-w-sm flex-col items-stretch gap-3 sm:mt-8 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.5 }}
         >
-          <a href="#devis" className="btn-primary">
+          <a href="#devis" className="btn-primary sm:!w-auto">
             {t.hero.cta}
             <ArrowRight className="h-4 w-4" />
           </a>
-          <a href="#services" className="btn-ghost">
+          <a href="#services" className="btn-ghost sm:!w-auto">
             {t.hero.secondary}
           </a>
         </motion.div>
 
         <motion.p
-          className="mt-8 text-sm text-[var(--text-muted)]"
+          className="mt-6 px-2 text-xs leading-relaxed text-[var(--text-muted)] sm:mt-8 sm:text-sm"
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.5 }}

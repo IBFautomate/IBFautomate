@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "390px",
+      },
       colors: {
         night: {
           DEFAULT: "#050807",

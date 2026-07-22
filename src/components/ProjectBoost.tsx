@@ -143,7 +143,7 @@ function UiCollage() {
   ];
 
   return (
-    <div className="relative mx-auto aspect-[4/3] w-full max-w-lg">
+    <div className="relative mx-auto aspect-[4/3] w-full max-w-lg scale-[0.92] sm:scale-100">
       <div
         className="pointer-events-none absolute inset-0 z-40"
         style={{
@@ -184,11 +184,11 @@ export function ProjectBoost() {
 
   return (
     <section
-      className="relative py-20 sm:py-24"
+      className="relative overflow-hidden py-16 sm:py-24"
       aria-labelledby="project-boost-title"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <FadeIn>
             <div
               className="mb-6 inline-flex flex-wrap items-center gap-x-3 gap-y-2 rounded-full border px-4 py-2 text-xs font-medium text-[var(--text-muted)]"
@@ -223,10 +223,10 @@ export function ProjectBoost() {
 
             <a
               href="#devis"
-              className="group mt-8 inline-flex items-center gap-4 rounded-full bg-night px-6 py-3.5 font-display text-sm font-semibold text-white transition-all duration-300 hover:shadow-glow-brand-sm dark:bg-[var(--bg-surface)] dark:text-[var(--text)] dark:ring-1 dark:ring-[var(--island-border)]"
+              className="group mt-8 inline-flex w-full items-center justify-between gap-4 rounded-full bg-night px-5 py-3.5 font-display text-sm font-semibold text-white transition-all duration-300 hover:shadow-glow-brand-sm sm:w-auto sm:justify-center dark:bg-[var(--bg-surface)] dark:text-[var(--text)] dark:ring-1 dark:ring-[var(--island-border)]"
             >
               {t.boost.cta}
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-night transition-transform duration-300 group-hover:scale-105 dark:bg-brand dark:text-night">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-night transition-transform duration-300 group-hover:scale-105 dark:bg-brand dark:text-night">
                 <ArrowUpRight className="h-4 w-4" aria-hidden />
               </span>
             </a>

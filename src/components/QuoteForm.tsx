@@ -141,7 +141,7 @@ export function QuoteForm() {
                         name="name"
                         required
                         autoComplete="name"
-                        className="w-full rounded-xl border bg-transparent px-4 py-3 text-sm outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand"
+                        className="w-full rounded-xl border bg-transparent px-4 py-3 text-base outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand sm:text-sm"
                         style={{ borderColor: "var(--island-border)" }}
                       />
                     </div>
@@ -159,7 +159,7 @@ export function QuoteForm() {
                         type="email"
                         required
                         autoComplete="email"
-                        className="w-full rounded-xl border bg-transparent px-4 py-3 text-sm outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand"
+                        className="w-full rounded-xl border bg-transparent px-4 py-3 text-base outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand sm:text-sm"
                         style={{ borderColor: "var(--island-border)" }}
                       />
                     </div>
@@ -177,7 +177,7 @@ export function QuoteForm() {
                         type="tel"
                         required
                         autoComplete="tel"
-                        className="w-full rounded-xl border bg-transparent px-4 py-3 text-sm outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand"
+                        className="w-full rounded-xl border bg-transparent px-4 py-3 text-base outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand sm:text-sm"
                         style={{ borderColor: "var(--island-border)" }}
                       />
                     </div>
@@ -194,7 +194,7 @@ export function QuoteForm() {
                         name="subject"
                         required
                         defaultValue=""
-                        className="w-full rounded-xl border bg-transparent px-4 py-3 text-sm outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand"
+                        className="w-full rounded-xl border bg-transparent px-4 py-3 text-base outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand sm:text-sm"
                         style={{
                           borderColor: "var(--island-border)",
                           color: "var(--text)",
@@ -227,7 +227,7 @@ export function QuoteForm() {
                         name="message"
                         required
                         rows={4}
-                        className="w-full resize-y rounded-xl border bg-transparent px-4 py-3 text-sm outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand"
+                        className="w-full resize-y rounded-xl border bg-transparent px-4 py-3 text-base outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand sm:text-sm"
                         style={{ borderColor: "var(--island-border)" }}
                       />
                     </div>

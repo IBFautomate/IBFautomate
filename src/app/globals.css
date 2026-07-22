@@ -215,3 +215,86 @@
     }
   }
 }
+
+/* —— Mobile / smartphone adaptations —— */
+@layer base {
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 639px) {
+  .island {
+    border-radius: 18px;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .btn-primary,
+  .btn-ghost {
+    width: 100%;
+    max-width: 100%;
+    min-height: 48px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .island-hover:active {
+    transform: none;
+  }
+
+  .mobile-showcase {
+    max-height: 380px;
+    margin-inline: auto;
+    overflow: hidden;
+  }
+
+  .clay-illustration {
+    transform: scale(0.85);
+    transform-origin: center;
+  }
+
+  .marquee-track.is-running {
+    animation-duration: 26s;
+  }
+}
+
+@media (hover: none) {
+  .island-hover:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-primary:hover,
+  .btn-ghost:hover {
+    transform: none;
+  }
+}
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@media (max-width: 389px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .mobile-showcase {
+    max-height: 300px;
+  }
+}

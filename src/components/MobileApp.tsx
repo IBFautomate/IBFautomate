@@ -274,7 +274,7 @@ export function MobileApp() {
   return (
     <section
       id="application-mobile"
-      className="relative scroll-mt-28 overflow-hidden py-20 sm:py-24"
+      className="relative scroll-mt-24 overflow-hidden py-16 sm:scroll-mt-28 sm:py-24"
       aria-labelledby="mobile-app-title"
     >
       <div
@@ -317,51 +317,51 @@ export function MobileApp() {
               ))}
             </Stagger>
 
-            <a href="#devis" className="btn-primary mt-8">
+            <a href="#devis" className="btn-primary mt-8 sm:!w-auto">
               {t.mobile.cta}
               <ArrowRight className="h-4 w-4" />
             </a>
           </FadeIn>
 
-          <FadeIn delay={0.15} className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="mobile-showcase relative mx-auto aspect-[4/5] max-h-[520px] w-full max-w-[420px]">
+          <FadeIn delay={0.15} className="relative mx-auto w-full max-w-[300px] overflow-hidden sm:max-w-md sm:overflow-visible lg:max-w-none">
+            <div className="mobile-showcase relative mx-auto aspect-[4/5] max-h-[320px] w-full max-w-[380px] sm:max-h-[520px]">
               <PhoneMockup
                 variant="dashboard"
                 dashboardLabel={t.mobile.dashboard}
-                className="absolute left-0 top-8 z-20 w-[46%] -rotate-6"
+                className="absolute left-[2%] top-8 z-20 w-[44%] -rotate-6 sm:left-0 sm:w-[46%]"
               />
               <PhoneMockup
                 variant="profile"
                 dashboardLabel={t.mobile.dashboard}
-                className="absolute right-0 top-0 z-10 w-[46%] rotate-6"
+                className="absolute right-[2%] top-0 z-10 w-[44%] rotate-6 sm:right-0 sm:w-[46%]"
               />
 
               <FloatingClay
-                className="clay-illustration absolute -left-2 top-0 z-30 w-16 sm:w-20"
+                className="clay-illustration absolute -left-1 top-0 z-30 hidden w-16 sm:block sm:w-20"
                 delay={0}
               >
                 <ClayRocket />
               </FloatingClay>
               <FloatingClay
-                className="clay-illustration absolute -right-1 top-16 z-30 w-14 sm:w-[4.5rem]"
+                className="clay-illustration absolute right-0 top-14 z-30 w-10 sm:right-0 sm:top-16 sm:w-[4.5rem]"
                 delay={0.5}
               >
                 <ClayBell />
               </FloatingClay>
               <FloatingClay
-                className="clay-illustration absolute bottom-32 -left-4 z-30 w-14 sm:w-16"
+                className="clay-illustration absolute bottom-28 left-0 z-30 w-10 sm:bottom-32 sm:-left-3 sm:w-16"
                 delay={1}
               >
                 <ClayChatBubble />
               </FloatingClay>
               <FloatingClay
-                className="clay-illustration absolute bottom-20 right-0 z-30 w-14 sm:w-[4.5rem]"
+                className="clay-illustration absolute bottom-20 right-0 z-30 hidden w-14 sm:block sm:w-[4.5rem]"
                 delay={1.5}
               >
                 <ClayCompass />
               </FloatingClay>
               <FloatingClay
-                className="clay-illustration absolute bottom-4 left-1/3 z-30 w-12 sm:w-14"
+                className="clay-illustration absolute bottom-4 left-1/3 z-30 w-9 sm:w-14"
                 delay={0.8}
               >
                 <ClayStar />

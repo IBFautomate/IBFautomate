@@ -39,7 +39,7 @@ export function FAQ() {
                       aria-expanded={isOpen}
                       onClick={() => setOpenIndex(isOpen ? null : index)}
                     >
-                      <span className="font-display text-sm font-semibold sm:text-base">
+                      <span className="min-w-0 font-display text-sm font-semibold leading-snug sm:text-base">
                         {item.q}
                       </span>
                       <span className="icon-box !h-9 !w-9 shrink-0">

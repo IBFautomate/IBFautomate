@@ -37,12 +37,12 @@ export function Process() {
 
         <div ref={containerRef} className="relative mx-auto max-w-3xl">
           <div
-            className="absolute bottom-4 left-[27px] top-4 w-px sm:left-[31px]"
+            className="absolute bottom-4 left-[23px] top-4 w-px sm:left-[31px]"
             style={{ background: "var(--island-border)" }}
             aria-hidden
           />
           <motion.div
-            className="absolute left-[27px] top-4 w-px origin-top sm:left-[31px]"
+            className="absolute left-[23px] top-4 w-px origin-top sm:left-[31px]"
             style={{
               height: reduce ? "100%" : height,
               backgroundImage:
@@ -51,23 +51,23 @@ export function Process() {
             aria-hidden
           />
 
-          <Stagger className="relative space-y-5" stagger={0.1}>
+          <Stagger className="relative space-y-4 sm:space-y-5" stagger={0.1}>
             {t.process.steps.map((step) => (
               <StaggerItem key={step.num}>
-                <article className="island island-hover relative flex gap-5 p-5 sm:gap-6 sm:p-6">
+                <article className="island island-hover relative flex gap-3.5 p-4 sm:gap-6 sm:p-6">
                   <div
-                    className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border bg-[var(--bg)] sm:h-16 sm:w-16"
+                    className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border bg-[var(--bg)] sm:h-16 sm:w-16 sm:rounded-2xl"
                     style={{ borderColor: "var(--island-border)" }}
                   >
-                    <span className="text-gradient font-display text-xl font-bold sm:text-2xl">
+                    <span className="text-gradient font-display text-lg font-bold sm:text-2xl">
                       {step.num}
                     </span>
                   </div>
-                  <div>
-                    <h3 className="font-display text-lg font-bold tracking-tight sm:text-xl">
+                  <div className="min-w-0">
+                    <h3 className="font-display text-base font-bold tracking-tight sm:text-xl">
                       {step.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
+                    <p className="mt-1.5 text-sm leading-relaxed text-[var(--text-muted)] sm:mt-2">
                       {step.description}
                     </p>
                   </div>

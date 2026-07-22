@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>IBFautomate — Automatisation & Workflows</title>
-<meta name="description" content="IBFautomate automatise vos tâches répétitives pour gagner du temps et développer votre activité." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>IBFautomate — Agence Web & Automatisation</title>
+<meta name="description" content="IBFautomate — systèmes sur mesure, sites performants et automatisation pour libérer votre temps et accélérer votre croissance." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -43,18 +43,24 @@ html[data-theme="dark"] {
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
+html, body {
+  max-width:100vw;
+  overflow-x:hidden;
+}
 body {
   font-family:'Inter',system-ui,sans-serif;
   background:var(--bg);
   color:var(--text);
   line-height:1.6;
-  overflow-x:hidden;
   transition:background .3s ease,color .3s ease;
 }
+body.menu-open { overflow:hidden; }
+input, select, textarea { font-size:16px; }
 h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; line-height:1.15; }
 a { color:inherit; text-decoration:none; }
 img { max-width:100%; }
-.container { width:100%; max-width:1200px; margin:0 auto; padding:0 24px; }
+.container { width:100%; max-width:1200px; margin:0 auto; padding:0 16px; }
+@media (min-width:640px) { .container { padding:0 24px; } }
 section { position:relative; }
 .section-title {
   font-family:'Space Grotesk',sans-serif;
@@ -102,14 +108,17 @@ html[data-theme="dark"] .icon-btn:hover { color:var(--green); }
 /* Navbar */
 .navbar {
   position:fixed; top:0; left:0; right:0; z-index:100;
+  padding-top:env(safe-area-inset-top);
   background:var(--island);
   backdrop-filter:blur(var(--glass-blur));
   -webkit-backdrop-filter:blur(var(--glass-blur));
   border-bottom:1px solid var(--border);
   transition:background .3s ease;
 }
-.nav-inner { display:flex; align-items:center; justify-content:space-between; height:70px; }
-.logo { display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.25rem; }
+.nav-inner { display:flex; align-items:center; justify-content:space-between; gap:10px; height:64px; }
+@media (min-width:640px) { .nav-inner { height:70px; } }
+.logo { display:flex; align-items:center; gap:8px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem; flex-shrink:0; }
+@media (min-width:640px) { .logo { gap:10px; font-size:1.25rem; } }
 .logo-mark {
   width:34px; height:34px; border-radius:10px; background:var(--grad);
   display:flex; align-items:center; justify-content:center; color:#022016; font-weight:800; font-size:1rem;
@@ -119,16 +128,26 @@ html[data-theme="dark"] .icon-btn:hover { color:var(--green); }
 .nav-links a { font-size:.95rem; font-weight:500; color:var(--text-soft); transition:color .2s ease; }
 .nav-links a:hover { color:var(--green-deep); }
 html[data-theme="dark"] .nav-links a:hover { color:var(--green); }
-.nav-actions { display:flex; align-items:center; gap:10px; }
+.nav-actions { display:flex; align-items:center; gap:8px; flex-shrink:0; }
 .menu-toggle { display:none; }
+.nav-cta { display:inline-flex; }
 
 /* Mobile menu */
 .mobile-menu {
-  display:none; flex-direction:column; gap:6px; padding:18px 24px 24px;
+  display:none; flex-direction:column; gap:4px; padding:12px 16px 20px;
   border-bottom:1px solid var(--border); background:var(--surface);
+  max-height:calc(100vh - 64px - env(safe-area-inset-top));
+  overflow-y:auto;
 }
 .mobile-menu.open { display:flex; }
-.mobile-menu a { padding:10px 0; color:var(--text-soft); font-weight:500; border-bottom:1px solid var(--border); }
+.mobile-menu a {
+  padding:14px 4px; color:var(--text-soft); font-weight:600; font-size:1.05rem;
+  border-bottom:1px solid var(--border); min-height:48px; display:flex; align-items:center;
+}
+.mobile-menu a.mobile-cta {
+  margin-top:12px; justify-content:center; border:none; border-radius:14px;
+  background:var(--grad); color:#022016; font-weight:700;
+}
 
 /* Hero */
 .hero { padding:150px 0 60px; text-align:center; overflow:hidden; }
@@ -201,7 +220,12 @@ html[data-theme="dark"] .nav-links a:hover { color:var(--green); }
 .service-icon svg { width:28px; height:28px; color:var(--green-deep); }
 html[data-theme="dark"] .service-icon svg { color:var(--green); }
 .service-card h3 { font-size:1.3rem; margin-bottom:10px; }
-.service-card p { color:var(--text-soft); font-size:.97rem; flex:1; margin-bottom:20px; }
+.service-card p { color:var(--text-soft); font-size:.97rem; flex:1; margin-bottom:16px; }
+.service-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+.service-tags span {
+  font-size:.75rem; font-weight:600; padding:5px 10px; border-radius:8px;
+  border:1px solid var(--border-strong); color:var(--text-muted);
+}
 
 /* App section */
 .appsec { padding:100px 0; background:var(--bg-alt); overflow:hidden; }
@@ -209,8 +233,10 @@ html[data-theme="dark"] .service-icon svg { color:var(--green); }
 .app-copy h2 { font-size:clamp(1.9rem,4vw,2.7rem); font-weight:700; margin-bottom:18px; }
 .app-copy p { color:var(--text-soft); font-size:1.05rem; margin-bottom:26px; }
 .app-list { list-style:none; display:flex; flex-direction:column; gap:14px; margin-bottom:30px; }
-.app-list li { display:flex; align-items:center; gap:12px; color:var(--text-soft); }
-.app-list .tick { width:24px; height:24px; border-radius:8px; background:linear-gradient(135deg,var(--green),var(--green-deep)); display:flex; align-items:center; justify-content:center; color:#022016; flex-shrink:0; }
+.app-list li { display:flex; align-items:flex-start; gap:12px; color:var(--text-soft); }
+.app-list .tick { width:24px; height:24px; border-radius:8px; background:linear-gradient(135deg,var(--green),var(--green-deep)); display:flex; align-items:center; justify-content:center; color:#022016; flex-shrink:0; margin-top:2px; }
+.app-list strong { display:block; color:var(--text); font-weight:700; margin-bottom:2px; }
+.app-list .feat-desc { font-size:.92rem; }
 .app-visual { position:relative; display:flex; justify-content:center; min-height:480px; }
 .phone {
   width:230px; height:460px; border-radius:38px; background:var(--surface);
@@ -239,9 +265,11 @@ html[data-theme="dark"] .phone { border-color:#000; }
   background:var(--grad); border-radius:32px; padding:56px; color:#022016; position:relative; overflow:hidden;
   display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:center; box-shadow:var(--shadow-lg);
 }
-.boost-badge { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:999px; background:rgba(2,32,22,0.14); font-size:.8rem; font-weight:600; margin-bottom:18px; }
+.boost-badge { display:inline-flex; flex-wrap:wrap; align-items:center; gap:8px 12px; padding:8px 14px; border-radius:999px; background:rgba(2,32,22,0.14); font-size:.8rem; font-weight:600; margin-bottom:18px; }
 .boost-badge .dot { width:8px; height:8px; border-radius:50%; background:#022016; }
-.boost h2 { font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:700; margin-bottom:22px; color:#022016; }
+.boost-badge .sep { width:1px; height:12px; background:rgba(2,32,22,0.25); }
+.boost h2 { font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:700; margin-bottom:14px; color:#022016; }
+.boost-sub { color:rgba(2,32,22,0.78); margin-bottom:22px; max-width:520px; font-size:1.02rem; }
 .boost .btn-dark { background:#022016; color:var(--green); }
 .boost .btn-dark:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(2,32,22,0.35); }
 .collage { position:relative; min-height:280px; }
@@ -270,8 +298,9 @@ html[data-theme="dark"] .step-num { color:var(--green); }
 .testimonials { padding:100px 0; }
 .reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
 .review-card { background:var(--island); border:1px solid var(--border); border-radius:22px; padding:30px; box-shadow:var(--shadow); }
-.stars { color:#f5b301; margin-bottom:14px; letter-spacing:2px; }
-.review-text { color:var(--text-soft); font-style:italic; margin-bottom:20px; }
+.stars { color:var(--green-deep); margin-bottom:14px; letter-spacing:0.12em; font-size:.8rem; font-weight:700; font-family:'Space Grotesk',sans-serif; }
+html[data-theme="dark"] .stars { color:var(--green); }
+.review-text { color:var(--text-soft); margin-bottom:20px; }
 .reviewer { display:flex; align-items:center; gap:12px; }
 .avatar { width:44px; height:44px; border-radius:50%; background:var(--grad); display:flex; align-items:center; justify-content:center; color:#022016; font-weight:700; font-family:'Space Grotesk',sans-serif; }
 .reviewer .who { font-weight:600; }
@@ -305,7 +334,7 @@ html[data-theme="dark"] .contact-item .ci-icon { color:var(--green); }
 html[data-theme="dark"] .field label .req { color:var(--green); }
 .field input, .field select, .field textarea {
   width:100%; padding:13px 15px; border-radius:12px; border:1px solid var(--border-strong);
-  background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; font-size:.95rem; transition:border-color .2s ease;
+  background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; font-size:16px; transition:border-color .2s ease;
 }
 .field input:focus, .field select:focus, .field textarea:focus { outline:none; border-color:var(--green); }
 .field textarea { resize:vertical; min-height:120px; }
@@ -323,45 +352,112 @@ footer { background:var(--bg-alt); border-top:1px solid var(--border); padding:7
 .footer-col p, .footer-col a { display:block; color:var(--text-soft); font-size:.92rem; margin-bottom:10px; }
 .footer-col a:hover { color:var(--green-deep); }
 html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
-.footer-bottom { border-top:1px solid var(--border); padding-top:24px; text-align:center; color:var(--text-muted); font-size:.88rem; }
+.footer-bottom { border-top:1px solid var(--border); padding-top:24px; text-align:center; color:var(--text-muted); font-size:.88rem; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px; }
+.footer-bottom a { color:var(--text-muted); }
+.footer-bottom a:hover { color:var(--green-deep); }
+html[data-theme="dark"] .footer-bottom a:hover { color:var(--green); }
 
 /* WhatsApp widget */
-.wa-widget { position:fixed; bottom:26px; right:26px; z-index:120; display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
+.wa-widget {
+  position:fixed; z-index:120; display:flex; flex-direction:column; align-items:flex-end; gap:12px;
+  bottom:max(16px, env(safe-area-inset-bottom));
+  right:max(16px, env(safe-area-inset-right));
+}
 .wa-bubble {
   display:none; background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow-lg);
-  border-radius:16px; padding:14px 18px; max-width:240px; font-size:.9rem; color:var(--text);
+  border-radius:16px; padding:14px 18px; width:min(100vw - 2rem, 260px); font-size:.9rem; color:var(--text);
 }
 .wa-bubble.show { display:block; animation:pop .3s ease; }
 @keyframes pop { from { opacity:0; transform:translateY(10px);} to { opacity:1; transform:translateY(0);} }
 .wa-btn {
-  width:60px; height:60px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center;
+  width:52px; height:52px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center;
   box-shadow:0 10px 30px rgba(37,211,102,0.5); cursor:pointer; transition:transform .2s ease;
 }
+@media (min-width:640px) {
+  .wa-widget { bottom:max(26px, env(safe-area-inset-bottom)); right:max(26px, env(safe-area-inset-right)); }
+  .wa-btn { width:60px; height:60px; }
+}
 .wa-btn:hover { transform:scale(1.06); }
-.wa-btn svg { width:32px; height:32px; }
+.wa-btn svg { width:28px; height:28px; }
+@media (min-width:640px) { .wa-btn svg { width:32px; height:32px; } }
 
 /* Responsive */
 @media (max-width:960px) {
   .nav-links { display:none; }
   .menu-toggle { display:inline-flex; }
+  .nav-cta { display:none; }
   .services-grid { grid-template-columns:1fr 1fr; }
   .service-card, .services-grid .service-card:nth-child(4), .services-grid .service-card:nth-child(5) { grid-column:auto; }
   .stats-grid { grid-template-columns:1fr; }
-  .app-grid { grid-template-columns:1fr; }
-  .app-visual { min-height:420px; }
-  .boost-inner { grid-template-columns:1fr; }
-  .collage { min-height:340px; }
+  .app-grid { grid-template-columns:1fr; gap:36px; }
+  .app-visual { min-height:360px; max-width:340px; margin:0 auto; overflow:hidden; }
+  .phone { width:190px; height:380px; }
+  .phone-2 { width:160px; height:320px; right:4%; top:28px; }
+  .clay { width:52px; height:52px; border-radius:16px; }
+  .clay svg { width:26px; height:26px; }
+  .clay.c2 { left:0; }
+  .boost-inner { grid-template-columns:1fr; padding:36px 24px; border-radius:24px; }
+  .collage { min-height:260px; transform:scale(0.92); transform-origin:center top; }
   .steps { grid-template-columns:1fr 1fr; }
   .reviews-grid { grid-template-columns:1fr; }
   .devis-grid { grid-template-columns:1fr; }
   .footer-grid { grid-template-columns:1fr 1fr; }
+  .contact-card, .form-card { padding:28px 20px; }
+  .stats, .services, .appsec, .boost, .process, .testimonials, .faq, .devis { padding:72px 0; }
 }
-@media (max-width:560px) {
+@media (max-width:639px) {
   .services-grid { grid-template-columns:1fr; }
   .steps { grid-template-columns:1fr; }
   .form-row { grid-template-columns:1fr; }
-  .footer-grid { grid-template-columns:1fr; }
-  .hero { padding-top:130px; }
+  .footer-grid { grid-template-columns:1fr; gap:28px; }
+  .hero { padding:110px 0 40px; }
+  .hero h1 { font-size:clamp(1.75rem, 8vw, 2.35rem); }
+  .hero-sub { font-size:.95rem; margin:18px auto 24px; }
+  .hero-ctas { flex-direction:column; align-items:stretch; gap:10px; max-width:360px; margin-left:auto; margin-right:auto; }
+  .hero-ctas .btn { width:100%; min-height:48px; }
+  .badge { font-size:.72rem; padding:6px 12px; margin-bottom:18px; max-width:100%; text-align:left; }
+  .trust-line { font-size:.8rem; gap:8px; }
+  .marquee-wrap { margin-top:36px; }
+  .tool-chip { padding:10px 14px; font-size:.88rem; gap:8px; }
+  .tool-chip svg { width:22px; height:22px; }
+  .section-head h2, .stats-head h2, .app-copy h2 { font-size:clamp(1.5rem, 6.5vw, 2rem); }
+  .section-head p, .app-copy p { font-size:.95rem; }
+  .stat-card, .service-card, .step-card, .review-card { padding:22px 18px; border-radius:18px; }
+  .stat-num { font-size:2.2rem; }
+  .service-card h3 { font-size:1.15rem; }
+  .btn { white-space:normal; }
+  .app-visual { min-height:300px; max-width:300px; }
+  .phone { width:160px; height:320px; border-radius:30px; border-width:6px; }
+  .phone-2 { width:130px; height:260px; right:2%; top:20px; }
+  .clay.c1, .clay.c4 { display:none; }
+  .clay.c2, .clay.c3, .clay.c5 { width:42px; height:42px; }
+  .clay.c2 svg, .clay.c3 svg, .clay.c5 svg { width:22px; height:22px; }
+  .boost-inner { padding:28px 18px; }
+  .boost .btn-dark { width:100%; min-height:48px; }
+  .collage { min-height:220px; transform:scale(0.85); }
+  .cc1, .cc2, .cc3 { width:150px; padding:14px; }
+  .faq-q { padding:18px 16px; font-size:.95rem; text-align:left; }
+  .faq-a p { padding:0 16px 18px; font-size:.92rem; }
+  .field input, .field select, .field textarea { font-size:16px; padding:14px 14px; }
+  .ci-value { word-break:break-word; }
+  .footer-col a[href^="mailto"] { word-break:break-all; }
+  .icon-btn { width:40px; height:40px; }
+  .logo-mark { width:30px; height:30px; font-size:.9rem; }
+}
+@media (max-width:389px) {
+  .hero h1 { font-size:1.55rem; }
+  .app-visual { max-width:260px; min-height:260px; }
+  .phone { width:140px; height:280px; }
+  .phone-2 { width:115px; height:230px; }
+}
+@media (hover:none) {
+  .btn-primary:hover, .btn-ghost:hover, .service-card:hover, .icon-btn:hover, .wa-btn:hover {
+    transform:none;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .marquee { animation:none; }
+  .clay { animation:none; }
 }
 </style>
 </head>
@@ -383,8 +479,8 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
         <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
-      <a href="#devis" class="btn btn-primary" data-i18n="nav.cta">Demander un devis</a>
-      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Menu">
+      <a href="#devis" class="btn btn-primary nav-cta" data-i18n="nav.cta">Demander un devis</a>
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
     </div>
@@ -394,7 +490,7 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
     <a href="#processus" data-i18n="nav.process">Processus</a>
     <a href="#avis" data-i18n="nav.reviews">Avis</a>
     <a href="#faq" data-i18n="nav.faq">FAQ</a>
-    <a href="#devis" data-i18n="nav.cta">Demander un devis</a>
+    <a href="#devis" class="mobile-cta" data-i18n="nav.cta">Demander un devis</a>
   </div>
 </nav>
 
@@ -402,20 +498,18 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
 <header class="hero">
   <div class="hero-bg"></div>
   <div class="container">
-    <span class="badge"><span class="dot"></span><span data-i18n="hero.badge">Automatisation intelligente pour votre activité</span></span>
+    <span class="badge"><span class="dot"></span><span data-i18n="hero.badge">Agence web & automatisation</span></span>
     <h1>
-      <span class="line" data-i18n="hero.title1">Automatisez vos tâches répétitives</span>
-      <span class="line gradient-text" data-i18n="hero.title2">et concentrez-vous sur l'essentiel</span>
+      <span class="line" data-i18n="hero.title1">Automatisez votre entreprise.</span>
+      <span class="line gradient-text" data-i18n="hero.title2">Gagnez des heures chaque semaine.</span>
     </h1>
-    <p class="hero-sub" data-i18n="hero.sub">IBFautomate connecte vos outils, élimine les tâches manuelles et fait gagner des heures à votre équipe chaque semaine.</p>
+    <p class="hero-sub" data-i18n="hero.sub">Systèmes sur mesure, sites performants et processus sans friction — conçus pour libérer votre temps et accélérer votre croissance.</p>
     <div class="hero-ctas">
       <a href="#devis" class="btn btn-primary" data-i18n="hero.ctaStart">Démarrer</a>
-      <a href="#services" class="btn btn-ghost" data-i18n="hero.ctaDiscover">Découvrir</a>
+      <a href="#services" class="btn btn-ghost" data-i18n="hero.ctaDiscover">Découvrir nos services</a>
     </div>
     <div class="trust-line">
-      <span data-i18n="hero.trust1">Sans engagement</span><span class="sep"></span>
-      <span data-i18n="hero.trust2">Réponse sous 24h</span><span class="sep"></span>
-      <span data-i18n="hero.trust3">France entière</span>
+      <span data-i18n="hero.trust">Projets livrés · 100 % satisfaction · Réponse sous 24h</span>
     </div>
 
     <div class="marquee-wrap">
@@ -430,13 +524,14 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
 <section class="stats">
   <div class="container">
     <div class="stats-head">
-      <span class="section-title" data-i18n="stats.kicker">Le problème</span>
+      <span class="section-title" data-i18n="stats.kicker">Le constat</span>
       <h2 data-i18n="stats.title">Le coût invisible du manuel</h2>
+      <p data-i18n="stats.sub" style="color:var(--text-soft);margin-top:14px">Chaque jour, des heures s'évaporent dans des tâches qui pourraient tourner toutes seules.</p>
     </div>
     <div class="stats-grid">
-      <div class="stat-card"><div class="stat-num gradient-text">40%</div><div class="stat-label" data-i18n="stats.s1">du temps perdu sur des tâches répétitives</div></div>
-      <div class="stat-card"><div class="stat-num gradient-text">10h</div><div class="stat-label" data-i18n="stats.s2">gaspillées chaque semaine en moyenne</div></div>
-      <div class="stat-card"><div class="stat-num gradient-text" data-i18n="stats.s3num">Des milliers €</div><div class="stat-label" data-i18n="stats.s3">de coûts cachés chaque année</div></div>
+      <div class="stat-card"><div class="stat-num gradient-text">40%</div><div class="stat-label" data-i18n="stats.s1">du temps de travail = tâches répétitives</div></div>
+      <div class="stat-card"><div class="stat-num gradient-text">10h</div><div class="stat-label" data-i18n="stats.s2">par semaine perdues en opérations manuelles</div></div>
+      <div class="stat-card"><div class="stat-num gradient-text" data-i18n="stats.s3num">Des milliers €</div><div class="stat-label" data-i18n="stats.s3">de productivité envolés chaque année</div></div>
     </div>
   </div>
 </section>
@@ -446,38 +541,43 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
   <div class="container">
     <div class="section-head">
       <span class="section-title" data-i18n="services.kicker">Nos services</span>
-      <h2 data-i18n="services.title">Des automatisations sur mesure</h2>
-      <p data-i18n="services.sub">Nous concevons des workflows adaptés à vos outils et à vos process.</p>
+      <h2 data-i18n="services.title">Ce que nous construisons</h2>
+      <p data-i18n="services.sub">Cinq expertises complémentaires pour digitaliser, automatiser et accélérer votre activité.</p>
     </div>
     <div class="services-grid">
       <div class="service-card">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg></div>
-        <h3 data-i18n="services.c1t">Automatisation de workflows</h3>
-        <p data-i18n="services.c1d">Connectez vos applications et automatisez vos processus de bout en bout, sans effort manuel.</p>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 4v16"/></svg></div>
+        <h3 data-i18n="services.c1t">Développement d'Applications Web</h3>
+        <p data-i18n="services.c1d">Des applications fluides et sécurisées qui centralisent vos opérations et simplifient le quotidien de vos équipes.</p>
+        <div class="service-tags"><span>Next.js</span><span>API</span><span data-i18n="services.c1tag3">Sur mesure</span></div>
         <a href="#devis" class="btn btn-ghost" data-i18n="services.start">Démarrer</a>
       </div>
       <div class="service-card">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div>
-        <h3 data-i18n="services.c2t">Email & communication</h3>
-        <p data-i18n="services.c2d">Relances, réponses automatiques et notifications intelligentes pour ne rien manquer.</p>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM17 14v6M14 17h6"/></svg></div>
+        <h3 data-i18n="services.c2t">Automatisation & IA</h3>
+        <p data-i18n="services.c2d">Reliez vos outils, éliminez les saisies manuelles et laissez vos processus tourner en continu sans surveillance.</p>
+        <div class="service-tags"><span>n8n</span><span>Zapier</span><span>Workflows</span></div>
         <a href="#devis" class="btn btn-ghost" data-i18n="services.start">Démarrer</a>
       </div>
       <div class="service-card">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
-        <h3 data-i18n="services.c3t">Reporting & données</h3>
-        <p data-i18n="services.c3d">Tableaux de bord automatisés et synchronisation de vos données en temps réel.</p>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></div>
+        <h3 data-i18n="services.c3t">Réceptionniste IA</h3>
+        <p data-i18n="services.c3d">Un accueil téléphonique disponible 24h/24 qui qualifie les appels, prend les rendez-vous et ne laisse aucun prospect en attente.</p>
+        <div class="service-tags"><span data-i18n="services.c3tag1">Voix</span><span>CRM</span><span>24/7</span></div>
         <a href="#devis" class="btn btn-ghost" data-i18n="services.start">Démarrer</a>
       </div>
       <div class="service-card">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg></div>
-        <h3 data-i18n="services.c4t">Intégrations sur mesure</h3>
-        <p data-i18n="services.c4d">Nous relions vos outils préférés grâce à des intégrations robustes et évolutives.</p>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div>
+        <h3 data-i18n="services.c4t">Sites Web Professionnels</h3>
+        <p data-i18n="services.c4d">Une présence en ligne claire, rapide et orientée conversion, conçue pour inspirer confiance dès la première seconde.</p>
+        <div class="service-tags"><span>SEO</span><span>Responsive</span><span>Performance</span></div>
         <a href="#devis" class="btn btn-ghost" data-i18n="services.start">Démarrer</a>
       </div>
       <div class="service-card">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3 data-i18n="services.c5t">Support & maintenance</h3>
-        <p data-i18n="services.c5d">Un accompagnement continu pour faire évoluer vos automatisations dans le temps.</p>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg></div>
+        <h3 data-i18n="services.c5t">Modernisation de site web</h3>
+        <p data-i18n="services.c5d">Remettez votre site à niveau : design actuel, vitesse améliorée et parcours utilisateur pensé pour convertir.</p>
+        <div class="service-tags"><span data-i18n="services.c5tag1">Refonte</span><span>UX</span><span data-i18n="services.c5tag3">Migration</span></div>
         <a href="#devis" class="btn btn-ghost" data-i18n="services.start">Démarrer</a>
       </div>
     </div>
@@ -490,12 +590,21 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
     <div class="app-grid">
       <div class="app-copy">
         <span class="section-title" data-i18n="app.kicker">Application mobile</span>
-        <h2 data-i18n="app.title">Pilotez vos automatisations où que vous soyez</h2>
-        <p data-i18n="app.sub">Suivez vos workflows, recevez des alertes et gardez le contrôle depuis votre téléphone.</p>
+        <h2 data-i18n="app.title">Application mobile</h2>
+        <p data-i18n="app.sub">Des applications mobiles performantes, élégantes et connectées à votre écosystème — pour servir vos clients et vos équipes partout.</p>
         <ul class="app-list">
-          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span data-i18n="app.l1">Notifications en temps réel</span></li>
-          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span data-i18n="app.l2">Tableau de bord centralisé</span></li>
-          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span data-i18n="app.l3">Contrôle total à distance</span></li>
+          <li>
+            <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <div><strong data-i18n="app.l1t">iOS & Android</strong><span class="feat-desc" data-i18n="app.l1d">Applications natives ou cross-platform, pensées pour une expérience fluide sur tous les écrans.</span></div>
+          </li>
+          <li>
+            <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <div><strong data-i18n="app.l2t">Design sur mesure</strong><span class="feat-desc" data-i18n="app.l2d">Interfaces modernes, intuitives et alignées sur votre identité visuelle.</span></div>
+          </li>
+          <li>
+            <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <div><strong data-i18n="app.l3t">Connexion & suivi</strong><span class="feat-desc" data-i18n="app.l3d">Notifications, tableaux de bord et synchronisation avec vos outils métier.</span></div>
+          </li>
         </ul>
         <a href="#devis" class="btn btn-primary" data-i18n="app.cta">Démarrer</a>
       </div>
@@ -517,17 +626,24 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
   <div class="container">
     <div class="boost-inner">
       <div>
-        <span class="boost-badge"><span class="dot"></span><span data-i18n="boost.badge">Disponible maintenant</span></span>
+        <span class="boost-badge">
+          <span class="dot"></span>
+          <span data-i18n="boost.badgeLeft">Créneaux disponibles ce mois-ci</span>
+          <span class="sep" aria-hidden="true"></span>
+          <span data-i18n="boost.badgeRight">100 % satisfaction · Réponse sous 24h</span>
+        </span>
         <h2 data-i18n="boost.title">Prêt à faire évoluer votre projet ?</h2>
+        <p class="boost-sub" data-i18n="boost.sub">Au-delà du code, nous concevons des systèmes pensés pour votre croissance : web, mobile et automatisation, livrés avec rigueur. Échangeons sur votre besoin — on accélère le vôtre.</p>
         <a href="#devis" class="btn btn-dark" data-i18n="boost.cta">Réserver un échange</a>
       </div>
       <div class="collage">
         <div class="collage-card cc1">
-          <div class="mini-label" data-i18n="boost.card1">Temps gagné</div>
-          <div class="mini-num">+12h / sem</div>
+          <div class="mini-label" data-i18n="boost.card1">Automatisations actives</div>
+          <div class="mini-num">24</div>
         </div>
         <div class="collage-card cc2">
-          <div class="mini-label" data-i18n="boost.card2">Productivité</div>
+          <div class="mini-label" data-i18n="boost.card2">Performance globale</div>
+          <div class="mini-num">+38 %</div>
           <div class="bars"><span style="height:40%"></span><span style="height:70%"></span><span style="height:55%"></span><span style="height:90%"></span><span style="height:75%"></span></div>
         </div>
         <div class="collage-card cc3">
@@ -543,15 +659,16 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
 <section class="process" id="processus">
   <div class="container">
     <div class="section-head">
-      <span class="section-title" data-i18n="process.kicker">Processus</span>
-      <h2 data-i18n="process.title">Comment nous travaillons</h2>
+      <span class="section-title" data-i18n="process.kicker">Notre processus</span>
+      <h2 data-i18n="process.title">De l'idée à la livraison</h2>
+      <p data-i18n="process.sub">Une méthode éprouvée en cinq étapes pour livrer vite, bien, et sans surprise.</p>
     </div>
     <div class="steps">
-      <div class="step-card"><div class="step-num">01</div><h3 data-i18n="process.s1t">Analyse</h3><p data-i18n="process.s1d">Nous étudions vos process et identifions les tâches à automatiser.</p></div>
-      <div class="step-card"><div class="step-num">02</div><h3 data-i18n="process.s2t">Conception</h3><p data-i18n="process.s2d">Nous concevons le workflow idéal adapté à vos outils.</p></div>
-      <div class="step-card"><div class="step-num">03</div><h3 data-i18n="process.s3t">Développement</h3><p data-i18n="process.s3d">Nous construisons et connectons vos automatisations.</p></div>
-      <div class="step-card"><div class="step-num">04</div><h3 data-i18n="process.s4t">Tests</h3><p data-i18n="process.s4d">Nous validons chaque scénario pour garantir la fiabilité.</p></div>
-      <div class="step-card"><div class="step-num">05</div><h3 data-i18n="process.s5t">Suivi</h3><p data-i18n="process.s5d">Nous assurons la maintenance et l'évolution continue.</p></div>
+      <div class="step-card"><div class="step-num">01</div><h3 data-i18n="process.s1t">Audit & Cadrage</h3><p data-i18n="process.s1d">Nous cartographions vos process, outils et objectifs pour définir un plan d'action clair et priorisé.</p></div>
+      <div class="step-card"><div class="step-num">02</div><h3 data-i18n="process.s2t">Conception & Design</h3><p data-i18n="process.s2d">Architecture, parcours et interfaces : une maquette précise avant la moindre ligne de code.</p></div>
+      <div class="step-card"><div class="step-num">03</div><h3 data-i18n="process.s3t">Développement</h3><p data-i18n="process.s3d">Construction itérative, livraisons régulières et transparence totale sur l'avancement.</p></div>
+      <div class="step-card"><div class="step-num">04</div><h3 data-i18n="process.s4t">Tests & Optimisation</h3><p data-i18n="process.s4d">Validation performance, accessibilité et cas limites pour une mise en production sereine.</p></div>
+      <div class="step-card"><div class="step-num">05</div><h3 data-i18n="process.s5t">Livraison & Suivi</h3><p data-i18n="process.s5d">Formation, documentation et accompagnement pour que vos équipes prennent le relais en confiance.</p></div>
     </div>
   </div>
 </section>
@@ -562,14 +679,15 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
     <div class="section-head">
       <span class="section-title" data-i18n="reviews.kicker">Avis clients</span>
       <h2 data-i18n="reviews.title">Ils nous font confiance</h2>
+      <p data-i18n="reviews.sub">Des retours concrets sur la qualité d'exécution et le gain de temps au quotidien.</p>
     </div>
     <div class="reviews-grid">
-      <div class="review-card"><div class="stars">★★★★★</div><p class="review-text" data-i18n="reviews.r1">IBFautomate nous a fait gagner un temps précieux. Nos relances clients sont désormais totalement automatisées.</p><div class="reviewer"><div class="avatar">KB</div><div><div class="who">Kamel B.</div><div class="role" data-i18n="reviews.r1role">Gérant, PME</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="review-text" data-i18n="reviews.r2">Un accompagnement clair et efficace. Le workflow mis en place tourne sans accroc depuis des mois.</p><div class="reviewer"><div class="avatar">SL</div><div><div class="who">Sophie L.</div><div class="role" data-i18n="reviews.r2role">Responsable marketing</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="review-text" data-i18n="reviews.r3">Nos données sont synchronisées automatiquement entre tous nos outils. Un vrai gain de sérénité.</p><div class="reviewer"><div class="avatar">MT</div><div><div class="who">Marc T.</div><div class="role" data-i18n="reviews.r3role">Directeur commercial</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="review-text" data-i18n="reviews.r4">Réactifs et professionnels. Ils ont compris nos besoins dès le premier échange.</p><div class="reviewer"><div class="avatar">AN</div><div><div class="who">Amina N.</div><div class="role" data-i18n="reviews.r4role">Fondatrice, startup</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="review-text" data-i18n="reviews.r5">Je ne perds plus de temps sur des tâches administratives. Tout est automatisé et fiable.</p><div class="reviewer"><div class="avatar">JP</div><div><div class="who">Julien P.</div><div class="role" data-i18n="reviews.r5role">Consultant indépendant</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="review-text" data-i18n="reviews.r6">Excellent rapport qualité-prix. Les automatisations ont transformé notre organisation.</p><div class="reviewer"><div class="avatar">CD</div><div><div class="who">Claire D.</div><div class="role" data-i18n="reviews.r6role">Responsable opérations</div></div></div></div>
+      <div class="review-card"><div class="stars">5 / 5</div><p class="review-text" data-i18n="reviews.r1">Les délais annoncés ont été tenus à la lettre. Nos équipes ont gagné plusieurs heures par semaine dès la première livraison.</p><div class="reviewer"><div class="avatar">TM</div><div><div class="who">Thomas M.</div></div></div></div>
+      <div class="review-card"><div class="stars">5 / 5</div><p class="review-text" data-i18n="reviews.r2">Un accompagnement très professionnel du brief à la mise en ligne. La communication était claire et les livrables impeccables.</p><div class="reviewer"><div class="avatar">SL</div><div><div class="who">Sophie L.</div></div></div></div>
+      <div class="review-card"><div class="stars">5 / 5</div><p class="review-text" data-i18n="reviews.r3">La refonte a transformé notre image en ligne. Le site est plus rapide, plus clair, et nos demandes entrantes ont nettement augmenté.</p><div class="reviewer"><div class="avatar">RB</div><div><div class="who">Rachid B.</div></div></div></div>
+      <div class="review-card"><div class="stars">5 / 5</div><p class="review-text" data-i18n="reviews.r4">L'accueil téléphonique automatisé a changé notre quotidien. Plus d'appels manqués, et les rendez-vous sont qualifiés avant même que l'on rappelle.</p><div class="reviewer"><div class="avatar">MC</div><div><div class="who">Marie C.</div></div></div></div>
+      <div class="review-card"><div class="stars">5 / 5</div><p class="review-text" data-i18n="reviews.r5">On a enfin connecté nos outils entre eux. Moins d'erreurs de saisie, plus de temps pour le commercial. Exactement ce dont on avait besoin.</p><div class="reviewer"><div class="avatar">JD</div><div><div class="who">Julien D.</div></div></div></div>
+      <div class="review-card"><div class="stars">5 / 5</div><p class="review-text" data-i18n="reviews.r6">Écoute, rigueur et résultats. Le projet a été mené avec une vraie exigence de qualité, sans jargon inutile ni mauvaises surprises.</p><div class="reviewer"><div class="avatar">KB</div><div><div class="who">Kamel B.</div></div></div></div>
     </div>
   </div>
 </section>
@@ -580,13 +698,14 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
     <div class="section-head">
       <span class="section-title" data-i18n="faq.kicker">FAQ</span>
       <h2 data-i18n="faq.title">Questions fréquentes</h2>
+      <p data-i18n="faq.sub">Les réponses aux points que l'on nous pose le plus souvent.</p>
     </div>
     <div class="faq-list">
-      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q1">Combien de temps pour mettre en place une automatisation ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a1">Cela dépend de la complexité, mais la plupart des projets sont livrés en 1 à 3 semaines.</p></div></div>
-      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q2">Avec quels outils travaillez-vous ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a2">Gmail, Google Sheets, Slack, Notion, Stripe, WhatsApp, Calendar et bien d'autres.</p></div></div>
-      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q3">Faut-il des compétences techniques ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a3">Non, nous nous occupons de tout. Vous profitez simplement des résultats.</p></div></div>
-      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q4">Proposez-vous un suivi après la mise en place ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a4">Oui, nous assurons la maintenance et l'évolution de vos automatisations dans le temps.</p></div></div>
-      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q5">Quel est le coût d'un projet ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a5">Chaque projet est sur mesure. Demandez un devis gratuit et sans engagement.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q1">Vos solutions sont-elles compatibles avec nos outils existants ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a1">Oui. Nous nous branchons sur votre stack actuelle — messagerie, tableurs, CRM, facturation, agendas — pour automatiser sans tout remplacer. L'objectif est d'améliorer ce qui fonctionne déjà.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q2">Quels sont les délais de mise en place ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a2">Cela dépend du périmètre. Une automatisation ciblée peut être opérationnelle en quelques semaines ; un site ou une application plus large se planifie sur un calendrier clair, validé dès le cadrage.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q3">Faut-il des compétences techniques en interne ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a3">Non. Nous concevons, déployons et formons vos équipes. Vous bénéficiez d'interfaces simples et d'une documentation claire pour piloter au quotidien.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q4">Comment gérez-vous la sécurité et le RGPD ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a4">La confidentialité et la conformité sont intégrées dès la conception : accès maîtrisés, données minimisées, hébergement adapté et bonnes pratiques de sécurité sur chaque livrable.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="faq.q5">Comment fonctionne la demande de devis ?</span><span class="plus">+</span></button><div class="faq-a"><p data-i18n="faq.a5">Vous décrivez votre besoin via le formulaire. Nous revenons vers vous sous 24h avec des questions de clarification, puis une proposition détaillée — sans engagement.</p></div></div>
     </div>
   </div>
 </section>
@@ -595,9 +714,9 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
 <section class="devis" id="devis">
   <div class="container">
     <div class="section-head">
-      <span class="section-title" data-i18n="devis.kicker">Contact</span>
-      <h2 data-i18n="devis.title">Demandez votre devis gratuit</h2>
-      <p data-i18n="devis.sub">Parlons de votre projet. Nous vous répondons sous 24h.</p>
+      <span class="section-title" data-i18n="devis.kicker">Devis</span>
+      <h2 data-i18n="devis.title">Parlons de votre projet</h2>
+      <p data-i18n="devis.sub">Décrivez votre besoin : nous revenons vers vous sous 24 heures avec une proposition adaptée.</p>
     </div>
     <div class="devis-grid">
       <div class="contact-card">
@@ -611,7 +730,7 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
         </div>
         <div class="contact-item">
           <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-          <div><div class="ci-label" data-i18n="devis.delayLabel">Réactivité</div><div class="ci-value" data-i18n="devis.delayValue">Réponse sous 24h</div></div>
+          <div><div class="ci-label" data-i18n="devis.delayLabel">Délai</div><div class="ci-value" data-i18n="devis.delayValue">Réponse sous 24h</div></div>
         </div>
         <div class="contact-item">
           <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
@@ -623,7 +742,7 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
         <form id="quoteForm" novalidate>
           <div class="form-row">
             <div class="field">
-              <label data-i18n="form.name">Nom <span class="req">*</span></label>
+              <label data-i18n="form.name">Nom complet <span class="req">*</span></label>
               <input type="text" name="name" required />
             </div>
             <div class="field">
@@ -640,10 +759,11 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
               <label data-i18n="form.subject">Sujet <span class="req">*</span></label>
               <select name="subject" required>
                 <option value="" data-i18n="form.subjectPlaceholder">Sélectionnez un sujet</option>
-                <option value="workflow" data-i18n="form.subjectWorkflow">Automatisation de workflows</option>
-                <option value="email" data-i18n="form.subjectEmail">Email & communication</option>
-                <option value="reporting" data-i18n="form.subjectReporting">Reporting & données</option>
-                <option value="integration" data-i18n="form.subjectIntegration">Intégrations sur mesure</option>
+                <option value="webapp" data-i18n="form.subjectWebapp">Développement d'Applications Web</option>
+                <option value="automation" data-i18n="form.subjectAutomation">Automatisation & IA</option>
+                <option value="receptionist" data-i18n="form.subjectReceptionist">Réceptionniste IA</option>
+                <option value="website" data-i18n="form.subjectWebsite">Sites Web Professionnels</option>
+                <option value="modernize" data-i18n="form.subjectModernize">Modernisation de site web</option>
                 <option value="other" data-i18n="form.subjectOther">Autre</option>
               </select>
             </div>
@@ -652,8 +772,8 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
             <label data-i18n="form.message">Message <span class="req">*</span></label>
             <textarea name="message" required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="form.submit">Envoyer ma demande</button>
-          <div class="form-success" id="formSuccess" data-i18n="form.success">Merci ! Votre demande a bien été envoyée. Nous vous répondons sous 24h.</div>
+          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="form.submit">Envoyer ma demande de devis →</button>
+          <div class="form-success" id="formSuccess" data-i18n="form.success">Merci. Nous avons bien reçu votre message et vous répondrons sous 24 heures.</div>
         </form>
       </div>
     </div>
@@ -666,34 +786,43 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
     <div class="footer-grid">
       <div class="footer-col">
         <a href="#" class="logo" style="margin-bottom:16px"><span class="logo-mark">IB</span>IBFautomate</a>
-        <p data-i18n="footer.about">L'automatisation intelligente pour libérer votre temps et développer votre activité.</p>
+        <p data-i18n="footer.about">Agence web & automatisation. Des systèmes sur mesure pour gagner du temps et accélérer votre activité.</p>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer.navTitle">Navigation</h4>
+        <h4 data-i18n="footer.servicesTitle">Services</h4>
+        <a href="#devis" data-i18n="services.c1t">Développement d'Applications Web</a>
+        <a href="#devis" data-i18n="services.c2t">Automatisation & IA</a>
+        <a href="#devis" data-i18n="services.c3t">Réceptionniste IA</a>
+        <a href="#devis" data-i18n="services.c4t">Sites Web Professionnels</a>
+        <a href="#devis" data-i18n="services.c5t">Modernisation de site web</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.quickTitle">Liens rapides</h4>
         <a href="#services" data-i18n="nav.services">Services</a>
         <a href="#processus" data-i18n="nav.process">Processus</a>
         <a href="#avis" data-i18n="nav.reviews">Avis</a>
         <a href="#faq" data-i18n="nav.faq">FAQ</a>
+        <a href="#devis" data-i18n="nav.cta">Demander un devis</a>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.contactTitle">Contact</h4>
         <a href="mailto:IBFautomate@outlook.com">IBFautomate@outlook.com</a>
         <a href="tel:+33762129949">07 62 12 99 49</a>
-        <p data-i18n="devis.zoneValue">France entière</p>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer.startTitle">Commencer</h4>
-        <p data-i18n="footer.startText">Prêt à automatiser votre activité ?</p>
-        <a href="#devis" class="btn btn-primary" data-i18n="nav.cta">Demander un devis</a>
       </div>
     </div>
-    <div class="footer-bottom">© 2026 IBFautomate. <span data-i18n="footer.rights">Tous droits réservés.</span></div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.rights">© 2026 IBFautomate. Tous droits réservés.</span>
+      <span style="margin:0 8px">·</span>
+      <a href="#devis" data-i18n="footer.legal">Mentions légales</a>
+      <span style="margin:0 8px">·</span>
+      <a href="#devis" data-i18n="footer.privacy">Politique de confidentialité</a>
+    </div>
   </div>
 </footer>
 
 <!-- WhatsApp widget -->
 <div class="wa-widget">
-  <div class="wa-bubble" id="waBubble" data-i18n="wa.bubble">Une question ? Écrivez-nous sur WhatsApp !</div>
+  <div class="wa-bubble" id="waBubble" data-i18n="wa.bubble">Une question ? Réponse rapide sur WhatsApp</div>
   <a class="wa-btn" href="https://wa.me/0762129949" target="_blank" rel="noopener" aria-label="WhatsApp">
     <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5s-.6-1.5-.9-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.4-.3.3-1 .9-1 2.3s1 2.7 1.2 2.9c.1.2 2 3 4.8 4.2 1.8.8 2.5.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.6.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
   </a>
@@ -706,152 +835,180 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
     fr: {
       nav: { services:"Services", process:"Processus", reviews:"Avis", faq:"FAQ", cta:"Demander un devis" },
       hero: {
-        badge:"Automatisation intelligente pour votre activité",
-        title1:"Automatisez vos tâches répétitives",
-        title2:"et concentrez-vous sur l'essentiel",
-        sub:"IBFautomate connecte vos outils, élimine les tâches manuelles et fait gagner des heures à votre équipe chaque semaine.",
-        ctaStart:"Démarrer", ctaDiscover:"Découvrir",
-        trust1:"Sans engagement", trust2:"Réponse sous 24h", trust3:"France entière"
+        badge:"Agence web & automatisation",
+        title1:"Automatisez votre entreprise.",
+        title2:"Gagnez des heures chaque semaine.",
+        sub:"Systèmes sur mesure, sites performants et processus sans friction — conçus pour libérer votre temps et accélérer votre croissance.",
+        ctaStart:"Démarrer", ctaDiscover:"Découvrir nos services",
+        trust:"Projets livrés · 100 % satisfaction · Réponse sous 24h"
       },
-      stats: { kicker:"Le problème", title:"Le coût invisible du manuel",
-        s1:"du temps perdu sur des tâches répétitives", s2:"gaspillées chaque semaine en moyenne",
-        s3num:"Des milliers €", s3:"de coûts cachés chaque année" },
+      stats: { kicker:"Le constat", title:"Le coût invisible du manuel",
+        sub:"Chaque jour, des heures s'évaporent dans des tâches qui pourraient tourner toutes seules.",
+        s1:"du temps de travail = tâches répétitives", s2:"par semaine perdues en opérations manuelles",
+        s3num:"Des milliers €", s3:"de productivité envolés chaque année" },
       services: {
-        kicker:"Nos services", title:"Des automatisations sur mesure",
-        sub:"Nous concevons des workflows adaptés à vos outils et à vos process.", start:"Démarrer",
-        c1t:"Automatisation de workflows", c1d:"Connectez vos applications et automatisez vos processus de bout en bout, sans effort manuel.",
-        c2t:"Email & communication", c2d:"Relances, réponses automatiques et notifications intelligentes pour ne rien manquer.",
-        c3t:"Reporting & données", c3d:"Tableaux de bord automatisés et synchronisation de vos données en temps réel.",
-        c4t:"Intégrations sur mesure", c4d:"Nous relions vos outils préférés grâce à des intégrations robustes et évolutives.",
-        c5t:"Support & maintenance", c5d:"Un accompagnement continu pour faire évoluer vos automatisations dans le temps."
+        kicker:"Nos services", title:"Ce que nous construisons",
+        sub:"Cinq expertises complémentaires pour digitaliser, automatiser et accélérer votre activité.", start:"Démarrer",
+        c1t:"Développement d'Applications Web", c1d:"Des applications fluides et sécurisées qui centralisent vos opérations et simplifient le quotidien de vos équipes.", c1tag3:"Sur mesure",
+        c2t:"Automatisation & IA", c2d:"Reliez vos outils, éliminez les saisies manuelles et laissez vos processus tourner en continu sans surveillance.",
+        c3t:"Réceptionniste IA", c3d:"Un accueil téléphonique disponible 24h/24 qui qualifie les appels, prend les rendez-vous et ne laisse aucun prospect en attente.", c3tag1:"Voix",
+        c4t:"Sites Web Professionnels", c4d:"Une présence en ligne claire, rapide et orientée conversion, conçue pour inspirer confiance dès la première seconde.",
+        c5t:"Modernisation de site web", c5d:"Remettez votre site à niveau : design actuel, vitesse améliorée et parcours utilisateur pensé pour convertir.", c5tag1:"Refonte", c5tag3:"Migration"
       },
       app: {
-        kicker:"Application mobile", title:"Pilotez vos automatisations où que vous soyez",
-        sub:"Suivez vos workflows, recevez des alertes et gardez le contrôle depuis votre téléphone.",
-        l1:"Notifications en temps réel", l2:"Tableau de bord centralisé", l3:"Contrôle total à distance", cta:"Démarrer"
+        kicker:"Application mobile", title:"Application mobile",
+        sub:"Des applications mobiles performantes, élégantes et connectées à votre écosystème — pour servir vos clients et vos équipes partout.",
+        l1t:"iOS & Android", l1d:"Applications natives ou cross-platform, pensées pour une expérience fluide sur tous les écrans.",
+        l2t:"Design sur mesure", l2d:"Interfaces modernes, intuitives et alignées sur votre identité visuelle.",
+        l3t:"Connexion & suivi", l3d:"Notifications, tableaux de bord et synchronisation avec vos outils métier.",
+        cta:"Démarrer"
       },
       boost: {
-        badge:"Disponible maintenant", title:"Prêt à faire évoluer votre projet ?", cta:"Réserver un échange",
-        card1:"Temps gagné", card2:"Productivité", card3:"Tâches automatisées"
+        badgeLeft:"Créneaux disponibles ce mois-ci", badgeRight:"100 % satisfaction · Réponse sous 24h",
+        title:"Prêt à faire évoluer votre projet ?",
+        sub:"Au-delà du code, nous concevons des systèmes pensés pour votre croissance : web, mobile et automatisation, livrés avec rigueur. Échangeons sur votre besoin — on accélère le vôtre.",
+        cta:"Réserver un échange",
+        card1:"Automatisations actives", card2:"Performance globale", card3:"Tâches automatisées"
       },
       process: {
-        kicker:"Processus", title:"Comment nous travaillons",
-        s1t:"Analyse", s1d:"Nous étudions vos process et identifions les tâches à automatiser.",
-        s2t:"Conception", s2d:"Nous concevons le workflow idéal adapté à vos outils.",
-        s3t:"Développement", s3d:"Nous construisons et connectons vos automatisations.",
-        s4t:"Tests", s4d:"Nous validons chaque scénario pour garantir la fiabilité.",
-        s5t:"Suivi", s5d:"Nous assurons la maintenance et l'évolution continue."
+        kicker:"Notre processus", title:"De l'idée à la livraison",
+        sub:"Une méthode éprouvée en cinq étapes pour livrer vite, bien, et sans surprise.",
+        s1t:"Audit & Cadrage", s1d:"Nous cartographions vos process, outils et objectifs pour définir un plan d'action clair et priorisé.",
+        s2t:"Conception & Design", s2d:"Architecture, parcours et interfaces : une maquette précise avant la moindre ligne de code.",
+        s3t:"Développement", s3d:"Construction itérative, livraisons régulières et transparence totale sur l'avancement.",
+        s4t:"Tests & Optimisation", s4d:"Validation performance, accessibilité et cas limites pour une mise en production sereine.",
+        s5t:"Livraison & Suivi", s5d:"Formation, documentation et accompagnement pour que vos équipes prennent le relais en confiance."
       },
       reviews: {
         kicker:"Avis clients", title:"Ils nous font confiance",
-        r1:"IBFautomate nous a fait gagner un temps précieux. Nos relances clients sont désormais totalement automatisées.", r1role:"Gérant, PME",
-        r2:"Un accompagnement clair et efficace. Le workflow mis en place tourne sans accroc depuis des mois.", r2role:"Responsable marketing",
-        r3:"Nos données sont synchronisées automatiquement entre tous nos outils. Un vrai gain de sérénité.", r3role:"Directeur commercial",
-        r4:"Réactifs et professionnels. Ils ont compris nos besoins dès le premier échange.", r4role:"Fondatrice, startup",
-        r5:"Je ne perds plus de temps sur des tâches administratives. Tout est automatisé et fiable.", r5role:"Consultant indépendant",
-        r6:"Excellent rapport qualité-prix. Les automatisations ont transformé notre organisation.", r6role:"Responsable opérations"
+        sub:"Des retours concrets sur la qualité d'exécution et le gain de temps au quotidien.",
+        r1:"Les délais annoncés ont été tenus à la lettre. Nos équipes ont gagné plusieurs heures par semaine dès la première livraison.",
+        r2:"Un accompagnement très professionnel du brief à la mise en ligne. La communication était claire et les livrables impeccables.",
+        r3:"La refonte a transformé notre image en ligne. Le site est plus rapide, plus clair, et nos demandes entrantes ont nettement augmenté.",
+        r4:"L'accueil téléphonique automatisé a changé notre quotidien. Plus d'appels manqués, et les rendez-vous sont qualifiés avant même que l'on rappelle.",
+        r5:"On a enfin connecté nos outils entre eux. Moins d'erreurs de saisie, plus de temps pour le commercial. Exactement ce dont on avait besoin.",
+        r6:"Écoute, rigueur et résultats. Le projet a été mené avec une vraie exigence de qualité, sans jargon inutile ni mauvaises surprises."
       },
       faq: {
         kicker:"FAQ", title:"Questions fréquentes",
-        q1:"Combien de temps pour mettre en place une automatisation ?", a1:"Cela dépend de la complexité, mais la plupart des projets sont livrés en 1 à 3 semaines.",
-        q2:"Avec quels outils travaillez-vous ?", a2:"Gmail, Google Sheets, Slack, Notion, Stripe, WhatsApp, Calendar et bien d'autres.",
-        q3:"Faut-il des compétences techniques ?", a3:"Non, nous nous occupons de tout. Vous profitez simplement des résultats.",
-        q4:"Proposez-vous un suivi après la mise en place ?", a4:"Oui, nous assurons la maintenance et l'évolution de vos automatisations dans le temps.",
-        q5:"Quel est le coût d'un projet ?", a5:"Chaque projet est sur mesure. Demandez un devis gratuit et sans engagement."
+        sub:"Les réponses aux points que l'on nous pose le plus souvent.",
+        q1:"Vos solutions sont-elles compatibles avec nos outils existants ?", a1:"Oui. Nous nous branchons sur votre stack actuelle — messagerie, tableurs, CRM, facturation, agendas — pour automatiser sans tout remplacer. L'objectif est d'améliorer ce qui fonctionne déjà.",
+        q2:"Quels sont les délais de mise en place ?", a2:"Cela dépend du périmètre. Une automatisation ciblée peut être opérationnelle en quelques semaines ; un site ou une application plus large se planifie sur un calendrier clair, validé dès le cadrage.",
+        q3:"Faut-il des compétences techniques en interne ?", a3:"Non. Nous concevons, déployons et formons vos équipes. Vous bénéficiez d'interfaces simples et d'une documentation claire pour piloter au quotidien.",
+        q4:"Comment gérez-vous la sécurité et le RGPD ?", a4:"La confidentialité et la conformité sont intégrées dès la conception : accès maîtrisés, données minimisées, hébergement adapté et bonnes pratiques de sécurité sur chaque livrable.",
+        q5:"Comment fonctionne la demande de devis ?", a5:"Vous décrivez votre besoin via le formulaire. Nous revenons vers vous sous 24h avec des questions de clarification, puis une proposition détaillée — sans engagement."
       },
       devis: {
-        kicker:"Contact", title:"Demandez votre devis gratuit", sub:"Parlons de votre projet. Nous vous répondons sous 24h.",
-        emailLabel:"Email", phoneLabel:"Téléphone", delayLabel:"Réactivité", delayValue:"Réponse sous 24h",
+        kicker:"Devis", title:"Parlons de votre projet", sub:"Décrivez votre besoin : nous revenons vers vous sous 24 heures avec une proposition adaptée.",
+        emailLabel:"Email", phoneLabel:"Téléphone", delayLabel:"Délai", delayValue:"Réponse sous 24h",
         zoneLabel:"Zone", zoneValue:"France entière"
       },
       form: {
-        name:'Nom <span class="req">*</span>', email:'Email <span class="req">*</span>', phone:'Téléphone <span class="req">*</span>',
+        name:'Nom complet <span class="req">*</span>', email:'Email <span class="req">*</span>', phone:'Téléphone <span class="req">*</span>',
         subject:'Sujet <span class="req">*</span>', message:'Message <span class="req">*</span>',
-        subjectPlaceholder:"Sélectionnez un sujet", subjectWorkflow:"Automatisation de workflows", subjectEmail:"Email & communication",
-        subjectReporting:"Reporting & données", subjectIntegration:"Intégrations sur mesure", subjectOther:"Autre",
-        submit:"Envoyer ma demande", success:"Merci ! Votre demande a bien été envoyée. Nous vous répondons sous 24h."
+        subjectPlaceholder:"Sélectionnez un sujet",
+        subjectWebapp:"Développement d'Applications Web", subjectAutomation:"Automatisation & IA",
+        subjectReceptionist:"Réceptionniste IA", subjectWebsite:"Sites Web Professionnels",
+        subjectModernize:"Modernisation de site web", subjectOther:"Autre",
+        submit:"Envoyer ma demande de devis →",
+        success:"Merci. Nous avons bien reçu votre message et vous répondrons sous 24 heures."
       },
       footer: {
-        about:"L'automatisation intelligente pour libérer votre temps et développer votre activité.",
-        navTitle:"Navigation", contactTitle:"Contact", startTitle:"Commencer",
-        startText:"Prêt à automatiser votre activité ?", rights:"Tous droits réservés."
+        about:"Agence web & automatisation. Des systèmes sur mesure pour gagner du temps et accélérer votre activité.",
+        servicesTitle:"Services", quickTitle:"Liens rapides", contactTitle:"Contact",
+        rights:"© 2026 IBFautomate. Tous droits réservés.",
+        legal:"Mentions légales", privacy:"Politique de confidentialité"
       },
-      wa: { bubble:"Une question ? Écrivez-nous sur WhatsApp !" }
+      wa: { bubble:"Une question ? Réponse rapide sur WhatsApp" }
     },
     en: {
       nav: { services:"Services", process:"Process", reviews:"Reviews", faq:"FAQ", cta:"Request a quote" },
       hero: {
-        badge:"Smart automation for your business",
-        title1:"Automate your repetitive tasks",
-        title2:"and focus on what matters",
-        sub:"IBFautomate connects your tools, eliminates manual work and saves your team hours every week.",
-        ctaStart:"Get started", ctaDiscover:"Discover",
-        trust1:"No commitment", trust2:"Reply within 24h", trust3:"Anywhere in France"
+        badge:"Web agency & automation",
+        title1:"Automate your business.",
+        title2:"Save hours every week.",
+        sub:"Custom systems, high-performing websites, and frictionless processes — built to free your time and accelerate growth.",
+        ctaStart:"Get started", ctaDiscover:"Explore our services",
+        trust:"Projects delivered · 100% satisfaction · Reply within 24h"
       },
-      stats: { kicker:"The problem", title:"The invisible cost of manual work",
-        s1:"of time lost on repetitive tasks", s2:"wasted every week on average",
-        s3num:"Thousands €", s3:"in hidden costs every year" },
+      stats: { kicker:"The reality", title:"The hidden cost of manual work",
+        sub:"Every day, hours disappear into tasks that could run on their own.",
+        s1:"of work time = repetitive tasks", s2:"per week lost to manual operations",
+        s3num:"Thousands €", s3:"in lost productivity every year" },
       services: {
-        kicker:"Our services", title:"Tailor-made automations",
-        sub:"We design workflows adapted to your tools and processes.", start:"Get started",
-        c1t:"Workflow automation", c1d:"Connect your apps and automate your processes end to end, with no manual effort.",
-        c2t:"Email & communication", c2d:"Follow-ups, auto-replies and smart notifications so you never miss a thing.",
-        c3t:"Reporting & data", c3d:"Automated dashboards and real-time synchronization of your data.",
-        c4t:"Custom integrations", c4d:"We connect your favorite tools with robust and scalable integrations.",
-        c5t:"Support & maintenance", c5d:"Ongoing support to evolve your automations over time."
+        kicker:"Our services", title:"What we build",
+        sub:"Five complementary expertise areas to digitize, automate, and accelerate your business.", start:"Get started",
+        c1t:"Web Application Development", c1d:"Fluid, secure applications that centralize your operations and simplify your team's daily work.", c1tag3:"Custom",
+        c2t:"Automation & AI", c2d:"Connect your tools, eliminate manual entry, and let your processes run continuously without supervision.",
+        c3t:"AI Receptionist", c3d:"24/7 phone reception that qualifies calls, books appointments, and never leaves a lead waiting.", c3tag1:"Voice",
+        c4t:"Professional Websites", c4d:"A clear, fast, conversion-focused online presence designed to inspire trust from the first second.",
+        c5t:"Website modernization", c5d:"Bring your site up to date: modern design, better speed, and a user journey built to convert.", c5tag1:"Redesign", c5tag3:"Migration"
       },
       app: {
-        kicker:"Mobile app", title:"Manage your automations wherever you are",
-        sub:"Track your workflows, get alerts and stay in control from your phone.",
-        l1:"Real-time notifications", l2:"Centralized dashboard", l3:"Full remote control", cta:"Get started"
+        kicker:"Mobile app", title:"Mobile app",
+        sub:"High-performing, elegant mobile apps connected to your ecosystem — for your clients and teams, everywhere.",
+        l1t:"iOS & Android", l1d:"Native or cross-platform apps designed for a smooth experience on every screen.",
+        l2t:"Custom design", l2d:"Modern, intuitive interfaces aligned with your brand identity.",
+        l3t:"Connected & tracked", l3d:"Notifications, dashboards, and sync with your business tools.",
+        cta:"Get started"
       },
       boost: {
-        badge:"Available now", title:"Ready to grow your project?", cta:"Book a call",
-        card1:"Time saved", card2:"Productivity", card3:"Automated tasks"
+        badgeLeft:"Slots available this month", badgeRight:"100% satisfaction · Reply within 24h",
+        title:"Ready to take your project further?",
+        sub:"Beyond code, we design systems built for growth: web, mobile, and automation, delivered with rigor. Let's talk about your needs — we'll accelerate yours.",
+        cta:"Book a call",
+        card1:"Active automations", card2:"Overall performance", card3:"Automated tasks"
       },
       process: {
-        kicker:"Process", title:"How we work",
-        s1t:"Analysis", s1d:"We study your processes and identify tasks to automate.",
-        s2t:"Design", s2d:"We design the ideal workflow adapted to your tools.",
-        s3t:"Development", s3d:"We build and connect your automations.",
-        s4t:"Testing", s4d:"We validate every scenario to ensure reliability.",
-        s5t:"Follow-up", s5d:"We handle maintenance and continuous improvement."
+        kicker:"Our process", title:"From idea to delivery",
+        sub:"A proven five-step method to deliver fast, well, and without surprises.",
+        s1t:"Audit & Scoping", s1d:"We map your processes, tools, and goals to define a clear, prioritized action plan.",
+        s2t:"Design & UX", s2d:"Architecture, journeys, and interfaces: a precise mockup before a single line of code.",
+        s3t:"Development", s3d:"Iterative build, regular deliveries, and full transparency on progress.",
+        s4t:"Testing & Optimization", s4d:"Performance, accessibility, and edge-case validation for a smooth go-live.",
+        s5t:"Delivery & Support", s5d:"Training, documentation, and guidance so your teams take over with confidence."
       },
       reviews: {
         kicker:"Client reviews", title:"They trust us",
-        r1:"IBFautomate saved us precious time. Our client follow-ups are now fully automated.", r1role:"Manager, SMB",
-        r2:"Clear and effective support. The workflow we set up has been running flawlessly for months.", r2role:"Marketing manager",
-        r3:"Our data is automatically synced across all our tools. True peace of mind.", r3role:"Sales director",
-        r4:"Responsive and professional. They understood our needs from the very first call.", r4role:"Founder, startup",
-        r5:"I no longer waste time on admin tasks. Everything is automated and reliable.", r5role:"Independent consultant",
-        r6:"Excellent value for money. The automations transformed our organization.", r6role:"Operations manager"
+        sub:"Concrete feedback on delivery quality and time saved every day.",
+        r1:"Deadlines were met exactly as promised. Our teams saved several hours a week from the very first delivery.",
+        r2:"Highly professional support from brief to launch. Clear communication and flawless deliverables.",
+        r3:"The redesign transformed our online image. The site is faster, clearer, and inbound requests have clearly increased.",
+        r4:"Automated phone reception changed our daily work. No more missed calls, and appointments are qualified before we even call back.",
+        r5:"We finally connected our tools. Fewer input errors, more time for sales. Exactly what we needed.",
+        r6:"Listening, rigor, and results. The project was run with real quality standards — no useless jargon, no bad surprises."
       },
       faq: {
         kicker:"FAQ", title:"Frequently asked questions",
-        q1:"How long does it take to set up an automation?", a1:"It depends on complexity, but most projects are delivered in 1 to 3 weeks.",
-        q2:"Which tools do you work with?", a2:"Gmail, Google Sheets, Slack, Notion, Stripe, WhatsApp, Calendar and many more.",
-        q3:"Do I need technical skills?", a3:"No, we take care of everything. You simply enjoy the results.",
-        q4:"Do you offer follow-up after setup?", a4:"Yes, we handle the maintenance and evolution of your automations over time.",
-        q5:"How much does a project cost?", a5:"Every project is tailor-made. Request a free, no-commitment quote."
+        sub:"Answers to the points we get asked most often.",
+        q1:"Are your solutions compatible with our existing tools?", a1:"Yes. We plug into your current stack — messaging, spreadsheets, CRM, billing, calendars — to automate without replacing everything. The goal is to improve what already works.",
+        q2:"What are the implementation timelines?", a2:"It depends on the scope. A focused automation can be live in a few weeks; a larger site or app is planned on a clear calendar, validated from the start.",
+        q3:"Do we need technical skills in-house?", a3:"No. We design, deploy, and train your teams. You get simple interfaces and clear documentation to run things day to day.",
+        q4:"How do you handle security and GDPR?", a4:"Privacy and compliance are built in from the start: controlled access, minimized data, suitable hosting, and security best practices on every deliverable.",
+        q5:"How does the quote request work?", a5:"You describe your need via the form. We get back to you within 24h with clarifying questions, then a detailed proposal — with no obligation."
       },
       devis: {
-        kicker:"Contact", title:"Request your free quote", sub:"Let's talk about your project. We reply within 24h.",
-        emailLabel:"Email", phoneLabel:"Phone", delayLabel:"Responsiveness", delayValue:"Reply within 24h",
-        zoneLabel:"Area", zoneValue:"Anywhere in France"
+        kicker:"Quote", title:"Let's talk about your project", sub:"Describe your need: we get back to you within 24 hours with a tailored proposal.",
+        emailLabel:"Email", phoneLabel:"Phone", delayLabel:"Timeline", delayValue:"Reply within 24h",
+        zoneLabel:"Area", zoneValue:"All of France"
       },
       form: {
-        name:'Name <span class="req">*</span>', email:'Email <span class="req">*</span>', phone:'Phone <span class="req">*</span>',
+        name:'Full name <span class="req">*</span>', email:'Email <span class="req">*</span>', phone:'Phone <span class="req">*</span>',
         subject:'Subject <span class="req">*</span>', message:'Message <span class="req">*</span>',
-        subjectPlaceholder:"Select a subject", subjectWorkflow:"Workflow automation", subjectEmail:"Email & communication",
-        subjectReporting:"Reporting & data", subjectIntegration:"Custom integrations", subjectOther:"Other",
-        submit:"Send my request", success:"Thank you! Your request has been sent. We'll reply within 24h."
+        subjectPlaceholder:"Select a subject",
+        subjectWebapp:"Web Application Development", subjectAutomation:"Automation & AI",
+        subjectReceptionist:"AI Receptionist", subjectWebsite:"Professional Websites",
+        subjectModernize:"Website modernization", subjectOther:"Other",
+        submit:"Send my quote request →",
+        success:"Thank you. We've received your message and will reply within 24 hours."
       },
       footer: {
-        about:"Smart automation to free up your time and grow your business.",
-        navTitle:"Navigation", contactTitle:"Contact", startTitle:"Get started",
-        startText:"Ready to automate your business?", rights:"All rights reserved."
+        about:"Web agency & automation. Custom systems to save time and accelerate your business.",
+        servicesTitle:"Services", quickTitle:"Quick links", contactTitle:"Contact",
+        rights:"© 2026 IBFautomate. All rights reserved.",
+        legal:"Legal notice", privacy:"Privacy policy"
       },
-      wa: { bubble:"Have a question? Message us on WhatsApp!" }
+      wa: { bubble:"Got a question? Quick reply on WhatsApp" }
     }
   };
 
@@ -886,7 +1043,7 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
   });
 
   // ---------- Theme ----------
-  var THEME_KEY = 'ibf-theme';
+  var THEME_KEY = 'ibfautomate-theme-v2';
   var iconSun = document.getElementById('iconSun');
   var iconMoon = document.getElementById('iconMoon');
 
@@ -934,10 +1091,17 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
   // ---------- Mobile menu ----------
   var menuToggle = document.getElementById('menuToggle');
   var mobileMenu = document.getElementById('mobileMenu');
-  menuToggle.addEventListener('click', function () { mobileMenu.classList.toggle('open'); });
+  function setMenuOpen(open) {
+    mobileMenu.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  menuToggle.addEventListener('click', function () {
+    setMenuOpen(!mobileMenu.classList.contains('open'));
+  });
   var mmLinks = mobileMenu.querySelectorAll('a');
   for (var m = 0; m < mmLinks.length; m++) {
-    mmLinks[m].addEventListener('click', function () { mobileMenu.classList.remove('open'); });
+    mmLinks[m].addEventListener('click', function () { setMenuOpen(false); });
   }
 
   // ---------- FAQ accordion ----------
@@ -972,9 +1136,10 @@ html[data-theme="dark"] .footer-col a:hover { color:var(--green); }
   });
 
   // ---------- WhatsApp bubble ----------
+  var waDelay = window.matchMedia('(max-width: 639px)').matches ? 6000 : 3000;
   setTimeout(function () {
     document.getElementById('waBubble').classList.add('show');
-  }, 3000);
+  }, waDelay);
 
   // ---------- Init ----------
   applyTranslations();

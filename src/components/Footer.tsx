@@ -77,10 +77,10 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:IBFautomate@outlook.com"
-                  className="inline-flex items-center gap-2 text-sm text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--text)]"
+                  className="inline-flex max-w-full items-center gap-2 break-all text-sm text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--text)]"
                 >
                   <Mail
-                    className="h-4 w-4 text-brand-deep dark:text-brand"
+                    className="h-4 w-4 shrink-0 text-brand-deep dark:text-brand"
                     aria-hidden
                   />
                   IBFautomate@outlook.com

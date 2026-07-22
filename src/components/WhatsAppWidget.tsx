@@ -27,7 +27,10 @@ export function WhatsAppWidget() {
     }
     if (sessionStorage.getItem(BUBBLE_KEY) === "1") return;
 
-    const timer = window.setTimeout(() => setShowBubble(true), 3000);
+    const timer = window.setTimeout(
+      () => setShowBubble(true),
+      window.matchMedia("(max-width: 639px)").matches ? 6000 : 3000,
+    );
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -50,13 +53,13 @@ export function WhatsAppWidget() {
   if (!showWidget) return null;
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 safe-bottom sm:bottom-6 sm:right-6">
       <AnimatePresence>
         {showBubble && (
           <motion.div
             role="dialog"
             aria-label="Contact WhatsApp"
-            className="island relative w-[min(100vw-2.5rem,300px)] p-4 pr-10 shadow-glow-brand-sm"
+            className="island relative w-[min(100vw-2rem,280px)] p-4 pr-10 shadow-glow-brand-sm sm:w-[min(100vw-2.5rem,300px)]"
             initial={
               reduce ? { opacity: 1 } : { opacity: 0, scale: 0.8, y: 16 }
             }
@@ -101,7 +104,7 @@ export function WhatsAppWidget() {
           type="button"
           onClick={openChat}
           aria-label={t.whatsapp.open}
-          className="relative flex h-14 w-14 items-center justify-center rounded-full text-night shadow-glow-brand transition-transform duration-300 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="relative flex h-12 w-12 items-center justify-center rounded-full text-night shadow-glow-brand transition-transform duration-300 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:h-14 sm:w-14"
           style={{
             backgroundImage:
               "linear-gradient(135deg, #00E676, #059669, #064E3B)",
