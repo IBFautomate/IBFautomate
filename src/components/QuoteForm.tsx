@@ -277,10 +277,10 @@ export function QuoteForm() {
                         style={{ borderColor: "var(--island-border)" }}
                       />
                       <p
-                        className={`mt-1.5 text-xs transition-colors duration-300 ${
+                        className={`mt-1.5 transition-all duration-300 ${
                           messageOk
-                            ? "text-brand-deep dark:text-brand"
-                            : "text-[var(--text-muted)]"
+                            ? "text-sm font-semibold text-[#00E676]"
+                            : "text-xs text-[var(--text-muted)]"
                         }`}
                       >
                         {locale === "en"
