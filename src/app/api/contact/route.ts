@@ -1,0 +1,50 @@
+import { Resend } from "resend";
+import { NextResponse } from "next/server";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function POST(request: Request) {
+  try {
+    const { name, email, phone, subject, message } = await request.json();
+
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { error: "Champs obligatoires manquants" },
+        { status: 400 },
+      );
+    }
+
+    if (typeof message !== "string" || message.trim().length < 30) {
+      return NextResponse.json(
+        { error: "Le message doit contenir au moins 30 caractères" },
+        { status: 400 },
+      );
+    }
+
+    const { data, error } = await resend.emails.send({
+      from: "IBFautomate <contact@ibfautomate.com>",
+      to: ["IBFautomate@outlook.com", "benfakir.imrane@gmail.com"],
+      replyTo: email,
+      subject: `Nouvelle demande de ${name}${subject ? ` — ${subject}` : ""}`,
+      text: [
+        `De : ${name}`,
+        `Email : ${email}`,
+        phone ? `Téléphone : ${phone}` : null,
+        subject ? `Sujet : ${subject}` : null,
+        "",
+        "Message :",
+        message,
+      ]
+        .filter(Boolean)
+        .join("\n"),
+    });
+
+    if (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
+
+    return NextResponse.json({ data });
+  } catch {
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+  }
+}
