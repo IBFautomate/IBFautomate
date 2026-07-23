@@ -11,7 +11,10 @@ export function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [messageLength, setMessageLength] = useState(0);
   const reduce = useReducedMotion();
+
+  const messageOk = messageLength >= 30;
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,6 +43,7 @@ export function QuoteForm() {
 
       setSubmitted(true);
       form.reset();
+      setMessageLength(0);
     } catch {
       setError(
         locale === "en"
@@ -268,10 +272,17 @@ export function QuoteForm() {
                         minLength={30}
                         rows={4}
                         disabled={sending}
+                        onChange={(e) => setMessageLength(e.target.value.length)}
                         className="w-full resize-y rounded-xl border bg-transparent px-4 py-3 text-base outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand sm:text-sm"
                         style={{ borderColor: "var(--island-border)" }}
                       />
-                      <p className="mt-1.5 text-xs text-[var(--text-muted)]">
+                      <p
+                        className={`mt-1.5 text-xs transition-colors duration-300 ${
+                          messageOk
+                            ? "text-brand-deep dark:text-brand"
+                            : "text-[var(--text-muted)]"
+                        }`}
+                      >
                         {locale === "en"
                           ? "Minimum 30 characters"
                           : "Minimum 30 caractères"}
