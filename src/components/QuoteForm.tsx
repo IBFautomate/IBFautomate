@@ -14,25 +14,23 @@ export function QuoteForm() {
   const [error, setError] = useState<string | null>(null);
   const [messageLength, setMessageLength] = useState(0);
   const [phoneValue, setPhoneValue] = useState("");
-  const [phoneTouched, setPhoneTouched] = useState(false);
+  const [phoneTried, setPhoneTried] = useState(false);
   const reduce = useReducedMotion();
 
   const messageOk = messageLength >= 30;
   const phoneOk = isEuropeanPhoneNumber(phoneValue);
+  const showPhoneError = phoneTried && !phoneOk;
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-    setPhoneTouched(true);
+    setPhoneTried(true);
 
     const form = e.currentTarget;
     const data = new FormData(form);
     const phone = String(data.get("phone") ?? "");
 
     if (!isEuropeanPhoneNumber(phone)) {
-      setError(
-        locale === "en" ? "Non-compliant number" : "Numéro non conforme",
-      );
       return;
     }
 
@@ -54,9 +52,7 @@ export function QuoteForm() {
       if (!res.ok) {
         const payload = await res.json().catch(() => null);
         if (payload?.error === "invalid_phone") {
-          setError(
-            locale === "en" ? "Non-compliant number" : "Numéro non conforme",
-          );
+          setPhoneTried(true);
           return;
         }
         throw new Error("send_failed");
@@ -66,7 +62,7 @@ export function QuoteForm() {
       form.reset();
       setMessageLength(0);
       setPhoneValue("");
-      setPhoneTouched(false);
+      setPhoneTried(false);
     } catch {
       setError(
         locale === "en"
@@ -250,28 +246,20 @@ export function QuoteForm() {
                         disabled={sending}
                         value={phoneValue}
                         onChange={(e) => setPhoneValue(e.target.value)}
-                        onBlur={() => setPhoneTouched(true)}
-                        aria-invalid={phoneTouched && !phoneOk}
+                        aria-invalid={showPhoneError}
                         className="w-full rounded-xl border bg-transparent px-4 py-3 text-base outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand sm:text-sm"
                         style={{ borderColor: "var(--island-border)" }}
                       />
-                      <p
-                        className={`mt-1.5 transition-all duration-300 ${
-                          phoneTouched && phoneOk
-                            ? "text-sm font-semibold text-[#00E676]"
-                            : phoneTouched && phoneValue
-                              ? "text-sm font-semibold text-red-600 dark:text-red-500"
-                              : "text-xs text-[var(--text-muted)]"
-                        }`}
-                      >
-                        {phoneTouched && phoneValue && !phoneOk
-                          ? locale === "en"
+                      {showPhoneError ? (
+                        <p
+                          className="mt-1.5 text-sm font-semibold text-red-600 dark:text-red-500"
+                          role="alert"
+                        >
+                          {locale === "en"
                             ? "Non-compliant number"
-                            : "Numéro non conforme"
-                          : locale === "en"
-                            ? "European number required (mobile or landline)"
-                            : "Numéro européen obligatoire (mobile ou fixe)"}
-                      </p>
+                            : "Numéro non conforme"}
+                        </p>
+                      ) : null}
                     </div>
                     <div>
                       <label
