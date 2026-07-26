@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { isEuropeanPhoneNumber } from "@/lib/phone";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -7,9 +8,16 @@ export async function POST(request: Request) {
   try {
     const { name, email, phone, subject, message } = await request.json();
 
-    if (!name || !email || !message) {
+    if (!name || !email || !phone || !message) {
       return NextResponse.json(
         { error: "Champs obligatoires manquants" },
+        { status: 400 },
+      );
+    }
+
+    if (typeof phone !== "string" || !isEuropeanPhoneNumber(phone)) {
+      return NextResponse.json(
+        { error: "invalid_phone" },
         { status: 400 },
       );
     }
@@ -29,7 +37,7 @@ export async function POST(request: Request) {
       text: [
         `De : ${name}`,
         `Email : ${email}`,
-        phone ? `Téléphone : ${phone}` : null,
+        `Téléphone : ${phone}`,
         subject ? `Sujet : ${subject}` : null,
         "",
         "Message :",

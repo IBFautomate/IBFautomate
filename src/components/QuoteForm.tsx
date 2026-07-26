@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { FadeIn } from "./Motion";
 import { useLanguage } from "./LanguageProvider";
+import { isEuropeanPhoneNumber } from "@/lib/phone";
 
 export function QuoteForm() {
   const { t, locale } = useLanguage();
@@ -12,17 +13,30 @@ export function QuoteForm() {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [messageLength, setMessageLength] = useState(0);
+  const [phoneValue, setPhoneValue] = useState("");
+  const [phoneTouched, setPhoneTouched] = useState(false);
   const reduce = useReducedMotion();
 
   const messageOk = messageLength >= 30;
+  const phoneOk = isEuropeanPhoneNumber(phoneValue);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-    setSending(true);
+    setPhoneTouched(true);
 
     const form = e.currentTarget;
     const data = new FormData(form);
+    const phone = String(data.get("phone") ?? "");
+
+    if (!isEuropeanPhoneNumber(phone)) {
+      setError(
+        locale === "en" ? "Non-compliant number" : "Numéro non conforme",
+      );
+      return;
+    }
+
+    setSending(true);
 
     try {
       const res = await fetch("/api/contact", {
@@ -31,19 +45,28 @@ export function QuoteForm() {
         body: JSON.stringify({
           name: data.get("name"),
           email: data.get("email"),
-          phone: data.get("phone"),
+          phone,
           subject: data.get("subject"),
           message: data.get("message"),
         }),
       });
 
       if (!res.ok) {
+        const payload = await res.json().catch(() => null);
+        if (payload?.error === "invalid_phone") {
+          setError(
+            locale === "en" ? "Non-compliant number" : "Numéro non conforme",
+          );
+          return;
+        }
         throw new Error("send_failed");
       }
 
       setSubmitted(true);
       form.reset();
       setMessageLength(0);
+      setPhoneValue("");
+      setPhoneTouched(false);
     } catch {
       setError(
         locale === "en"
@@ -218,10 +241,37 @@ export function QuoteForm() {
                         type="tel"
                         required
                         autoComplete="tel"
+                        inputMode="tel"
+                        placeholder={
+                          locale === "en"
+                            ? "+33 6 12 34 56 78"
+                            : "+33 6 12 34 56 78"
+                        }
                         disabled={sending}
+                        value={phoneValue}
+                        onChange={(e) => setPhoneValue(e.target.value)}
+                        onBlur={() => setPhoneTouched(true)}
+                        aria-invalid={phoneTouched && !phoneOk}
                         className="w-full rounded-xl border bg-transparent px-4 py-3 text-base outline-none transition-shadow duration-300 focus:shadow-glow-brand-sm focus:ring-1 focus:ring-brand sm:text-sm"
                         style={{ borderColor: "var(--island-border)" }}
                       />
+                      <p
+                        className={`mt-1.5 transition-all duration-300 ${
+                          phoneTouched && phoneOk
+                            ? "text-sm font-semibold text-[#00E676]"
+                            : phoneTouched && phoneValue
+                              ? "text-sm font-semibold text-red-600 dark:text-red-500"
+                              : "text-xs text-[var(--text-muted)]"
+                        }`}
+                      >
+                        {phoneTouched && phoneValue && !phoneOk
+                          ? locale === "en"
+                            ? "Non-compliant number"
+                            : "Numéro non conforme"
+                          : locale === "en"
+                            ? "European number required (mobile or landline)"
+                            : "Numéro européen obligatoire (mobile ou fixe)"}
+                      </p>
                     </div>
                     <div>
                       <label
