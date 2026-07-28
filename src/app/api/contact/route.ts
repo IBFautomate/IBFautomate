@@ -51,6 +51,27 @@ export async function POST(request: Request) {
       return NextResponse.json({ error }, { status: 500 });
     }
 
+    // Envoi vers le CRM (tolérant aux erreurs)
+    try {
+      await fetch("https://ibfautomate-crm-phi.vercel.app/api/webhook/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-ibfautomate-secret": process.env.CRM_WEBHOOK_SECRET ?? "",
+        },
+        body: JSON.stringify({
+          source: "FORMULAIRE",
+          nom: name,
+          email,
+          telephone: phone,
+          sujet: subject || "Autre",
+          message,
+        }),
+      });
+    } catch (err) {
+      console.error("Erreur envoi vers CRM:", err);
+    }
+
     return NextResponse.json({ data });
   } catch {
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
