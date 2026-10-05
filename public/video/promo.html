@@ -629,18 +629,20 @@ button { font-family: inherit; color: inherit; }
 .pl-time { font-size: 12.5px; font-variant-numeric: tabular-nums; color: rgba(242, 245, 243, 0.8); min-width: 88px; text-align: center; }
 .pl-grow { flex: 1; }
 
-/* Barre de progression segmentée (une section par scène) */
+/* Barre de progression continue (segments collés, une piste unique) */
 .pl-bar {
   position: relative;
   height: 28px;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 0;
   cursor: pointer;
   touch-action: none;
   outline: none;
 }
-.pl-seg { position: relative; height: 5px; border-radius: 3px; background: rgba(242, 245, 243, 0.16); overflow: hidden; transition: height 0.15s ease; }
+.pl-seg { position: relative; height: 5px; border-radius: 0; background: rgba(242, 245, 243, 0.16); overflow: hidden; transition: height 0.15s ease; }
+.pl-seg:first-child { border-radius: 3px 0 0 3px; }
+.pl-seg:nth-last-child(2) { border-radius: 0 3px 3px 0; }
 .pl-bar:hover .pl-seg, .pl-bar.drag .pl-seg { height: 8px; }
 .pl-seg i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: #1FE07A; box-shadow: 0 0 8px rgba(31, 224, 122, 0.7); }
 .pl-knob {
