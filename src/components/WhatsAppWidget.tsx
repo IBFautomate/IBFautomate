@@ -104,10 +104,10 @@ export function WhatsAppWidget() {
           type="button"
           onClick={openChat}
           aria-label={t.whatsapp.open}
-          className="relative flex h-12 w-12 items-center justify-center rounded-full text-night shadow-glow-brand transition-transform duration-300 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:h-14 sm:w-14"
+          className="relative flex h-12 w-12 items-center justify-center rounded-full text-white shadow-glow-brand transition-transform duration-300 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:h-14 sm:w-14"
           style={{
             backgroundImage:
-              "linear-gradient(135deg, #00E676, #059669, #064E3B)",
+              "linear-gradient(135deg, #FB9A8E 0%, #F06060 45%, #B54447 100%)",
           }}
         >
           <MessageCircle className="h-7 w-7" strokeWidth={2.2} />

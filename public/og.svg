@@ -1,14 +1,17 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00E676"/>
-      <stop offset="50%" stop-color="#059669"/>
-      <stop offset="100%" stop-color="#064E3B"/>
+      <stop offset="0%" stop-color="#F06060"/>
+      <stop offset="55%" stop-color="#D94F55"/>
+      <stop offset="100%" stop-color="#B54447"/>
     </linearGradient>
+    <radialGradient id="r1"><stop offset="0%" stop-color="#F06060" stop-opacity="0.2"/><stop offset="100%" stop-color="#F06060" stop-opacity="0"/></radialGradient>
+    <radialGradient id="r2"><stop offset="0%" stop-color="#FB9A8E" stop-opacity="0.26"/><stop offset="100%" stop-color="#FB9A8E" stop-opacity="0"/></radialGradient>
   </defs>
-  <rect width="1200" height="630" fill="#050807"/>
-  <circle cx="200" cy="120" r="180" fill="#00E676" opacity="0.15"/>
-  <circle cx="1000" cy="500" r="220" fill="#10B981" opacity="0.12"/>
-  <text x="80" y="290" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#F0F7F3">IBF<tspan fill="url(#g)">automate</tspan></text>
-  <text x="80" y="370" font-family="Arial, sans-serif" font-size="32" fill="#9AADA3">Agence Web &amp; Automatisation</text>
+  <rect width="1200" height="630" fill="#FBFBFC"/>
+  <circle cx="150" cy="120" r="380" fill="url(#r1)"/>
+  <circle cx="1110" cy="640" r="410" fill="url(#r2)"/>
+  <text x="80" y="290" font-family="Arial, sans-serif" font-size="80" font-weight="700" fill="#15171C">IBF<tspan fill="url(#g)">automate</tspan></text>
+  <text x="80" y="370" font-family="Arial, sans-serif" font-size="34" fill="#4A5062">Agence Web &amp; Automatisation</text>
+  <text x="80" y="450" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#B54447">ibfautomate.com</text>
 </svg>

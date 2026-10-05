@@ -84,7 +84,7 @@ export function QuoteForm() {
         className="orb right-[10%] top-20 h-[360px] w-[360px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(0,230,118,0.35), transparent 70%)",
+            "radial-gradient(circle, rgba(240,96,96,0.32), transparent 70%)",
         }}
       />
 
@@ -317,7 +317,7 @@ export function QuoteForm() {
                       <p
                         className={`mt-1.5 transition-all duration-300 ${
                           messageOk
-                            ? "text-sm font-semibold text-[#00E676]"
+                            ? "text-sm font-semibold text-[#1FA36A] dark:text-[#3DD68C]"
                             : "text-xs text-[var(--text-muted)]"
                         }`}
                       >

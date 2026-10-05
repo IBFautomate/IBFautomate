@@ -28,10 +28,10 @@ export function Testimonials() {
               <article className="island island-hover flex h-full flex-col p-6">
                 <div className="mb-4 flex items-center gap-3">
                   <div
-                    className="flex h-11 w-11 items-center justify-center rounded-full font-display text-sm font-bold text-night"
+                    className="flex h-11 w-11 items-center justify-center rounded-full font-display text-sm font-bold text-white"
                     style={{
                       backgroundImage:
-                        "linear-gradient(135deg, #00E676, #059669, #064E3B)",
+                        "linear-gradient(135deg, #FB9A8E 0%, #F06060 45%, #B54447 100%)",
                     }}
                     aria-hidden
                   >

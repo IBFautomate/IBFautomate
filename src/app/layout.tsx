@@ -17,7 +17,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ibfautomate.fr"),
+  metadataBase: new URL("https://ibfautomate.com"),
   title: "IBFautomate — Agence Web & Automatisation",
   description:
     "Automatisez votre entreprise et gagnez des heures chaque semaine. Sites performants, applications sur mesure et processus sans friction — IBFautomate.",
@@ -25,13 +25,13 @@ export const metadata: Metadata = {
     title: "IBFautomate — Agence Web & Automatisation",
     description:
       "Automatisez votre entreprise et gagnez des heures chaque semaine. Sites performants et processus sans friction.",
-    url: "https://ibfautomate.fr",
+    url: "https://ibfautomate.com",
     siteName: "IBFautomate",
     locale: "fr_FR",
     type: "website",
     images: [
       {
-        url: "/og.svg",
+        url: "/og.png",
         width: 1200,
         height: 630,
         alt: "IBFautomate — Agence Web & Automatisation",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "IBFautomate — Agence Web & Automatisation",
     description:
       "Automatisez votre entreprise et gagnez des heures chaque semaine.",
-    images: ["/og.svg"],
+    images: ["/og.png"],
   },
   robots: { index: true, follow: true },
 };

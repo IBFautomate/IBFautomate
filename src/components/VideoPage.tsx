@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties, type Keyb
 import Link from "next/link";
 import { ArrowLeft, Loader2, Maximize, Minimize, Pause, Play, RotateCcw, Volume2, VolumeX, X } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
+import { PromoStart } from "./PromoStart";
 
 /* Vidéo promo : deux vrais fichiers MP4 (H.264 + AAC), lus par le lecteur vidéo du navigateur.
    Téléphone tenu droit (arrivée par QR code) : version verticale, à l'endroit.
@@ -512,7 +513,7 @@ export function VideoPage() {
         <div
           className="absolute left-1/2 top-1/3 h-96 w-96 -translate-x-1/2 rounded-full blur-3xl"
           style={{
-            background: "radial-gradient(circle, rgba(0,230,118,0.18), transparent 70%)",
+            background: "radial-gradient(circle, rgba(240,96,96,0.18), transparent 70%)",
             opacity: "var(--orb-opacity)",
           }}
         />
@@ -561,27 +562,7 @@ export function VideoPage() {
             )}
 
             {/* Écran de départ */}
-            {!started && (
-              <button
-                type="button"
-                onClick={start}
-                aria-label={t.video.play}
-                className="group absolute inset-0 z-10 flex flex-col items-center justify-center gap-[3cqmin] bg-[#FBFBFC] text-[#15171C]"
-                style={{ backgroundImage: "radial-gradient(60% 55% at 50% 42%, rgba(240,96,96,0.12), transparent 70%)" }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/video/logo-ibfautomate.svg" alt="" className="h-auto w-[30cqmin] max-w-[40%]" />
-                <span className="px-4 text-center font-display text-[clamp(16px,5.4cqmin,34px)] font-bold tracking-[-0.02em]">
-                  {t.video.title}
-                </span>
-                <span className="flex h-[clamp(56px,17cqmin,96px)] w-[clamp(56px,17cqmin,96px)] items-center justify-center rounded-full bg-[#F06060] text-white shadow-[0_18px_40px_-12px_rgba(240,96,96,0.65)] transition-transform duration-200 group-hover:scale-105 group-active:scale-95">
-                  <Play aria-hidden fill="currentColor" className="ml-[6%] h-[38%] w-[38%]" />
-                </span>
-                <span className="font-sans text-[clamp(12px,3.2cqmin,16px)] font-medium text-[#646A79]">
-                  {coarse ? t.video.tapToPlay : t.video.clickToPlay}
-                </span>
-              </button>
-            )}
+            {!started && <PromoStart onStart={start} touch={coarse} />}
 
             {/* Barre de commandes */}
             <div

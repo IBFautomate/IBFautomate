@@ -51,13 +51,17 @@ src/
     QuoteForm.tsx       # formulaire devis → /api/contact
     Footer.tsx
     WhatsAppWidget.tsx
+    VideoPage.tsx       # page /video (QR code) : MP4 vertical / horizontal, plein écran
+    HeroPromoVideo.tsx  # vidéo promo de l'accueil (MP4 horizontal)
+    PromoStart.tsx      # écran de départ commun des deux lecteurs
     ThemeProvider.tsx / ThemeToggle.tsx
     LanguageProvider.tsx / LanguageToggle.tsx
     Motion.tsx          # FadeIn, Stagger
   lib/
     phone.ts            # validation numéros européens
 public/
-  slack.png, Calendar.png, og.svg, og.png
+  slack.png, Calendar.png, og.svg, og.png (image de partage 1200×630)
+  video/                # promo-verticale.mp4, promo-horizontale.mp4, logo-ibfautomate.svg
 .env.example            # RESEND_API_KEY, CRM_WEBHOOK_SECRET
 .env.local              # secrets (gitignored)
 ```
@@ -83,6 +87,9 @@ Ancres : `#top`, `#services`, `#processus`, `#avis`, `#faq`, `#devis`.
 | Logos Slack/Calendar en PNG | Fichiers `public/slack.png` et `public/Calendar.png` |
 | Déploiement via dashboard Vercel | Pas via `vercel --prod` CLI (mauvaise approche pour ce projet) |
 | i18n FR/EN | LanguageProvider ; FR par défaut |
+| Palette rose corail de la vidéo promo | `brand` = #F06060 (clair #FB9A8E, foncé #B54447, très foncé #6A252A) dans `tailwind.config.js` + `globals.css` ; fonds/textes neutres. Vert seulement pour la validation du formulaire et les logos d'outils tiers |
+| Vidéo promo en MP4 (pas de lecteur HTML) | Fichiers exportés depuis le projet vidéo (Bureau) ; lecture native = pas de plantage sur téléphone. iPhone : plein écran via le lecteur vidéo natif (`webkitEnterFullscreen`) |
+| Image de partage en PNG sur ibfautomate.com | `metadataBase` = https://ibfautomate.com ; `og.png` (les réseaux sociaux ne lisent pas le SVG) |
 
 ## Conventions de code
 
@@ -98,7 +105,7 @@ Ancres : `#top`, `#services`, `#processus`, `#avis`, `#faq`, `#devis`.
 
 ## Terminés
 
-- [x] Site one-page complet (design vert/noir, glassmorphism, thème jour/nuit)
+- [x] Site one-page complet (design rose corail aligné sur la vidéo promo, glassmorphism, thème jour/nuit)
 - [x] i18n FR/EN
 - [x] Widget WhatsApp (bulle 3s, sessionStorage, `wa.me/0762129949`)
 - [x] Formulaire devis → Resend + webhook CRM
@@ -108,6 +115,7 @@ Ancres : `#top`, `#services`, `#processus`, `#avis`, `#faq`, `#devis`.
 - [x] Section Formules retirée
 - [x] Repo GitHub + pushes sur `main`
 - [x] Projet Vercel lié au repo GitHub
+- [x] Page /video (QR code) : vidéo promo MP4, verticale sur téléphone, plein écran horizontal
 
 ## À faire
 

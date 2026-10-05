@@ -30,16 +30,16 @@ function ClayRocket({ className }: { className?: string }) {
       />
       <defs>
         <linearGradient id="clayRocketBody" x1="28" y1="8" x2="52" y2="60">
-          <stop stopColor="#34d399" />
-          <stop offset="1" stopColor="#059669" />
+          <stop stopColor="#F7877F" />
+          <stop offset="1" stopColor="#D24D52" />
         </linearGradient>
         <linearGradient id="clayRocketWindow" x1="33" y1="25" x2="47" y2="39">
-          <stop stopColor="#a7f3d0" />
-          <stop offset="1" stopColor="#6ee7b7" />
+          <stop stopColor="#FFD3CC" />
+          <stop offset="1" stopColor="#FBA79D" />
         </linearGradient>
         <linearGradient id="clayRocketFin" x1="18" y1="48" x2="62" y2="62">
-          <stop stopColor="#10b981" />
-          <stop offset="1" stopColor="#047857" />
+          <stop stopColor="#F06060" />
+          <stop offset="1" stopColor="#B54447" />
         </linearGradient>
         <linearGradient id="clayRocketFlame" x1="36" y1="58" x2="44" y2="68">
           <stop stopColor="#fbbf24" />
@@ -63,13 +63,13 @@ function ClayChatBubble({ className }: { className?: string }) {
         d="M14 18h52a10 10 0 0 1 10 10v22a10 10 0 0 1-10 10H36l-12 12v-12H14a10 10 0 0 1-10-10V28a10 10 0 0 1 10-10Z"
         fill="url(#clayChatBody)"
       />
-      <circle cx="28" cy="39" r="4" fill="#ecfdf5" />
-      <circle cx="40" cy="39" r="4" fill="#ecfdf5" />
-      <circle cx="52" cy="39" r="4" fill="#ecfdf5" />
+      <circle cx="28" cy="39" r="4" fill="#FFF0EF" />
+      <circle cx="40" cy="39" r="4" fill="#FFF0EF" />
+      <circle cx="52" cy="39" r="4" fill="#FFF0EF" />
       <defs>
         <linearGradient id="clayChatBody" x1="14" y1="18" x2="66" y2="60">
-          <stop stopColor="#6ee7b7" />
-          <stop offset="1" stopColor="#10b981" />
+          <stop stopColor="#FBA79D" />
+          <stop offset="1" stopColor="#F06060" />
         </linearGradient>
       </defs>
     </svg>
@@ -89,7 +89,7 @@ function ClayBell({ className }: { className?: string }) {
         d="M40 12c-12 0-20 10-20 22v16l-6 8h52l-6-8V34c0-12-8-22-20-22Z"
         fill="url(#clayBellBody)"
       />
-      <rect x="34" y="8" width="12" height="8" rx="4" fill="#047857" />
+      <rect x="34" y="8" width="12" height="8" rx="4" fill="#B54447" />
       <circle cx="40" cy="62" r="6" fill="url(#clayBellClapper)" />
       <defs>
         <linearGradient id="clayBellBody" x1="20" y1="12" x2="60" y2="58">
@@ -117,7 +117,7 @@ function ClayCompass({ className }: { className?: string }) {
       <circle cx="40" cy="38" r="26" fill="url(#clayCompassRing)" />
       <circle cx="40" cy="38" r="18" fill="url(#clayCompassFace)" />
       <path d="M40 24 44 38 40 52 36 38Z" fill="url(#clayCompassNeedle)" />
-      <circle cx="40" cy="38" r="3" fill="#ecfdf5" />
+      <circle cx="40" cy="38" r="3" fill="#FFF0EF" />
       <defs>
         <linearGradient id="clayCompassRing" x1="14" y1="12" x2="66" y2="64">
           <stop stopColor="#a78bfa" />
@@ -128,7 +128,7 @@ function ClayCompass({ className }: { className?: string }) {
           <stop offset="1" stopColor="#c4b5fd" />
         </linearGradient>
         <linearGradient id="clayCompassNeedle" x1="36" y1="24" x2="44" y2="52">
-          <stop stopColor="#00e676" />
+          <stop stopColor="#6A252A" />
           <stop offset="1" stopColor="#ef4444" />
         </linearGradient>
       </defs>
@@ -178,7 +178,7 @@ function PhoneMockup({
     >
       <div
         className="relative overflow-hidden rounded-[1.6rem]"
-        style={{ background: "linear-gradient(160deg, #0a0f0d 0%, #064e3b 100%)" }}
+        style={{ background: "linear-gradient(160deg, #15171C 0%, #6A252A 100%)" }}
       >
         <div className="flex items-center justify-between px-4 pb-2 pt-3">
           <span className="text-[10px] font-medium text-white/70">9:41</span>
@@ -193,7 +193,7 @@ function PhoneMockup({
             </p>
             <div className="rounded-2xl bg-white/10 p-3 backdrop-blur">
               <div className="h-2 w-16 rounded-full bg-brand/80" />
-              <div className="mt-3 h-16 rounded-xl bg-gradient-to-r from-brand/30 to-emerald-900/40" />
+              <div className="mt-3 h-16 rounded-xl bg-gradient-to-r from-brand/30 to-brand-dark/40" />
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="rounded-xl bg-white/8 p-2">
@@ -216,7 +216,7 @@ function PhoneMockup({
           </div>
         ) : (
           <div className="space-y-3 px-4 pb-6 pt-2">
-            <div className="mx-auto h-14 w-14 rounded-full bg-gradient-to-br from-brand to-emerald-800" />
+            <div className="mx-auto h-14 w-14 rounded-full bg-gradient-to-br from-brand to-brand-dark" />
             <div className="mx-auto h-2 w-20 rounded-full bg-white/40" />
             <div className="mx-auto h-1.5 w-14 rounded-full bg-white/20" />
             <div className="mt-4 space-y-2">
@@ -281,7 +281,7 @@ export function MobileApp() {
         className="pointer-events-none absolute inset-0 opacity-60"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 70% 40%, rgba(0,230,118,0.08), transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 70% 40%, rgba(240,96,96,0.08), transparent 70%)",
         }}
         aria-hidden
       />

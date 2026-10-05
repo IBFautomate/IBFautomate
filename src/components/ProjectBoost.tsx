@@ -73,7 +73,7 @@ function UiCollage() {
               <path
                 d="M0 45 Q40 35 80 40 T160 15 T200 25"
                 fill="none"
-                stroke="#00E676"
+                stroke="#F06060"
                 strokeWidth="3"
                 strokeLinecap="round"
               />
@@ -84,7 +84,7 @@ function UiCollage() {
               />
               <defs>
                 <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop stopColor="#00E676" />
+                  <stop stopColor="#F06060" />
                   <stop offset="1" stopColor="transparent" />
                 </linearGradient>
               </defs>
@@ -100,7 +100,7 @@ function UiCollage() {
         <div className="p-4 space-y-2">
           {[
             { label: t.boost.leads, value: "124", color: "bg-brand/30" },
-            { label: t.boost.hours, value: "18h", color: "bg-emerald-500/20" },
+            { label: t.boost.hours, value: "18h", color: "bg-brand-light/30" },
             { label: t.boost.tasks, value: "47", color: "bg-brand/20" },
           ].map((row) => (
             <div
@@ -135,7 +135,7 @@ function UiCollage() {
           </div>
           <div className="mt-4 grid grid-cols-2 gap-2">
             <div className="h-12 rounded-xl bg-brand/10" />
-            <div className="h-12 rounded-xl bg-emerald-900/10 dark:bg-brand/5" />
+            <div className="h-12 rounded-xl bg-brand-dark/10 dark:bg-brand/5" />
           </div>
         </div>
       ),
@@ -226,7 +226,7 @@ export function ProjectBoost() {
               className="group mt-8 inline-flex w-full items-center justify-between gap-4 rounded-full bg-night px-5 py-3.5 font-display text-sm font-semibold text-white transition-all duration-300 hover:shadow-glow-brand-sm sm:w-auto sm:justify-center dark:bg-[var(--bg-surface)] dark:text-[var(--text)] dark:ring-1 dark:ring-[var(--island-border)]"
             >
               {t.boost.cta}
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-night transition-transform duration-300 group-hover:scale-105 dark:bg-brand dark:text-night">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-night transition-transform duration-300 group-hover:scale-105 dark:bg-brand dark:text-white">
                 <ArrowUpRight className="h-4 w-4" aria-hidden />
               </span>
             </a>
