@@ -393,6 +393,16 @@ body.nocursor, body.nocursor * { cursor: none !important; }
 body.embed #start .rec, body.embed #start .keys { display: none; }
 body.embed #start h1 { font-size: 26px; }
 
+/* ---------- Petits cadres (téléphone) ---------- */
+@media (max-height: 380px) {
+  #start { gap: 12px; }
+  #start .logo, #start .keys { display: none; }
+  #start h1 { font-size: 20px; }
+  #start .play { width: 64px; height: 64px; }
+  #start .play svg { width: 24px; height: 24px; margin-left: 4px; }
+  #start .status { font-size: 14px; }
+}
+
 </style>
 </head>
 <body>
@@ -1577,7 +1587,7 @@ function renderAt(t) {
   fontsReady.then(() => { layoutScenes(); renderAt(pausedAt); });
   Promise.all([fontsReady, Music.render().then(b => { buffer = b; }).catch(e => { console.error(e); })]).then(() => {
     ready = true; startEl.classList.remove('busy');
-    statusEl.textContent = buffer ? 'Cliquez pour lancer la vidéo' : 'Cliquez pour lancer (musique indisponible sur ce navigateur)';
+    statusEl.textContent = buffer ? (matchMedia('(pointer: coarse)').matches ? 'Touchez pour lancer la vidéo' : 'Cliquez pour lancer la vidéo') : 'Cliquez pour lancer (musique indisponible sur ce navigateur)';
     if (params.has('play')) { startEl.style.display = 'none'; started = true; play(pausedAt); }
   });
   /* Intégrée dans un site (iframe) ou ?embed : pas de boutons d'export */

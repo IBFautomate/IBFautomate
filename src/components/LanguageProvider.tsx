@@ -288,6 +288,7 @@ const translations = {
     },
     video: {
       back: "Retour à l'accueil",
+      rotateHint: "Tournez votre téléphone pour regarder la vidéo",
       iframeTitle: "Vidéo de présentation IBFautomate",
       heroLabel: "Vidéo de présentation IBFautomate",
     },
@@ -567,6 +568,7 @@ const translations = {
     },
     video: {
       back: "Back to home",
+      rotateHint: "Turn your phone sideways to watch the video",
       iframeTitle: "IBFautomate presentation video",
       heroLabel: "IBFautomate presentation video",
     },
