@@ -5,7 +5,7 @@ import { VideoPage } from "@/components/VideoPage";
 
 export const metadata: Metadata = {
   title: "Vidéo — IBFautomate",
-  description: "Présentation vidéo IBFautomate — bientôt disponible.",
+  description: "Présentation vidéo IBFautomate — agence web & automatisation.",
   robots: { index: true, follow: true },
 };
 

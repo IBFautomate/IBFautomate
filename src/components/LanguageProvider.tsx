@@ -291,6 +291,7 @@ const translations = {
       subtitle: "Notre présentation arrive très bientôt.",
       back: "Retour à l'accueil",
       iframeTitle: "Vidéo de présentation IBFautomate",
+      heroLabel: "Vidéo de présentation IBFautomate",
     },
   },
   en: {
@@ -571,6 +572,7 @@ const translations = {
       subtitle: "Our presentation video will be available shortly.",
       back: "Back to home",
       iframeTitle: "IBFautomate presentation video",
+      heroLabel: "IBFautomate presentation video",
     },
   },
 } as const;

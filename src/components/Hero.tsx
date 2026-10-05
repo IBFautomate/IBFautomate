@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { useLanguage } from "./LanguageProvider";
+import { HeroPromoVideo } from "./HeroPromoVideo";
 
 type ToolLogo = {
   name: string;
@@ -255,6 +256,8 @@ export function Hero() {
         >
           {t.hero.trust}
         </motion.p>
+
+        <HeroPromoVideo />
       </div>
 
       <ToolsMarquee />
