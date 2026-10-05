@@ -605,7 +605,7 @@ button { font-family: inherit; color: inherit; }
   padding-bottom: max(12px, env(safe-area-inset-bottom));
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.pl-scene { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; min-height: 18px; }
+.pl-scene { display: none; }
 .pl-scene b { color: #1FE07A; font-weight: 700; }
 .pl-scene span { color: rgba(242, 245, 243, 0.85); }
 .pl-row { display: flex; align-items: center; gap: 6px; }
@@ -640,10 +640,10 @@ button { font-family: inherit; color: inherit; }
   touch-action: none;
   outline: none;
 }
-.pl-seg { position: relative; height: 5px; border-radius: 0; background: rgba(242, 245, 243, 0.16); overflow: hidden; transition: height 0.15s ease; }
-.pl-seg:first-child { border-radius: 3px 0 0 3px; }
-.pl-seg:nth-last-child(2) { border-radius: 0 3px 3px 0; }
-.pl-bar:hover .pl-seg, .pl-bar.drag .pl-seg { height: 8px; }
+.pl-seg { position: relative; height: 7px; border-radius: 0; background: rgba(242, 245, 243, 0.22); overflow: hidden; transition: height 0.15s ease; }
+.pl-seg:first-child { border-radius: 4px 0 0 4px; }
+.pl-seg:nth-last-child(2) { border-radius: 0 4px 4px 0; }
+.pl-bar:hover .pl-seg, .pl-bar.drag .pl-seg { height: 10px; }
 .pl-seg i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: #1FE07A; box-shadow: 0 0 8px rgba(31, 224, 122, 0.7); }
 .pl-knob {
   position: absolute;
@@ -659,7 +659,7 @@ button { font-family: inherit; color: inherit; }
 
 /* Panneau des scènes */
 .pl-side { display: none; }
-.pl-chaps { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px 0 4px; }
+.pl-chaps { display: none; }
 .pl-chaps::-webkit-scrollbar { display: none; }
 .pl-chap {
   flex: none;
@@ -691,8 +691,8 @@ button { font-family: inherit; color: inherit; }
   padding-right: max(14px, env(safe-area-inset-right));
   background: linear-gradient(180deg, rgba(5, 8, 7, 0), rgba(5, 8, 7, 0.78) 45%, rgba(5, 8, 7, 0.92));
 }
-.player.compact .pl-chaps { display: none; }
-.player.compact.sheet .pl-chaps { display: flex; flex-wrap: wrap; }
+.player.compact .pl-chaps,
+.player.compact.sheet .pl-chaps { display: none !important; }
 .player.compact.idle .pl-ctrl { opacity: 0; transform: translateY(16px); pointer-events: none; }
 .player.compact.idle .pl-frame { cursor: none; }
 
@@ -749,6 +749,35 @@ button { font-family: inherit; color: inherit; }
 /* Plein écran immersif (y compris iPhone, sans API plein écran) */
 .player.immersive { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); }
 .player.immersive .pl-side { display: none; }
+
+/* Intégré au site : étapes retirées — barre et contrôles plus visibles */
+.player.immersive .pl-listbtn,
+.player.compact .pl-listbtn,
+.player.immersive .pl-chaps,
+.player.compact .pl-chaps,
+.player.compact.sheet .pl-chaps,
+.player.landscape .pl-chaps,
+.player.medium .pl-chaps,
+.player.wide .pl-chaps {
+  display: none !important;
+}
+.player.immersive .pl-ctrl,
+.player.compact .pl-ctrl {
+  gap: 8px;
+  padding-top: 20px;
+}
+.player.immersive .pl-btn.primary,
+.player.compact .pl-btn.primary {
+  width: 52px;
+  height: 52px;
+}
+.player.immersive .pl-time,
+.player.compact .pl-time {
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 96px;
+  color: rgba(242, 245, 243, 0.95);
+}
 
 /* Export : aucune interface */
 body.export { overflow: hidden; background: #050807; }
