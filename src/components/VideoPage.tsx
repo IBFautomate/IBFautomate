@@ -52,8 +52,24 @@ function seekTo(v: HTMLVideoElement, at: number) {
   }
 }
 
-type FullscreenDoc = Document & { webkitFullscreenElement?: Element | null; webkitExitFullscreen?: () => void };
+type FullscreenDoc = Document & {
+  webkitFullscreenElement?: Element | null;
+  webkitFullscreenEnabled?: boolean;
+  webkitExitFullscreen?: () => void;
+};
 type LockableOrientation = ScreenOrientation & { lock?: (o: string) => Promise<void>; unlock?: () => void };
+type IOSVideo = HTMLVideoElement & { webkitEnterFullscreen?: () => void; webkitDisplayingFullscreen?: boolean };
+
+/* iPhone : Safari ne met pas un bloc de page en plein écran (ses barres resteraient visibles),
+   mais son lecteur vidéo, lui, passe en vrai plein écran : plus rien d'autre que la vidéo. */
+function iosVideoFullscreen() {
+  if (typeof document === "undefined") return false;
+  const d = document as FullscreenDoc;
+  return (
+    !(document.fullscreenEnabled || d.webkitFullscreenEnabled) &&
+    typeof (HTMLVideoElement.prototype as IOSVideo).webkitEnterFullscreen === "function"
+  );
+}
 
 /* Plein écran du navigateur quand il existe (Android, ordinateur, iPad), en paysage sur téléphone.
    iPhone : pas de plein écran pour un bloc de page, l'affichage plein cadre (et tourné) suffit. */
@@ -116,9 +132,12 @@ export function VideoPage() {
   const [barOn, setBarOn] = useState(true);
   const [revealed, setRevealed] = useState(true);
   const [dragging, setDragging] = useState(false);
+  const [nativeVideo, setNativeVideo] = useState(false); // iPhone : lecteur plein écran du téléphone affiché
+  const nativeTimer = useRef<number | undefined>(undefined);
+  const nativeOpen = useRef(false);
 
   const overlay = fs && device !== null;
-  const fmt: Format = device === "portrait" && !fs ? "v" : "h";
+  const fmt: Format = device === "portrait" && !fs && !nativeVideo ? "v" : "h";
   const current = () => videos.current[active.current];
 
   /* ---- Barre de progression et temps, mis à jour sans re-rendu ---- */
@@ -235,6 +254,8 @@ export function VideoPage() {
     setStarted(true);
     setEnded(false);
     a.play().catch(() => setPlaying(false));
+    // iPhone tenu en paysage : la vidéo s'ouvre directement dans le lecteur plein écran du téléphone
+    if (device === "landscape" && active.current === "h") enterIOSVideoFullscreen();
     poke();
   };
   const togglePlay = () => {
@@ -267,9 +288,32 @@ export function VideoPage() {
   };
 
   /* ---- Plein écran ---- */
+  /* iPhone : la version horizontale s'ouvre dans le lecteur plein écran du téléphone.
+     Renvoie false si ce lecteur n'a pas pu s'ouvrir (vidéo pas encore prête). */
+  const enterIOSVideoFullscreen = () => {
+    const h = videos.current.h as IOSVideo | null;
+    if (!h || !iosVideoFullscreen() || typeof h.webkitEnterFullscreen !== "function") return false;
+    setNativeVideo(true); // garde la version horizontale active pendant l'ouverture
+    try {
+      h.webkitEnterFullscreen();
+    } catch {
+      setNativeVideo(false);
+      return false;
+    }
+    window.clearTimeout(nativeTimer.current);
+    nativeTimer.current = window.setTimeout(() => {
+      // le lecteur ne s'est pas ouvert : affichage plein cadre à la place
+      if (!nativeOpen.current && !h.webkitDisplayingFullscreen) {
+        setNativeVideo(false);
+        setFs(true);
+      }
+    }, 1500);
+    return true;
+  };
   const openFullscreen = () => {
-    setFs(true);
     switchTo("h"); // dans le toucher : la version horizontale démarre aussitôt (iPhone compris)
+    if (enterIOSVideoFullscreen()) return;
+    setFs(true);
     enterNativeFullscreen(shellRef.current, device !== "desktop");
     poke();
   };
@@ -279,7 +323,9 @@ export function VideoPage() {
     if (device === "portrait") switchTo("v");
     poke();
   };
-  const toggleFullscreen = () => (fs ? closeFullscreen() : openFullscreen());
+  /* iPhone : le bouton ouvre toujours le lecteur plein écran (l'affichage plein cadre se ferme avec la croix) */
+  const toggleFullscreen = () => (fs && !iosVideoFullscreen() ? closeFullscreen() : openFullscreen());
+  const showExit = fs && !iosVideoFullscreen();
 
   /* Sortie du plein écran par le navigateur (geste retour, Échap) */
   useEffect(() => {
@@ -294,6 +340,28 @@ export function VideoPage() {
       document.removeEventListener("webkitfullscreenchange", onChange);
     };
   }, []);
+
+  /* iPhone : ouverture / fermeture du lecteur plein écran du téléphone.
+     À la fermeture, la vidéo reprend dans la page au même instant (version verticale si le téléphone est droit). */
+  useEffect(() => {
+    const h = videos.current.h;
+    if (!h) return;
+    const begin = () => {
+      nativeOpen.current = true;
+      setNativeVideo(true);
+    };
+    const end = () => {
+      nativeOpen.current = false;
+      window.clearTimeout(nativeTimer.current);
+      setNativeVideo(false);
+    };
+    h.addEventListener("webkitbeginfullscreen", begin);
+    h.addEventListener("webkitendfullscreen", end);
+    return () => {
+      h.removeEventListener("webkitbeginfullscreen", begin);
+      h.removeEventListener("webkitendfullscreen", end);
+    };
+  }, [device]);
 
   /* La page ne défile plus pendant le plein écran */
   useEffect(() => {
@@ -385,6 +453,7 @@ export function VideoPage() {
     () => () => {
       window.clearTimeout(hideTimer.current);
       window.clearTimeout(revealTimer.current);
+      window.clearTimeout(nativeTimer.current);
     },
     [],
   );
@@ -547,8 +616,8 @@ export function VideoPage() {
                 <button type="button" onClick={toggleMute} aria-label={muted ? t.video.unmute : t.video.mute} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition hover:bg-white/15">
                   {muted ? <VolumeX aria-hidden className="h-5 w-5" /> : <Volume2 aria-hidden className="h-5 w-5" />}
                 </button>
-                <button type="button" onClick={toggleFullscreen} aria-label={fs ? t.video.exitFullscreen : t.video.fullscreen} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition hover:bg-white/15">
-                  {fs ? <Minimize aria-hidden className="h-5 w-5" /> : <Maximize aria-hidden className="h-5 w-5" />}
+                <button type="button" onClick={toggleFullscreen} aria-label={showExit ? t.video.exitFullscreen : t.video.fullscreen} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition hover:bg-white/15">
+                  {showExit ? <Minimize aria-hidden className="h-5 w-5" /> : <Maximize aria-hidden className="h-5 w-5" />}
                 </button>
               </div>
             </div>
