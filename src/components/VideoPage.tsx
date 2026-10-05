@@ -1,63 +1,145 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
-import { ArrowLeft, RotateCcw } from "lucide-react";
+import { ArrowLeft, Play, Smartphone, X } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 
 const PROMO_SRC = "/video/promo-corail.html?embed";
 
-/* Téléphone tenu droit (arrivée par QR code) : la vidéo 21:9 est affichée pivotée
-   pour occuper tout l'écran — on tourne le téléphone pour la regarder, même si la
-   rotation automatique est bloquée. Téléphone en paysage : plein cadre.
-   Le même cadre est réutilisé dans tous les cas : tourner le téléphone pendant la
-   lecture ne relance pas la vidéo. */
-const PORTRAIT_QUERY = "(orientation: portrait) and (max-width: 1024px)";
-const SHORT_LANDSCAPE_QUERY = "(orientation: landscape) and (max-height: 500px)";
+/* Téléphone tenu droit (arrivée par QR code) : écran « Tournez votre téléphone ».
+   Téléphone en paysage : la vidéo s'ouvre directement en plein écran.
+   Ordinateur : vidéo 21:9 en grand ; le bouton plein écran du lecteur passe en plein écran.
+   Un seul cadre (iframe) est utilisé partout : changer d'orientation ne relance pas la vidéo. */
+const PORTRAIT_PHONE = "(orientation: portrait) and (max-width: 1024px)";
+const LANDSCAPE_PHONE = "(orientation: landscape) and (max-height: 500px)";
 
-type Layout = "portrait" | "short" | "desktop";
+type Device = "portrait" | "landscape" | "desktop";
 
-const ROTATED_LENGTH = "min(calc(100svh - 9.5rem), calc((100vw - 1.5rem) * 21 / 9))";
+type FullscreenTarget = HTMLElement & { webkitRequestFullscreen?: () => void };
+type LockableOrientation = ScreenOrientation & { lock?: (o: string) => Promise<void>; unlock?: () => void };
 
 export function VideoPage() {
   const { t } = useLanguage();
-  const [layout, setLayout] = useState<Layout | null>(null);
+  const shellRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [device, setDevice] = useState<Device | null>(null);
+  const [fs, setFs] = useState(false);
+  const [viewport, setViewport] = useState({ w: 0, h: 0 });
+  const prevDevice = useRef<Device | null>(null);
 
+  /* Type d'écran + taille de la fenêtre */
   useEffect(() => {
-    const portrait = window.matchMedia(PORTRAIT_QUERY);
-    const short = window.matchMedia(SHORT_LANDSCAPE_QUERY);
-    const update = () =>
-      setLayout(portrait.matches ? "portrait" : short.matches ? "short" : "desktop");
+    const portrait = window.matchMedia(PORTRAIT_PHONE);
+    const landscape = window.matchMedia(LANDSCAPE_PHONE);
+    const update = () => {
+      const next: Device = portrait.matches ? "portrait" : landscape.matches ? "landscape" : "desktop";
+      const prev = prevDevice.current;
+      // Téléphone qu'on vient de tourner en paysage : plein écran directement.
+      if (next === "landscape" && prev !== "landscape") setFs(true);
+      // Retour en portrait : on revient à l'écran « Tournez votre téléphone ».
+      if (next === "portrait" && prev === "landscape") setFs(false);
+      prevDevice.current = next;
+      setDevice(next);
+      setViewport({ w: window.innerWidth, h: window.innerHeight });
+    };
     update();
     portrait.addEventListener("change", update);
-    short.addEventListener("change", update);
+    landscape.addEventListener("change", update);
+    window.addEventListener("resize", update);
     return () => {
       portrait.removeEventListener("change", update);
-      short.removeEventListener("change", update);
+      landscape.removeEventListener("change", update);
+      window.removeEventListener("resize", update);
     };
   }, []);
 
-  const rotated = layout === "portrait";
+  /* Plein écran natif quand le navigateur le permet (Android, ordinateur), en paysage sur téléphone */
+  const enterNative = useCallback((phone: boolean) => {
+    const el = shellRef.current as FullscreenTarget | null;
+    if (!el || document.fullscreenElement) return;
+    const lock = () => {
+      const o = screen.orientation as LockableOrientation | undefined;
+      if (phone && o?.lock) o.lock("landscape").catch(() => {});
+    };
+    try {
+      if (el.requestFullscreen) el.requestFullscreen().then(lock).catch(() => {});
+      else el.webkitRequestFullscreen?.();
+    } catch {
+      /* plein écran indisponible (iPhone) : l'affichage plein cadre suffit */
+    }
+  }, []);
+  const exitNative = useCallback(() => {
+    try {
+      (screen.orientation as LockableOrientation | undefined)?.unlock?.();
+    } catch {
+      /* rien */
+    }
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  }, []);
 
-  const stageStyle: CSSProperties = rotated
-    ? { height: "calc(100svh - 9.5rem)" }
-    : { maxWidth: layout === "short" ? "min(100%, calc((100svh - 6rem) * 21 / 9))" : "min(100%, calc((100svh - 10rem) * 21 / 9))" };
+  const openFullscreen = useCallback(() => {
+    setFs(true);
+    enterNative(device !== "desktop");
+  }, [device, enterNative]);
+  const closeFullscreen = useCallback(() => {
+    setFs(false);
+    exitNative();
+  }, [exitNative]);
 
-  const frameStyle: CSSProperties = rotated
-    ? {
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        width: ROTATED_LENGTH,
-        transform: "translate(-50%, -50%) rotate(90deg)",
-        transition: "none",
-      }
-    : { position: "relative", width: "100%" };
+  /* Messages du lecteur (bouton plein écran) */
+  useEffect(() => {
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== window.location.origin) return;
+      const d = e.data as { ibfVideo?: string; on?: boolean } | null;
+      if (d?.ibfVideo === "fullscreen") (d.on ? openFullscreen : closeFullscreen)();
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [openFullscreen, closeFullscreen]);
+
+  /* Sortie du plein écran natif (geste retour, Échap) */
+  useEffect(() => {
+    const onChange = () => {
+      if (!document.fullscreenElement) setFs(false);
+    };
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
+  /* Le lecteur affiche l'icône « quitter le plein écran » ; la page ne défile plus */
+  const overlay = fs && device !== null;
+  const postState = useCallback(() => {
+    iframeRef.current?.contentWindow?.postMessage({ ibfVideo: "fs", on: overlay }, window.location.origin);
+  }, [overlay]);
+  useEffect(() => {
+    postState();
+    const root = document.documentElement;
+    root.style.overflow = overlay ? "hidden" : "";
+    return () => {
+      root.style.overflow = "";
+    };
+  }, [overlay, postState]);
+
+  const hidden = device === "portrait" && !overlay; // écran « Tournez votre téléphone »
+  const rotate = overlay && viewport.h > viewport.w; // plein écran demandé, téléphone encore droit
+
+  const shellStyle: CSSProperties = overlay
+    ? { position: "fixed", inset: 0, zIndex: 200, background: "#000", padding: 0, borderRadius: 0 }
+    : hidden
+      ? { position: "fixed", inset: 0, visibility: "hidden", pointerEvents: "none" }
+      : { position: "relative", width: "100%", maxWidth: device === "landscape" ? "min(100%, calc((100svh - 6rem) * 21 / 9))" : "min(100%, calc((100svh - 10rem) * 21 / 9))" };
+
+  const frameStyle: CSSProperties = overlay
+    ? rotate
+      ? { position: "absolute", left: "50%", top: "50%", width: viewport.h, height: viewport.w, transform: "translate(-50%, -50%) rotate(90deg)" }
+      : { position: "absolute", inset: 0 }
+    : { position: "relative", width: "100%", aspectRatio: "21 / 9" };
 
   return (
     <section
       className={`relative flex min-h-[100svh] flex-col items-center justify-center px-3 sm:px-6 lg:px-8 ${
-        layout === "short" ? "pb-4 pt-20" : "pb-10 pt-24 sm:pt-28"
+        device === "landscape" ? "pb-4 pt-20" : "pb-10 pt-24 sm:pt-28"
       }`}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -70,37 +152,62 @@ export function VideoPage() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center">
-        {rotated && (
-          <p className="mb-3 flex items-center gap-2 text-sm font-medium text-[var(--text-muted)]">
-            <RotateCcw className="h-4 w-4" aria-hidden />
-            {t.video.rotateHint}
-          </p>
+      <div className="relative mx-auto flex w-full max-w-[1400px] flex-col items-center">
+        {device === "portrait" && (
+          <div className="island w-full max-w-sm px-6 py-10 text-center">
+            <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-3xl bg-brand/10">
+              <Smartphone className="ibf-turn h-12 w-12 text-brand-emerald" aria-hidden />
+            </div>
+            <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--text)]">{t.video.rotateTitle}</h1>
+            <p className="mt-3 text-[var(--text-muted)]">{t.video.rotateText}</p>
+            <button type="button" onClick={openFullscreen} className="btn-primary mx-auto mt-8 !w-auto">
+              <Play className="h-4 w-4" aria-hidden />
+              {t.video.launch}
+            </button>
+          </div>
         )}
 
-        <div className="relative w-full" style={stageStyle}>
-          <div className="island overflow-hidden p-1 sm:p-2" style={frameStyle}>
-            <div
-              className="relative w-full overflow-hidden rounded-[14px] bg-[#050807] sm:rounded-[18px]"
-              style={{ aspectRatio: "21 / 9" }}
-            >
-              {layout && (
-                <iframe
-                  className="absolute inset-0 h-full w-full border-0"
-                  src={PROMO_SRC}
-                  title={t.video.iframeTitle}
-                  allow="autoplay; fullscreen"
-                  allowFullScreen
-                />
-              )}
-            </div>
+        <div
+          ref={shellRef}
+          className={overlay || hidden ? "" : "island overflow-hidden p-1 sm:p-2"}
+          style={shellStyle}
+          aria-hidden={hidden || undefined}
+        >
+          <div
+            className={overlay ? "" : "overflow-hidden rounded-[14px] bg-[#050807] sm:rounded-[18px]"}
+            style={frameStyle}
+          >
+            {device && (
+              <iframe
+                ref={iframeRef}
+                className="absolute inset-0 h-full w-full border-0"
+                src={PROMO_SRC}
+                title={t.video.iframeTitle}
+                allow="autoplay; fullscreen"
+                allowFullScreen
+                tabIndex={hidden ? -1 : undefined}
+                onLoad={postState}
+              />
+            )}
+            {overlay && (
+              <button
+                type="button"
+                onClick={closeFullscreen}
+                aria-label={t.video.close}
+                className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-md transition hover:bg-black/75"
+              >
+                <X className="h-5 w-5" aria-hidden />
+              </button>
+            )}
           </div>
         </div>
 
         <div className="mt-6 flex justify-center sm:mt-8">
-          <Link href="/" className="btn-primary !w-auto">
-            <ArrowLeft className="h-4 w-4" aria-hidden />
-            {t.video.back}
+          <Link href="/" className={device === "portrait" ? "text-sm font-medium text-[var(--text-muted)] underline-offset-4 hover:underline" : "btn-primary !w-auto"}>
+            <span className="inline-flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" aria-hidden />
+              {t.video.back}
+            </span>
           </Link>
         </div>
       </div>

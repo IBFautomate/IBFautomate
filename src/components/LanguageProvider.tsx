@@ -288,7 +288,10 @@ const translations = {
     },
     video: {
       back: "Retour à l'accueil",
-      rotateHint: "Tournez votre téléphone pour regarder la vidéo",
+      rotateTitle: "Tournez votre téléphone",
+      rotateText: "La vidéo s'affiche en plein écran, à l'horizontale.",
+      launch: "Lancer la vidéo",
+      close: "Fermer la vidéo",
       iframeTitle: "Vidéo de présentation IBFautomate",
       heroLabel: "Vidéo de présentation IBFautomate",
     },
@@ -568,7 +571,10 @@ const translations = {
     },
     video: {
       back: "Back to home",
-      rotateHint: "Turn your phone sideways to watch the video",
+      rotateTitle: "Turn your phone sideways",
+      rotateText: "The video plays full screen, in landscape.",
+      launch: "Play the video",
+      close: "Close the video",
       iframeTitle: "IBFautomate presentation video",
       heroLabel: "IBFautomate presentation video",
     },
