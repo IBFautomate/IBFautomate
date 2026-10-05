@@ -287,8 +287,6 @@ const translations = {
       hide: "Masquer le widget WhatsApp",
     },
     video: {
-      title: "Vidéo bientôt disponible",
-      subtitle: "Notre présentation arrive très bientôt.",
       back: "Retour à l'accueil",
       iframeTitle: "Vidéo de présentation IBFautomate",
       heroLabel: "Vidéo de présentation IBFautomate",
@@ -568,8 +566,6 @@ const translations = {
       hide: "Hide WhatsApp widget",
     },
     video: {
-      title: "Video coming soon",
-      subtitle: "Our presentation video will be available shortly.",
       back: "Back to home",
       iframeTitle: "IBFautomate presentation video",
       heroLabel: "IBFautomate presentation video",

@@ -1,0 +1,1681 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IBFautomate — Vidéo promo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* ==========================================================================
+   IBFautomate — vidéo promo 21:9 (1920 × 820)
+
+   COULEURS ET TYPOGRAPHIE : TOUT SE RÈGLE ICI, ET SEULEMENT ICI.
+
+   ➜ Pour changer la couleur principale de toute la vidéo (logo, boutons,
+     mots d'accent, graphiques, statuts…), modifiez uniquement --primary.
+     Toutes les nuances plus claires / plus foncées en sont calculées
+     automatiquement : inutile de toucher aux scènes.
+   ========================================================================== */
+:root {
+  /* ---- Couleur principale ---------------------------------------------- */
+  --primary: #F06060;          /* corail (inspiré de la vidéo « lois ») */
+
+  /* ---- Couleurs de base ------------------------------------------------ */
+  --bg:        #FBFBFC;        /* fond de la vidéo */
+  --surface:   #FFFFFF;        /* cartes, fenêtres, boutons clairs */
+  --ink:       #15171C;        /* texte principal */
+  --ink-soft:  #646A79;        /* texte secondaire */
+  --line:      #E8E9EE;        /* bordures fines, séparateurs */
+  --success:   #1FA36A;        /* statuts « payé », « signé » */
+  --outside:   #0D0E11;        /* bandes autour du cadre 21:9 (hors vidéo) */
+  --white:     #FFFFFF;        /* texte sur la couleur principale, pastilles */
+  --shade:     17, 19, 26;     /* teinte des ombres (R, G, B) */
+
+  /* ---- Gris de l'interface (CRM, cartes, étiquettes) ------------------- */
+  --gray-50:   #FAFAFB;
+  --gray-100:  #F5F6F8;
+  --gray-150:  #EFF1F5;
+  --gray-200:  #E2E3E8;
+  --gray-400:  #9297A5;
+  --gray-700:  #4A5062;
+
+  /* ---- Typographie (celle d'ibfautomate.com) --------------------------- */
+  --font-title: 'Space Grotesk', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-text:  'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* ======================================================================
+     Nuances dérivées automatiquement — inutile d'y toucher
+     ====================================================================== */
+  --primary-light: color-mix(in oklab, var(--primary) 58%, #FFE3CF);
+  --primary-dark:  color-mix(in oklab, var(--primary) 70%, #3A0912);
+  --primary-deep:  color-mix(in oklab, var(--primary) 40%, #1E050B);
+  --primary-soft:  color-mix(in oklab, var(--primary) 10%, #FFFFFF);
+  --primary-soft2: color-mix(in oklab, var(--primary) 20%, #FFFFFF);
+  --primary-a08:   color-mix(in srgb, var(--primary) 8%, transparent);
+  --primary-a15:   color-mix(in srgb, var(--primary) 15%, transparent);
+  --primary-a30:   color-mix(in srgb, var(--primary) 30%, transparent);
+  --primary-a50:   color-mix(in srgb, var(--primary) 50%, transparent);
+  --success-soft:  color-mix(in oklab, var(--success) 12%, #FFFFFF);
+  --ink-a06:       color-mix(in srgb, var(--ink) 6%, transparent);
+  --grid:          color-mix(in srgb, var(--ink) 5%, transparent);
+
+  --shadow-1: 0 1px 2px rgba(var(--shade), .06), 0 4px 14px rgba(var(--shade), .05);
+  --shadow-2: 0 1px 2px rgba(var(--shade), .05), 0 10px 26px rgba(var(--shade), .07), 0 34px 64px -20px rgba(var(--shade), .18);
+  --shadow-3: 0 2px 6px rgba(var(--shade), .05), 0 24px 54px rgba(var(--shade), .10), 0 70px 130px -34px rgba(var(--shade), .28);
+  --shadow-primary: 0 14px 34px -8px var(--primary-a50), 0 3px 8px var(--primary-a30);
+
+  /* Logo (dégradés calculés depuis --primary) */
+  --logo-1: var(--primary-light);   /* reflet clair (haut / gauche) */
+  --logo-2: var(--primary);
+  --logo-3: var(--primary-dark);
+  --logo-4: var(--primary-deep);    /* ombre (bas / droite) */
+  --logo-text: color-mix(in oklab, var(--ink) 86%, var(--primary));
+  --logo-dash: color-mix(in oklab, var(--ink) 80%, var(--primary));
+}
+
+</style>
+<style>
+/* ==========================================================================
+   Styles des scènes — aucune couleur en dur ici : tout vient de theme.css
+   ========================================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--outside); }
+body {
+  font-family: var(--font-text); color: var(--ink);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision; user-select: none;
+}
+body.nocursor, body.nocursor * { cursor: none !important; }
+
+/* ---------- Cadre 21:9 ---------- */
+#stage {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 820px;
+  overflow: hidden; background: var(--bg); transform-origin: 0 0; isolation: isolate;
+}
+.scene { position: absolute; inset: 0; display: none; perspective: 1700px; perspective-origin: 50% 50%; }
+.abs { position: absolute; }
+.fill { position: absolute; inset: 0; }
+.center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.p3d { transform-style: preserve-3d; }
+
+/* ---------- Fond ---------- */
+#bg { position: absolute; inset: 0; overflow: hidden; background: var(--bg); }
+#bg .grid {
+  position: absolute; inset: -64px;
+  background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px),
+                    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 62% 70% at 50% 46%, #000 20%, transparent 76%);
+          mask-image: radial-gradient(ellipse 62% 70% at 50% 46%, #000 20%, transparent 76%);
+}
+#bg .blob {
+  position: absolute; left: 0; top: 0; width: 1000px; height: 1000px; margin: -500px 0 0 -500px;
+  border-radius: 50%; background: radial-gradient(closest-side, var(--primary-a15), transparent);
+}
+#bg .vig { position: absolute; inset: 0; background: radial-gradient(ellipse 85% 95% at 50% 45%, transparent 58%, rgba(var(--shade), .06)); }
+#grain { position: absolute; inset: 0; pointer-events: none; opacity: .045; mix-blend-mode: multiply; background-size: 256px 256px; z-index: 50; }
+#flash { position: absolute; inset: 0; pointer-events: none; background: var(--surface); opacity: 0; z-index: 40; }
+
+/* ---------- Textes ---------- */
+.txt { font-family: var(--font-title); font-weight: 700; letter-spacing: -.038em; line-height: 1.03; color: var(--ink); }
+.txt .ln { display: block; white-space: nowrap; }
+.txt .w { display: inline-block; white-space: pre; }
+.t-xxl { font-size: 156px; }
+.t-xl  { font-size: 128px; }
+.t-lg  { font-size: 112px; }
+.t-md  { font-size: 96px; }
+.t-sm  { font-size: 78px; }
+.t-xs  { font-size: 68px; }
+.t-need { font-size: 80px; transition: color .28s ease; }
+.t-need.hot { color: var(--primary); }
+.t-soft { color: var(--ink-soft); font-weight: 600; }
+.acc { color: var(--primary); position: relative; display: inline-block; white-space: nowrap; }
+.ul { position: absolute; left: 0; top: 100%; overflow: visible; pointer-events: none; }
+.ul path { fill: none; stroke: var(--primary); stroke-linecap: round; stroke-linejoin: round; }
+
+.tag {
+  display: inline-flex; align-items: center; gap: 12px; height: 46px; padding: 0 22px 0 18px;
+  border-radius: 999px; background: var(--surface); color: var(--ink);
+  font: 600 19px/1 var(--font-text); letter-spacing: .005em; white-space: nowrap;
+  box-shadow: var(--shadow-1), inset 0 0 0 1px var(--line);
+}
+.tag i { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 5px var(--primary-a15); }
+
+/* ---------- Icônes ---------- */
+.ico { width: 1em; height: 1em; display: block; flex: none; }
+
+/* ---------- Tuiles (scènes 1-2) ---------- */
+.tile {
+  position: absolute; left: 0; top: 0; width: 96px; height: 96px; border-radius: 28px;
+  background: color-mix(in oklab, var(--primary) calc(var(--hl, 0) * 100%), var(--surface));
+  color: color-mix(in oklab, var(--white) calc(var(--hl, 0) * 100%), var(--primary));
+  box-shadow: var(--shadow-2), inset 0 0 0 1px rgba(var(--shade), .035);
+  display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 42px; overflow: hidden;
+}
+.tile-lab { font: 700 30px/1 var(--font-title); letter-spacing: -.02em; color: var(--white); white-space: nowrap; width: 0; overflow: hidden; }
+
+/* ---------- Cartes « besoins » ---------- */
+.stack { position: absolute; left: 1120px; top: 150px; width: 660px; height: 520px; transform-style: preserve-3d; }
+.stack-in { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateY(-13deg) rotateX(5deg); }
+.ncard {
+  position: absolute; left: 0; width: 660px; height: 106px; border-radius: 24px; background: var(--surface);
+  box-shadow: var(--shadow-2), inset 0 0 0 1px rgba(var(--shade), .04);
+  display: flex; align-items: center; gap: 22px; padding: 0 26px 0 22px;
+}
+.ncard .nic { width: 60px; height: 60px; border-radius: 18px; background: var(--primary-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+.ncard .ntx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.ncard .ntx b { font: 600 25px/1.1 var(--font-title); letter-spacing: -.015em; color: var(--ink); }
+.ncard .ntx small { font: 500 17px/1.2 var(--font-text); color: var(--ink-soft); }
+.ncard .nright { display: flex; flex-direction: column; align-items: flex-end; gap: 9px; }
+.ncard time { font: 500 15px/1 var(--font-text); color: var(--ink-soft); }
+.ping { position: absolute; left: -7px; top: -7px; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 4px var(--surface); }
+.ping::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--primary); opacity: var(--pp, 0); transform: scale(calc(1 + var(--ps, 0) * 1.6)); }
+
+.pill { display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 14px; border-radius: 999px; font: 600 15px/1 var(--font-text); white-space: nowrap; }
+.pill .ico { font-size: 15px; }
+.pill.hot  { background: var(--primary); color: var(--white); }
+.pill.warn { background: var(--primary-soft2); color: var(--primary-dark); }
+.pill.soft { background: var(--gray-150); color: var(--ink-soft); }
+.pill.ok   { background: var(--success-soft); color: var(--success); }
+.pill.sent { background: var(--gray-150); color: var(--gray-700); }
+.pill.draft{ background: var(--gray-100); color: var(--gray-400); }
+.pill.late { background: var(--primary-soft2); color: var(--primary-dark); }
+.pill.auto { background: var(--primary); color: var(--white); }
+.pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+/* ---------- Puces « bien d'autres » ---------- */
+.chip {
+  position: absolute; left: 0; top: 0; height: 74px; padding: 0 30px 0 14px; border-radius: 999px; background: var(--surface);
+  box-shadow: var(--shadow-2), inset 0 0 0 1px rgba(var(--shade), .04);
+  display: flex; align-items: center; gap: 14px; white-space: nowrap; font: 600 25px/1 var(--font-title); letter-spacing: -.012em; color: var(--ink);
+}
+.chip .ci { width: 48px; height: 48px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+
+/* ---------- Logo ---------- */
+.logo { position: absolute; width: 420px; height: 420px; }
+.logo svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.shock { position: absolute; left: 0; top: 0; width: 400px; height: 400px; margin: -200px 0 0 -200px; border-radius: 50%; border: 3px solid var(--primary); }
+
+/* ---------- Hub « centralisé » ---------- */
+.hub {
+  position: absolute; width: 190px; height: 190px; margin: -95px 0 0 -95px; border-radius: 48px; background: var(--surface);
+  box-shadow: var(--shadow-3), inset 0 0 0 1px rgba(var(--shade), .04); display: flex; align-items: center; justify-content: center;
+}
+.hub .logo { position: relative; width: 150px; height: 150px; }
+.sat {
+  position: absolute; left: 0; top: 0; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 28px; background: var(--surface);
+  box-shadow: var(--shadow-2), inset 0 0 0 1px rgba(var(--shade), .04); color: var(--primary); font-size: 40px; display: flex; align-items: center; justify-content: center;
+}
+.sat small { position: absolute; top: 104px; left: 50%; transform: translateX(-50%); font: 600 17px/1 var(--font-text); color: var(--ink-soft); white-space: nowrap; }
+.links { position: absolute; inset: 0; overflow: visible; }
+.links path { fill: none; stroke: var(--primary); stroke-width: 2.5; stroke-linecap: round; opacity: .55; }
+.links circle { fill: var(--primary); }
+
+/* ---------- Interrupteur ---------- */
+.tcard {
+  position: absolute; width: 600px; height: 236px; border-radius: 34px; background: var(--surface);
+  box-shadow: var(--shadow-3), inset 0 0 0 1px rgba(var(--shade), .04); padding: 44px 46px; display: flex; align-items: center; justify-content: space-between;
+}
+.tcard b { display: block; font: 700 42px/1 var(--font-title); letter-spacing: -.03em; color: var(--ink); }
+.tcard small { display: block; margin-top: 14px; font: 500 21px/1.2 var(--font-text); color: var(--ink-soft); }
+.tcard .state { margin-top: 22px; font: 600 19px/1 var(--font-text); display: flex; align-items: center; gap: 9px; color: var(--ink-soft); }
+.tcard .state i { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+.sw { position: relative; width: 150px; height: 82px; border-radius: 999px; background: var(--gray-200); box-shadow: inset 0 2px 5px rgba(var(--shade), .10); flex: none; }
+.sw .fillc { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(135deg, var(--primary-light), var(--primary) 55%, var(--primary-dark)); opacity: 0; }
+.sw .knob { position: absolute; left: 8px; top: 8px; width: 66px; height: 66px; border-radius: 50%; background: var(--white); box-shadow: 0 4px 12px rgba(var(--shade), .22), 0 1px 2px rgba(var(--shade), .2); }
+.sw .glow { position: absolute; inset: -14px; border-radius: 999px; box-shadow: 0 0 0 0 var(--primary-a30); }
+
+/* ---------- Curseur ---------- */
+.cursor { position: absolute; left: 0; top: 0; width: 46px; height: 46px; z-index: 30; pointer-events: none; filter: drop-shadow(0 6px 10px rgba(var(--shade), .25)); }
+.ripple { position: absolute; left: 0; top: 0; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; border: 3px solid var(--primary); opacity: 0; z-index: 29; }
+
+/* ---------- CRM ---------- */
+.crm-wrap { position: absolute; left: 1240px; top: 410px; width: 0; height: 0; transform-style: preserve-3d; }
+.crm {
+  position: absolute; left: -740px; top: -410px; width: 1480px; height: 820px; border-radius: 28px; overflow: hidden;
+  background: var(--surface); box-shadow: var(--shadow-3), 0 0 0 1px rgba(var(--shade), .06);
+  display: grid; grid-template-columns: 236px 1fr; grid-template-rows: 54px 1fr; font-family: var(--font-text);
+}
+.crm-bar { grid-column: 1 / 3; display: flex; align-items: center; gap: 9px; padding: 0 22px; border-bottom: 1px solid var(--line); background: var(--gray-50); }
+.crm-bar i { width: 13px; height: 13px; border-radius: 50%; background: var(--gray-200); }
+.crm-bar span { margin-left: auto; margin-right: auto; font: 500 15px/1 var(--font-text); color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
+.crm-bar span .ico { font-size: 15px; }
+.crm-side { background: var(--gray-50); border-right: 1px solid var(--line); padding: 26px 18px; display: flex; flex-direction: column; gap: 6px; }
+.crm-brand { display: flex; align-items: center; gap: 12px; padding: 0 8px 22px; font: 700 21px/1 var(--font-title); letter-spacing: -.02em; }
+.crm-brand .logo { position: relative; width: 42px; height: 42px; }
+.crm-side a { display: flex; align-items: center; gap: 13px; height: 46px; padding: 0 14px; border-radius: 13px; font: 500 16px/1 var(--font-text); color: var(--gray-700); }
+.crm-side a .ico { font-size: 19px; color: var(--gray-400); }
+.crm-side a.on { background: var(--primary-soft); color: var(--primary-dark); font-weight: 600; }
+.crm-side a.on .ico { color: var(--primary); }
+.crm-side a em { margin-left: auto; font: 700 12px/1 var(--font-text); font-style: normal; color: var(--white); background: var(--primary); border-radius: 999px; padding: 5px 8px; }
+.crm-user { margin-top: auto; display: flex; align-items: center; gap: 12px; padding: 14px 10px; border-top: 1px solid var(--line); }
+.crm-user b { display: block; font: 600 15px/1.2 var(--font-text); }
+.crm-user small { font: 500 13px/1.2 var(--font-text); color: var(--ink-soft); }
+.av { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 700 13px/1 var(--font-text); background: var(--gray-150); color: var(--gray-700); flex: none; }
+.av.c { background: var(--primary-soft2); color: var(--primary-dark); }
+.crm-main { padding: 30px 34px 0; display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.crm-head { display: flex; align-items: center; justify-content: space-between; }
+.crm-head h3 { font: 700 34px/1 var(--font-title); letter-spacing: -.03em; }
+.crm-head small { display: block; margin-top: 8px; font: 500 15px/1 var(--font-text); color: var(--ink-soft); }
+.crm-tools { display: flex; align-items: center; gap: 14px; }
+.search { width: 290px; height: 46px; border-radius: 13px; background: var(--gray-100); display: flex; align-items: center; gap: 10px; padding: 0 16px; font: 500 15px/1 var(--font-text); color: var(--gray-400); }
+.search .ico { font-size: 18px; }
+.autob { height: 46px; border-radius: 13px; padding: 0 10px 0 16px; display: flex; align-items: center; gap: 12px; font: 600 15px/1 var(--font-text); background: var(--primary-soft); color: var(--primary-dark); }
+.msw { position: relative; width: 46px; height: 26px; border-radius: 999px; background: var(--primary); }
+.msw::after { content: ''; position: absolute; right: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--white); box-shadow: 0 1px 3px rgba(var(--shade), .2); }
+.bellb { position: relative; width: 46px; height: 46px; border-radius: 13px; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--gray-700); }
+.bellb em { position: absolute; right: 11px; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 2px var(--gray-100); }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.kpi { position: relative; height: 118px; border-radius: 18px; border: 1px solid var(--line); padding: 18px 20px; background: var(--surface); overflow: hidden; }
+.kpi small { font: 500 15px/1 var(--font-text); color: var(--ink-soft); }
+.kpi b { display: block; margin-top: 12px; font: 700 40px/1 var(--font-title); letter-spacing: -.03em; font-variant-numeric: tabular-nums; transform-origin: 0 60%; }
+.kpi .delta { position: absolute; left: 20px; bottom: 16px; font: 600 13px/1 var(--font-text); color: var(--success); }
+.kpi .delta.p { color: var(--primary-dark); }
+.kpi svg { position: absolute; right: 16px; bottom: 18px; width: 108px; height: 46px; overflow: visible; }
+.kpi svg path { fill: none; stroke: var(--primary); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.kpi.hi { border-color: var(--primary-a30); background: linear-gradient(160deg, var(--primary-soft), var(--surface) 70%); box-shadow: 0 10px 30px -14px var(--primary-a50); }
+.crm-body { display: grid; grid-template-columns: 1fr 380px; gap: 18px; flex: 1; min-height: 0; }
+.panel { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); padding: 20px 22px; position: relative; overflow: hidden; }
+.ph { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.ph h4 { font: 700 20px/1 var(--font-title); letter-spacing: -.02em; }
+.ph small { font: 500 14px/1 var(--font-text); color: var(--ink-soft); }
+.tr { position: relative; display: grid; grid-template-columns: 1.45fr 1.05fr 1.1fr .8fr 1fr; align-items: center; gap: 12px; height: 60px; padding: 0 10px; border-radius: 12px; font: 500 15px/1.2 var(--font-text); color: var(--gray-700); }
+.tr.th { height: 36px; font: 600 12px/1 var(--font-text); letter-spacing: .07em; text-transform: uppercase; color: var(--gray-400); border-bottom: 1px solid var(--line); border-radius: 0; margin-bottom: 4px; }
+.tr .hl { position: absolute; inset: 0; border-radius: 12px; background: var(--primary-soft); opacity: 0; }
+.tr > * { position: relative; }
+.tr .cl { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.tr .cl b { display: block; font: 600 15px/1.2 var(--font-text); color: var(--ink); white-space: nowrap; }
+.tr .cl small { font: 500 12.5px/1.2 var(--font-text); color: var(--ink-soft); }
+.tr .doc { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.tr .doc .ico { font-size: 17px; color: var(--primary); }
+.tr .amt { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tr .st { display: flex; }
+.tr .st .pill { height: 30px; font-size: 13.5px; padding: 0 12px; transform-origin: 20% 50%; }
+.feed { position: relative; height: 420px; }
+.fi { position: absolute; left: 0; right: 0; top: 0; height: 66px; display: flex; align-items: center; gap: 13px; border-radius: 14px; padding: 0 8px; }
+.fi .fic { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 19px; flex: none; background: var(--gray-150); color: var(--gray-700); }
+.fi .fic.hot { background: var(--primary); color: var(--white); box-shadow: 0 6px 14px -4px var(--primary-a50); }
+.fi .fic.ok { background: var(--success-soft); color: var(--success); }
+.fi .fic.n { background: var(--primary-soft); color: var(--primary); }
+.fi div { flex: 1; min-width: 0; }
+.fi b { display: block; font: 600 15px/1.2 var(--font-text); color: var(--ink); white-space: nowrap; }
+.fi small { display: block; margin-top: 3px; font: 500 12.5px/1.2 var(--font-text); color: var(--ink-soft); white-space: nowrap; }
+.fi time { font: 500 12.5px/1 var(--font-text); color: var(--gray-400); }
+.fi .hl { position: absolute; inset: 0; border-radius: 14px; background: var(--primary-soft); opacity: 0; z-index: -1; }
+.crm-fade { position: absolute; left: 0; top: 0; bottom: 0; width: 900px; background: linear-gradient(90deg, var(--bg) 0%, var(--bg) 52%, transparent 100%); opacity: 0; }
+
+/* ---------- Processus ---------- */
+.pcard {
+  position: absolute; left: 0; top: 0; width: 560px; height: 430px; margin: -215px 0 0 -280px; border-radius: 34px; background: var(--surface);
+  box-shadow: var(--shadow-3), inset 0 0 0 1px rgba(var(--shade), .04); padding: 38px 42px; display: flex; flex-direction: column;
+}
+.pcard .top { display: flex; align-items: center; justify-content: space-between; }
+.pcard .num { font: 700 88px/1 var(--font-title); letter-spacing: -.05em; color: var(--primary); display: flex; align-items: center; gap: 18px; }
+.pcard .num .pill { font-size: 16px; height: 34px; letter-spacing: 0; }
+.pcard .pic { width: 76px; height: 76px; border-radius: 24px; background: var(--primary-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 36px; }
+.pcard h5 { margin-top: 26px; font: 700 46px/1.04 var(--font-title); letter-spacing: -.035em; color: var(--ink); }
+.pcard p { margin-top: 14px; font: 500 22px/1.3 var(--font-text); color: var(--ink-soft); }
+.pcard .viz { margin-top: auto; height: 64px; position: relative; }
+.vlist { display: flex; gap: 12px; }
+.vlist span { flex: 1; height: 44px; border-radius: 12px; background: var(--gray-100); display: flex; align-items: center; gap: 10px; padding: 0 12px; font: 600 15px/1 var(--font-text); color: var(--ink-soft); white-space: nowrap; }
+.vlist span i { width: 22px; height: 22px; border-radius: 50%; background: var(--gray-200); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 14px; flex: none; }
+.vlist span.on i { background: var(--primary); }
+.vwire { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 10px; height: 64px; }
+.vwire span { border-radius: 10px; background: var(--primary-soft2); transform-origin: 0 100%; }
+.vwire span:first-child { background: var(--primary); grid-row: 1 / 3; }
+.vbar { height: 16px; border-radius: 999px; background: var(--gray-150); overflow: hidden; margin-top: 8px; }
+.vbar i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--primary-light), var(--primary)); }
+.vbar-row { display: flex; align-items: center; justify-content: space-between; font: 600 16px/1 var(--font-text); color: var(--ink-soft); }
+.stepper { position: absolute; left: 960px; top: 752px; display: flex; align-items: center; gap: 0; transform: translateX(-50%); }
+.stepper .sn { display: flex; align-items: center; gap: 12px; font: 600 19px/1 var(--font-text); color: var(--gray-400); white-space: nowrap; }
+.stepper .sn i { width: 16px; height: 16px; border-radius: 50%; background: var(--gray-200); box-shadow: 0 0 0 5px var(--bg); }
+.stepper .sn.on { color: var(--ink); }
+.stepper .sn.on i { background: var(--primary); box-shadow: 0 0 0 5px var(--primary-a15); }
+.stepper .sl { width: 130px; height: 3px; margin: 0 22px; border-radius: 3px; background: var(--gray-200); position: relative; overflow: hidden; }
+.stepper .sl b { position: absolute; inset: 0; background: var(--primary); transform-origin: 0 50%; transform: scaleX(0); }
+.parrow { position: absolute; left: 0; top: 0; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-2); color: var(--primary); font-size: 28px; display: flex; align-items: center; justify-content: center; }
+
+/* ---------- Appel à l'action ---------- */
+.burst { position: absolute; left: 960px; top: 410px; width: 0; height: 0; }
+.burst i { position: absolute; left: 0; top: -2px; height: 4px; border-radius: 4px; background: var(--primary); transform-origin: 0 50%; }
+.endline { position: absolute; left: 930px; top: 210px; width: 2px; height: 400px; background: linear-gradient(to bottom, transparent, var(--line) 18%, var(--line) 82%, transparent); transform-origin: 50% 50%; }
+.endcol { position: absolute; left: 1010px; top: 196px; display: flex; flex-direction: column; align-items: flex-start; }
+.url { font: 700 100px/1 var(--font-title); letter-spacing: -.045em; color: var(--ink); white-space: nowrap; margin-top: 30px; }
+.url span { color: var(--primary); }
+.btn {
+  position: relative; margin-top: 38px; height: 86px; padding: 0 34px 0 40px; border-radius: 999px; display: inline-flex; align-items: center; gap: 16px;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 45%, var(--primary-dark) 100%); color: var(--white);
+  font: 600 30px/1 var(--font-title); letter-spacing: -.015em; white-space: nowrap; box-shadow: var(--shadow-primary), inset 0 1px 0 rgba(255, 255, 255, .35); overflow: hidden;
+}
+.btn .ico { font-size: 30px; }
+.btn .sheen { position: absolute; top: 0; bottom: 0; left: 0; width: 140px; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .45), transparent); transform: translateX(-200px) skewX(-18deg); }
+.contacts { margin-top: 40px; display: flex; gap: 36px; font: 600 25px/1 var(--font-text); color: var(--ink); white-space: nowrap; }
+.contacts span { display: flex; align-items: center; gap: 12px; }
+.contacts .ico { font-size: 26px; color: var(--primary); }
+.fine { margin-top: 18px; font: 500 19px/1 var(--font-text); color: var(--ink-soft); display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+.fine i { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+
+/* ---------- Interface (hors vidéo) ---------- */
+#ui { position: fixed; inset: 0; pointer-events: none; z-index: 100; font-family: var(--font-text); }
+#start {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
+  background: radial-gradient(ellipse 60% 70% at 50% 45%, var(--surface), color-mix(in srgb, var(--bg) 96%, var(--primary))); pointer-events: auto; cursor: pointer; color: var(--ink); text-align: center;
+}
+#start .logo { position: relative; width: 120px; height: 120px; }
+#start h1 { font: 700 34px/1.1 var(--font-title); letter-spacing: -.03em; }
+#start .play { width: 92px; height: 92px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-primary); transition: transform .2s; }
+#start .play svg { width: 34px; height: 34px; margin-left: 6px; }
+#start:hover .play { transform: scale(1.06); }
+#start .status { font: 500 16px/1.4 var(--font-text); color: var(--ink-soft); min-height: 22px; }
+#start .keys { font: 500 13px/1.7 var(--font-text); color: var(--ink-soft); max-width: 680px; }
+#start .keys b { font-weight: 700; color: var(--ink); }
+#start .rec { pointer-events: auto; margin-top: 6px; font: 600 14px/1 var(--font-text); color: var(--ink); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-1); border-radius: 999px; padding: 12px 18px; cursor: pointer; }
+#start .rec:hover { border-color: var(--primary-a30); color: var(--primary-dark); }
+#start.busy { cursor: progress; }
+#start.busy .play { opacity: .45; }
+#hud { position: absolute; left: 16px; right: 16px; bottom: 14px; height: 34px; display: none; align-items: center; gap: 14px; pointer-events: auto; color: var(--white); font: 600 13px/1 var(--font-text); }
+#hud.on { display: flex; }
+#hud input { flex: 1; accent-color: var(--primary); }
+#hud span { min-width: 92px; font-variant-numeric: tabular-nums; text-shadow: 0 1px 3px rgba(var(--shade), .6); }
+#toast { position: absolute; left: 50%; top: 18px; transform: translateX(-50%); background: rgba(13, 14, 17, .85); color: var(--white); font: 500 14px/1.4 var(--font-text); padding: 10px 16px; border-radius: 10px; opacity: 0; transition: opacity .3s; max-width: 80vw; text-align: center; }
+#toast.on { opacity: 1; }
+
+/* ---------- Compléments ---------- */
+.lcol { position: absolute; left: 130px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+.pcard .done { position: absolute; right: 42px; top: 38px; width: 76px; height: 76px; border-radius: 24px; background: var(--primary); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 38px; box-shadow: var(--shadow-primary); transform: scale(0); }
+.sidel { position: absolute; top: 408px; left: 0; width: 190px; height: 5px; border-radius: 5px; }
+.sidel.l { background: linear-gradient(270deg, var(--primary), var(--primary-light) 80%, transparent); transform-origin: 100% 50%; }
+.sidel.r { background: linear-gradient(90deg, var(--primary), var(--primary-light) 80%, transparent); transform-origin: 0 50%; }
+
+/* ---------- Version intégrée dans un site ---------- */
+body.embed #start .rec, body.embed #start .keys { display: none; }
+body.embed #start h1 { font-size: 26px; }
+
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="ui">
+  <div id="start" class="busy">
+    <span class="logo-slot"></span>
+    <h1>IBFautomate — vidéo promo</h1>
+    <div class="play"><svg viewBox="0 0 24 24"><path d="M6 4.5 19.5 12 6 19.5z" style="fill:var(--white)"/></svg></div>
+    <div class="status">Préparation de la musique…</div>
+    <div class="keys"><b>Espace</b> pause · <b>R</b> rejouer · <b>F</b> plein écran · <b>H</b> barre de temps · <b>M</b> son · <b>← →</b> avancer / reculer · <b>1 à 9</b> scènes</div>
+    <div style="display:flex;gap:10px"><button class="rec" type="button">⏺ Enregistrer la vidéo (Chrome / Edge)</button><button class="rec wav" type="button">♪ Musique seule (.wav)</button></div>
+  </div>
+  <div id="hud"><span id="htime">0.00 s</span><input id="hbar" type="range" min="0" max="40" step="0.01" value="0"></div>
+  <div id="toast"></div>
+</div>
+<script>
+/* ==========================================================================
+   engine.js — moteur d'animation
+   Tout est calculé à partir du temps t (en secondes) : chaque image de la
+   vidéo est une fonction de t. Lecture, pause, retour en arrière et
+   synchronisation avec la musique sont donc toujours exacts.
+   ========================================================================== */
+'use strict';
+
+const W = 1920, H = 820, DURATION = 40;
+
+/* ---- Minutage (partagé entre l'image et la musique, 120 BPM : 1 temps = 0,5 s) ---- */
+const TL = {
+  s1: 0, s2: 2, s3: 4, s3b: 8, s4: 10, s5a: 13, s5b: 14.5,
+  s6: 16, s6b: 18, s6c: 20, s6d: 22,
+  s7: 24, steps: [25.5, 27.5, 29.5], overview: 31,
+  s8a: 32, s8b: 33.5, s9: 36,
+  needs: [4.12, 5, 6, 7],          // apparition des 4 besoins
+  chips: 8.12, chipStep: 0.125,    // « bien d'autres » (une puce par double croche)
+  toggle: 15,                      // clic sur l'interrupteur
+  status: [18.45, 18.85, 19.25],   // statuts qui changent dans le CRM
+  feed: [20.4, 20.9, 21.4],        // relance → relancé → payé
+  checks: [31.25, 31.45, 31.65],   // validation des 3 étapes
+  ctaClick: 37.9,                  // clic sur le bouton final
+  cuts: [2, 4, 8, 13, 14.5, 16, 18, 20, 22, 25.5, 27.5, 29.5, 31, 33.5], // transitions (souffles)
+};
+
+/* ---- Outils mathématiques ---- */
+const clamp = (v, a = 0, b = 1) => (v < a ? a : v > b ? b : v);
+const lerp = (a, b, p) => a + (b - a) * p;
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const Ease = {
+  lin: p => p,
+  o2: p => 1 - (1 - p) * (1 - p),
+  o3: p => 1 - Math.pow(1 - p, 3),
+  o4: p => 1 - Math.pow(1 - p, 4),
+  i2: p => p * p,
+  i3: p => p * p * p,
+  io2: p => (p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2),
+  io3: p => (p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2),
+  oX: p => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p)),
+  iX: p => (p <= 0 ? 0 : Math.pow(2, 10 * p - 10)),
+  ioX: p => (p <= 0 ? 0 : p >= 1 ? 1 : p < .5 ? Math.pow(2, 20 * p - 10) / 2 : (2 - Math.pow(2, -20 * p + 10)) / 2),
+  oB: p => { const s = 1.6; return 1 + (s + 1) * Math.pow(p - 1, 3) + s * Math.pow(p - 1, 2); },
+};
+const seg = (t, a, b, e = Ease.o3) => e(prog(t, a, b));
+/* 0 → 1 → 0 sur [a, a + d] */
+const bump = (t, a, d) => Math.sin(prog(t, a, a + d) * Math.PI);
+/* Générateur pseudo-aléatoire déterministe (même vidéo à chaque lecture) */
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let x = Math.imul(seed ^ seed >>> 15, 1 | seed); x = x + Math.imul(x ^ x >>> 7, 61 | x) ^ x; return ((x ^ x >>> 14) >>> 0) / 4294967296; }; }
+
+/* ---- DOM ---- */
+function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+function frag(html) { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+function at(e, x, y) { e.style.left = x + 'px'; e.style.top = y + 'px'; return e; }
+
+/* Applique une transformation (avec cache pour éviter les écritures inutiles) */
+function put(e, o) {
+  let s = '';
+  if (o.x || o.y || o.z) s += `translate3d(${(o.x || 0).toFixed(2)}px,${(o.y || 0).toFixed(2)}px,${(o.z || 0).toFixed(2)}px)`;
+  if (o.rx) s += ` rotateX(${o.rx.toFixed(3)}deg)`;
+  if (o.ry) s += ` rotateY(${o.ry.toFixed(3)}deg)`;
+  if (o.rz) s += ` rotate(${o.rz.toFixed(3)}deg)`;
+  if (o.s != null && Math.abs(o.s - 1) > 1e-4) s += ` scale(${o.s.toFixed(4)})`;
+  if (o.sx != null || o.sy != null) s += ` scale(${(o.sx ?? 1).toFixed(4)},${(o.sy ?? 1).toFixed(4)})`;
+  if (e._tf !== s) { e.style.transform = s || 'none'; e._tf = s; }
+  if (o.o != null) {
+    const v = o.o < .002 ? 0 : o.o > .998 ? 1 : +o.o.toFixed(3);
+    if (e._o !== v) { e.style.opacity = v; e.style.visibility = v === 0 ? 'hidden' : 'visible'; e._o = v; }
+  }
+  if ('blur' in o) {
+    const b = o.blur || 0, f = b > .12 ? `blur(${b.toFixed(2)}px)` : 'none';
+    if (e._f !== f) { e.style.filter = f; e._f = f; }
+  }
+}
+
+/* Entrée / sortie d'un élément.
+   A = entrée {d durée, x, y, z, s, rx, ry, rz, blur, e easing, bx/by décalage permanent}
+   B = sortie {d, x, y, z, s, rx, ry, rz, blur, e} — tout est interpolé depuis t. */
+function io(e, t, tin, tout, A = {}, B = {}) {
+  const pa = (A.e || Ease.oX)(prog(t, tin, tin + (A.d ?? .6)));
+  const pb = tout == null ? 0 : (B.e || Ease.i2)(prog(t, tout, tout + (B.d ?? .26)));
+  const a = 1 - pa;
+  put(e, {
+    x: (A.x || 0) * a + (B.x || 0) * pb + (A.bx || 0),
+    y: (A.y ?? 34) * a + (B.y ?? -18) * pb + (A.by || 0),
+    z: (A.z || 0) * a + (B.z || 0) * pb + (A.bz || 0),
+    rx: (A.rx || 0) * a + (B.rx || 0) * pb, ry: (A.ry || 0) * a + (B.ry || 0) * pb, rz: (A.rz || 0) * a + (B.rz || 0) * pb,
+    s: lerp(A.s ?? 1, 1, pa) * lerp(1, B.s ?? 1, pb) * (A.bs ?? 1),
+    o: pa * (1 - pb), blur: (A.blur ?? 10) * a + (B.blur ?? 8) * pb,
+  });
+  return pa * (1 - pb);
+}
+/* Apparition mot à mot */
+function words(ws, t, start, stagger, A, tout, B, outStagger = 0) {
+  ws.forEach((w, i) => io(w, t, start + i * stagger, tout == null ? null : tout + i * outStagger, A, B));
+}
+
+/* ---- Textes ----
+   txt("Une solution|{sur mesure}")
+     |      = retour à la ligne
+     [mot]  = mot d'accent (couleur principale)
+     {mot}  = mot d'accent + soulignement dessiné à la main */
+function txt(src, cls) {
+  const box = el('div', 'txt ' + (cls || ''));
+  box.words = []; box.uls = [];
+  src.split('|').forEach(line => {
+    const ln = el('div', 'ln'); box.appendChild(ln);
+    const re = /\{[^}]*\}|\[[^\]]*\]|\s+|[^\s[{]+/g; let m;
+    while ((m = re.exec(line))) {
+      const tok = m[0];
+      if (/^\s+$/.test(tok)) { ln.appendChild(document.createTextNode(' ')); continue; }
+      if (tok[0] === '{' || tok[0] === '[') {
+        const acc = el('span', 'acc'); ln.appendChild(acc);
+        tok.slice(1, -1).split(' ').forEach((wd, k) => {
+          if (k) acc.appendChild(document.createTextNode(' '));
+          const w = el('span', 'w', esc(wd)); acc.appendChild(w); box.words.push(w);
+        });
+        if (tok[0] === '{') box.uls.push({ acc });
+      } else { const w = el('span', 'w', esc(tok)); ln.appendChild(w); box.words.push(w); }
+    }
+  });
+  return box;
+}
+/* Construit les soulignements une fois les polices chargées (mesure réelle) */
+function layoutUnderlines(root) {
+  root.querySelectorAll('.txt').forEach(box => (box.uls || []).forEach(u => {
+    const w = u.acc.offsetWidth, fs = parseFloat(getComputedStyle(u.acc).fontSize);
+    const h = fs * .26, sw = Math.max(5, fs * .072);
+    if (u.svg) u.svg.remove();
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'ul'); svg.setAttribute('width', w); svg.setAttribute('height', h);
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`); svg.style.marginTop = (-fs * .02) + 'px';
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('d', `M ${sw} ${h * .72} C ${w * .28} ${h * .30}, ${w * .62} ${h * .12}, ${w - sw} ${h * .36}`);
+    p.setAttribute('stroke-width', sw);
+    svg.appendChild(p); u.acc.appendChild(svg);
+    const len = p.getTotalLength();
+    p.style.strokeDasharray = len + ' ' + (len + 40); p.style.strokeDashoffset = len; p.style.visibility = 'hidden';
+    u.svg = svg; u.path = p; u.len = len; u.last = null;
+  }));
+}
+/* Dessine le soulignement n° i d'un texte entre a et b */
+function ul(box, i, t, a, b, out) {
+  const u = box.uls && box.uls[i]; if (!u || !u.path) return;
+  let p = seg(t, a, b, Ease.io3);
+  if (out != null) p *= 1 - seg(t, out, out + .2, Ease.i2);
+  const v = (u.len * (1 - p)).toFixed(1);
+  if (u.last !== v) { u.path.style.strokeDashoffset = v; u.path.style.visibility = p > .002 ? 'visible' : 'hidden'; u.last = v; }
+}
+
+/* ---- Icônes (trait 1,8 px, dessinées pour la vidéo) ---- */
+const ICON = {
+  doc: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M8.5 13h7M8.5 16.5h4.5"/>',
+  invoice: '<path d="M6 3h12v18l-2.4-1.5L13.2 21 12 20.2 10.8 21l-2.4-1.5L6 21z"/><path d="M14.6 9.2a3.1 3.1 0 1 0 0 4.6"/><path d="M8.6 10.6h4.4M8.6 12.4h4.4"/>',
+  bell: '<path d="M6 9a6 6 0 1 1 12 0c0 6.5 2.5 8 2.5 8h-17S6 15.5 6 9"/><path d="M10.2 20.5a2 2 0 0 0 3.6 0"/>',
+  helmet: '<path d="M3 17.5h18"/><path d="M4.5 17.5v-1.8a7.5 7.5 0 0 1 15 0v1.8"/><path d="M9.6 9.2V6.3h4.8v2.9"/><path d="M12 6.3v4.2"/>',
+  cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M16 3v4M8 3v4M3.5 10h17"/><path d="M8 14h3v3H8z"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/>',
+  card: '<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/>',
+  chart: '<path d="M4 20V11M10 20V5M16 20v-6M2.5 20.5h19"/>',
+  users: '<circle cx="9" cy="8" r="3.3"/><path d="M3 19.5a6 6 0 0 1 12 0"/><path d="M16 5a3.2 3.2 0 0 1 0 6M18.5 19.5a5.5 5.5 0 0 0-3-5"/>',
+  check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  search: '<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/>',
+  layout: '<rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M9.5 9.5V20"/>',
+  rocket: '<path d="M12 2.8c3.4 2 5 5.6 5 9.6l-2 3.6H9l-2-3.6c0-4 1.6-7.6 5-9.6z"/><circle cx="12" cy="9.6" r="1.9"/><path d="M9 16l-2.6 3.4M15 16l2.6 3.4M12 17.5v3.7"/>',
+  refresh: '<path d="M19.5 10.5A7.7 7.7 0 0 0 6 6.5L4.5 8"/><path d="M4.5 4v4h4"/><path d="M4.5 13.5A7.7 7.7 0 0 0 18 17.5l1.5-1.5"/><path d="M19.5 20v-4h-4"/>',
+  phone: '<path d="M6.8 3.5h2.7l1.5 4.1-2.1 1.4a12 12 0 0 0 6.1 6.1l1.4-2.1 4.1 1.5v2.7a2 2 0 0 1-2.2 2A16.8 16.8 0 0 1 4.8 5.7a2 2 0 0 1 2-2.2z"/>',
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  home: '<path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/>',
+  clip: '<rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4h6v3H9z"/><path d="M8.5 12h7M8.5 15.5h5"/>',
+  box: '<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/>',
+  star: '<path d="m12 3.2 2.7 5.5 6 .9-4.4 4.2 1.1 6-5.4-2.8-5.4 2.8 1.1-6L3.3 9.6l6-.9z"/>',
+  pen: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+  cart: '<circle cx="9.5" cy="19.5" r="1.4"/><circle cx="17.5" cy="19.5" r="1.4"/><path d="M2.5 3.5h3l2.4 11.5h10.8l2-8H6.3"/>',
+  sms: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>',
+  lock: '<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
+};
+const ico = (name, cls = '') => `<svg class="ico ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[name]}</svg>`;
+const CURSOR = '<svg class="cursor" viewBox="0 0 28 28"><path d="M6 3.5 21.6 17.8l-7 .7 4.1 8.2-3.3 1.6-4.1-8.3L6 25.3z" style="fill:var(--ink);stroke:var(--white)" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+
+</script>
+<script>
+/* ==========================================================================
+   logo.js — logo IBFautomate redessiné en vectoriel (fidèle à « Logo vert »)
+   Les couleurs viennent des variables --logo-1 … --logo-4 de theme.css,
+   elles-mêmes calculées depuis --primary.
+   ========================================================================== */
+'use strict';
+
+const LOGO_GEO = {
+  // Lettres « IBF » et « AUTOMATE » vectorisées depuis le PNG d'origine (repère 1254 × 1254)
+  ibf: 'M274.8 402.0L276.0 401.4L368.0 401.4L369.5 402.0L332.1 558.0L282.0 761.1L281.0 761.6L188.0 761.6L186.9 761.0L239.7 543.0ZM420.9 402.0L422.0 401.4L636.0 401.5L650.0 401.7L661.0 402.7L681.0 406.8L692.0 410.6L701.0 414.5L715.0 423.5L722.1 430.0L727.0 436.0L731.4 443.0L735.2 451.0L738.2 461.0L739.7 469.0L740.3 480.0L739.5 493.0L737.5 504.0L735.0 512.9L731.2 523.0L726.4 533.0L720.2 543.0L715.0 549.6L709.0 556.0L701.0 563.0L693.0 568.3L681.3 574.0L693.0 579.5L702.0 585.5L710.6 595.0L716.4 605.0L719.6 614.0L721.8 629.0L721.7 641.0L719.5 657.0L715.6 671.0L711.5 682.0L705.6 694.0L701.3 701.0L693.1 712.0L685.2 721.0L676.0 729.3L666.0 736.7L650.0 746.0L633.0 753.1L615.0 758.2L594.0 761.4L582.0 761.8L332.0 761.8L331.0 761.3ZM801.0 402.0L802.0 401.4L1059.0 401.5L1074.2 440.0L1088.6 481.0L1088.0 482.0L872.0 482.0L870.8 485.0L854.7 552.0L855.5 553.0L860.0 553.2L1032.0 553.3L1032.5 554.0L1029.3 567.0L1020.1 602.0L1013.3 628.0L1012.0 628.6L838.0 628.7L805.7 761.0L805.0 761.6L802.0 761.7L714.0 761.5L713.5 760.0ZM441.0 481.9L443.0 483.3L484.0 494.0L485.1 495.0L472.6 545.0L473.0 546.2L606.0 546.2L620.0 544.1L632.0 539.6L639.3 535.0L646.1 528.0L650.4 520.0L652.5 510.0L652.3 504.0L651.4 500.0L648.2 494.0L642.9 489.0L634.0 484.7L625.0 482.7L613.0 481.9ZM456.0 618.0L439.3 685.0L440.0 685.8L585.0 685.8L599.0 684.1L613.0 679.4L622.0 673.4L628.2 667.0L632.3 660.0L635.5 648.0L635.1 639.0L633.2 633.0L631.4 630.0L626.0 624.8L619.0 621.0L611.0 618.6L603.0 617.7Z',
+  aut: 'M392.6 826.0L398.0 825.8L399.4 827.0L414.6 859.0L414.7 860.0L414.0 860.4L409.0 860.3L405.0 852.7L398.0 852.5L386.0 852.6L382.0 859.9L380.0 860.4L375.8 860.0L391.5 827.0ZM446.9 826.0L451.0 825.8L452.0 826.1L452.5 827.0L452.8 849.0L455.1 853.0L457.0 854.4L460.0 855.4L468.0 855.2L470.0 854.4L472.8 852.0L474.5 847.0L474.6 827.0L475.0 826.1L476.0 825.8L480.0 826.0L480.5 827.0L480.5 830.0L480.5 848.0L479.6 852.0L478.6 854.0L475.8 857.0L472.0 859.3L468.0 860.4L459.0 860.4L455.0 859.4L451.2 857.0L448.6 854.0L446.9 850.0L446.4 842.0L446.4 827.0ZM515.8 826.0L547.1 826.0L547.7 827.0L547.7 830.0L547.0 831.0L535.0 831.3L534.3 832.0L534.2 849.0L534.0 859.9L533.0 860.4L528.9 860.0L528.6 832.0L527.0 831.2L516.0 831.2L515.0 830.0L515.0 827.0ZM594.9 826.0L603.0 825.6L610.0 827.7L613.0 829.6L616.0 832.4L619.2 838.0L619.7 842.0L619.4 847.0L617.4 852.0L612.0 857.4L605.8 860.0L598.0 860.6L594.0 860.2L591.0 859.3L584.8 855.0L581.6 851.0L580.8 849.0L580.0 844.0L580.2 841.0L580.7 838.0L582.7 834.0L587.0 829.6L590.0 827.6ZM655.9 826.0L661.0 825.8L662.5 827.0L675.0 852.4L676.0 851.7L688.2 827.0L690.0 825.9L695.0 826.2L695.4 827.0L695.3 860.0L694.0 860.5L689.8 860.0L689.6 846.0L689.6 837.0L689.0 836.4L678.3 859.0L677.0 860.4L674.0 860.4L673.0 860.0L671.7 858.0L663.1 840.0L661.0 836.6L660.6 838.0L660.5 860.0L660.0 860.4L655.3 860.0L655.1 827.0ZM745.7 826.0L751.0 825.8L752.0 826.5L767.5 859.0L767.6 860.0L767.0 860.4L762.0 860.3L758.0 852.8L751.0 852.5L739.0 852.6L738.0 853.5L734.6 860.0L730.0 860.4L728.7 860.0L744.7 827.0ZM793.3 826.0L825.2 826.0L825.8 827.0L825.8 830.0L825.0 831.2L813.0 831.2L812.0 832.0L812.1 847.0L812.0 859.5L811.0 860.4L807.0 860.4L806.5 860.0L806.3 832.0L805.0 831.2L793.0 831.0L792.5 830.0L792.6 827.0ZM860.5 826.0L887.0 825.8L887.7 827.0L887.7 830.0L887.0 831.1L866.0 831.4L865.6 839.0L866.0 840.5L883.0 840.6L884.4 841.0L884.4 845.0L884.0 845.4L869.0 845.5L865.7 846.0L866.0 855.3L887.0 855.4L887.7 856.0L887.6 860.0L887.0 860.4L863.0 860.5L860.0 860.0L859.8 827.0ZM597.0 830.8L592.0 832.7L587.6 837.0L586.0 842.0L586.4 847.0L588.6 851.0L593.0 854.3L597.0 855.5L602.0 855.5L604.0 855.2L608.0 853.4L612.3 849.0L613.6 845.0L613.4 840.0L612.2 837.0L608.0 832.8L602.0 830.8ZM395.0 832.6L388.1 847.0L389.0 847.8L396.0 847.7L402.0 847.8L402.6 847.0L396.0 833.0ZM748.0 832.8L741.1 847.0L742.0 847.8L749.0 847.7L755.0 847.7L755.6 847.0L749.0 833.1Z',
+};
+
+let LOGO_N = 0;
+function makeLogo(cls = '') {
+  const id = 'lg' + (++LOGO_N);
+  const rad = a => a * Math.PI / 180;
+  const E = (a) => [626.5 + 532.2 * Math.cos(rad(a)), 621.5 + 551.5 * Math.sin(rad(a))];
+  const C = (cx, cy, r, a) => [cx + r * Math.cos(rad(a)), cy + r * Math.sin(rad(a))];
+  const arc = (cx, cy, r, a0, a1) => { const p0 = C(cx, cy, r, a0), p1 = C(cx, cy, r, a1); return `M${p0[0].toFixed(1)} ${p0[1].toFixed(1)}A${r} ${r} 0 0 1 ${p1[0].toFixed(1)} ${p1[1].toFixed(1)}`; };
+  const r0 = E(200), r1 = E(20);
+  const ring = `M${r0[0].toFixed(1)} ${r0[1].toFixed(1)}A532.2 551.5 0 1 1 ${r1[0].toFixed(1)} ${r1[1].toFixed(1)}A532.2 551.5 0 1 1 ${r0[0].toFixed(1)} ${r0[1].toFixed(1)}`;
+  const grad = (gid, x1, y1, x2, y2, stops) => `<linearGradient id="${gid}" gradientUnits="userSpaceOnUse" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">${stops.map(([o, c]) => `<stop offset="${o}" style="stop-color:${c}"/>`).join('')}</linearGradient>`;
+  const NS = 'viewBox="0 0 1254 1254" xmlns="http://www.w3.org/2000/svg"';
+  const box = el('div', 'logo ' + cls);
+  box.innerHTML = `
+<svg ${NS} class="lg-ring"><defs>${grad(id + 'r', 126.5, 439.5, 1126.5, 803.5, [[0, 'var(--logo-1)'], [.34, 'var(--logo-2)'], [.7, 'var(--logo-3)'], [1, 'var(--logo-4)']])}</defs>
+  <path class="ring" d="${ring}" fill="none" stroke="url(#${id}r)" stroke-width="31" pathLength="1"/>
+  <path class="arc" d="${arc(626.2, 570.9, 440, -141.5, -79.2)}" fill="none" stroke="url(#${id}r)" stroke-width="8.5" stroke-linecap="round" pathLength="1"/>
+  <path class="arc" d="${arc(633.7, 662.5, 437.6, 41.6, 103.7)}" fill="none" stroke="url(#${id}r)" stroke-width="8.5" stroke-linecap="round" pathLength="1"/>
+  <g class="dash"><path d="${arc(626.2, 570.9, 440, -77.1, -57.3)}" fill="none" style="stroke:var(--logo-dash)" stroke-width="4.6" stroke-dasharray="9.5 8.4"/>
+  <path d="${arc(633.7, 662.5, 439, 105.7, 128.1)}" fill="none" style="stroke:var(--logo-dash)" stroke-width="4.6" stroke-dasharray="9.5 8.4"/></g>
+  <circle class="dot" cx="879.7" cy="216.6" r="12.4" style="fill:var(--logo-3);transform-box:fill-box;transform-origin:center"/>
+  <circle class="dot" cx="346.3" cy="997.3" r="12.4" style="fill:var(--logo-3);transform-box:fill-box;transform-origin:center"/>
+</svg>
+<svg ${NS} class="lg-ibf"><defs>${grad(id + 'v', 0, 402, 0, 761, [[0, 'var(--logo-1)'], [.4, 'var(--logo-2)'], [.78, 'var(--logo-3)'], [1, 'var(--logo-4)']])}
+  <linearGradient id="${id}s" x1="0" x2="1" y1="0" y2="0"><stop offset="0" style="stop-color:var(--white)" stop-opacity="0"/><stop offset=".5" style="stop-color:var(--white)" stop-opacity=".75"/><stop offset="1" style="stop-color:var(--white)" stop-opacity="0"/></linearGradient>
+  <clipPath id="${id}c"><path d="${LOGO_GEO.ibf}" clip-rule="evenodd"/></clipPath></defs>
+  <path d="${LOGO_GEO.ibf}" fill="url(#${id}v)" fill-rule="evenodd"/>
+  <g clip-path="url(#${id}c)"><rect class="shine" x="-400" y="380" width="230" height="400" fill="url(#${id}s)" transform="skewX(-18)"/></g>
+</svg>
+<svg ${NS} class="lg-aut">
+  <rect class="ln-l" x="233" y="840.6" width="96.5" height="4.8" style="fill:var(--logo-1);transform-box:fill-box;transform-origin:100% 50%"/>
+  <rect class="ln-r" x="935" y="840.6" width="94.5" height="4.8" style="fill:var(--logo-1);transform-box:fill-box;transform-origin:0 50%"/>
+  <path d="${LOGO_GEO.aut}" fill-rule="evenodd" style="fill:var(--logo-text)"/>
+</svg>`;
+  const q = s => box.querySelector(s), qa = s => [...box.querySelectorAll(s)];
+  const P = { ring: q('.ring'), arcs: qa('.arc'), dash: q('.dash'), dots: qa('.dot'), ibf: q('.lg-ibf'), aut: q('.lg-aut'), lnL: q('.ln-l'), lnR: q('.ln-r'), shine: q('.shine') };
+  let last = null;
+  /* Animation de construction : lt = temps local (s). À partir de 1,3 s le logo est complet. */
+  box.set = (lt) => {
+    const k = Math.round(clamp(lt, -1, 1.4) * 600) / 600;
+    if (k === last) return; last = k;
+    const pr = seg(k, 0, .85, Ease.io3);
+    P.ring.style.strokeDasharray = '1 1'; P.ring.style.strokeDashoffset = (1 - pr).toFixed(4);
+    P.ring.style.opacity = pr > 0 ? 1 : 0;
+    const pa = seg(k, .28, .8, Ease.o3);
+    P.arcs.forEach(a => { a.style.strokeDasharray = '1 1'; a.style.strokeDashoffset = (1 - pa).toFixed(4); a.style.opacity = pa > 0 ? 1 : 0; });
+    P.dash.style.opacity = seg(k, .62, .85).toFixed(3);
+    const pd = seg(k, .72, .98, Ease.oB);
+    P.dots.forEach(d => { d.style.transform = `scale(${pd.toFixed(3)})`; });
+    put(P.ibf, { x: -90 * (1 - seg(k, .1, .62, Ease.oX)), o: seg(k, .1, .4, Ease.o2), blur: 14 * (1 - seg(k, .1, .55, Ease.o3)) });
+    const pt = seg(k, .5, 1.0, Ease.oX);
+    put(P.aut, { y: 26 * (1 - pt), s: lerp(.9, 1, pt), o: seg(k, .5, .8, Ease.o2) });
+    const pl = seg(k, .62, 1.05, Ease.oX);
+    P.lnL.style.transform = `scaleX(${pl.toFixed(3)})`; P.lnR.style.transform = `scaleX(${pl.toFixed(3)})`;
+  };
+  /* Reflet lumineux qui balaie « IBF » */
+  box.shine = (lt, d = .75) => { const p = seg(lt, 0, d, Ease.io2); P.shine.setAttribute('x', (-400 + p * 1750).toFixed(1)); };
+  box.set(5);
+  return box;
+}
+
+</script>
+<script>
+/* ==========================================================================
+   music.js — musique générée par code (Web Audio API)
+   120 BPM, ré majeur. Chaque coupe de la vidéo tombe sur un temps ;
+   les impacts, clics et sons d'interface sont placés sur les repères TL
+   (engine.js) : la musique suit toujours le rythme de l'image.
+   La bande son est calculée une fois (OfflineAudioContext, quelques
+   secondes) puis jouée d'un bloc : aucune dérive entre le son et l'image.
+   ========================================================================== */
+'use strict';
+
+const Music = (() => {
+  const SR = 44100, LEN = DURATION + 0.6, STEP = 0.125;      // double croche = 0,125 s
+  const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+  const inR = (t, a, b) => t >= a - 1e-6 && t < b - 1e-6;
+
+  /* Accords (une mesure = 2 s) : basse + notes de la nappe */
+  const CH = {
+    G:  { r: 43, n: [55, 59, 62, 66] },   // Sol maj7
+    D:  { r: 38, n: [57, 62, 66, 69] },   // Ré
+    Bm: { r: 35, n: [59, 62, 66, 69] },   // Si m7
+    A:  { r: 33, n: [57, 61, 64, 69] },   // La
+    As: { r: 33, n: [57, 62, 64, 69] },   // La sus4
+  };
+  const PROG = ['G', 'D', 'Bm', 'A', ['G', 'As'], 'D', 'Bm', 'A', 'G', 'D', 'Bm', 'A', 'G', 'D', 'Bm', 'A', 'G', 'As', 'D', 'D'];
+  /* Motif mélodique (positions en doubles croches dans la mesure) */
+  const MOTIF = {
+    D:  [[0, 78], [3, 81], [6, 83], [8, 81], [10, 78], [12, 76], [14, 78]],
+    Bm: [[0, 74], [3, 78], [6, 81], [8, 78], [12, 76]],
+    A:  [[0, 76], [3, 73], [6, 76], [8, 78], [10, 81], [12, 85]],
+    G:  [[0, 74], [3, 78], [6, 79], [8, 78], [12, 74], [14, 76]],
+  };
+  /* Sections (en secondes) */
+  const KICK  = t => inR(t, 4, 9.5) || inR(t, 10, 31.75) || inR(t, 36, 38);
+  const CLAP  = t => inR(t, 6, 9.5) || inR(t, 10, 31.75) || inR(t, 36, 38);
+  const HATS  = t => inR(t, 2, 9.75) || inR(t, 10, 31.9) || inR(t, 34, 35.75) || inR(t, 36, 38);
+  const BASS  = t => inR(t, 4, 9.75) || inR(t, 10, 32) || inR(t, 34, 35.75) || inR(t, 36, 38);
+  const ARP16 = t => inR(t, 4, 32) || inR(t, 34, 35.75) || inR(t, 36, 38);
+  const ARP8  = t => inR(t, 0, 4) || inR(t, 32, 34);
+  const LEAD  = t => inR(t, 10, 16) || inR(t, 24, 31.75) || inR(t, 36, 38);
+
+  async function render() {
+    const ac = new OfflineAudioContext(2, Math.ceil(SR * LEN), SR);
+    const rnd = rng(20261005);
+    const filt = (type, f, q = .7) => { const b = ac.createBiquadFilter(); b.type = type; b.frequency.value = f; b.Q.value = q; return b; };
+    const gainN = v => { const g = ac.createGain(); g.gain.value = v; return g; };
+    const env = (p, t, a, peak, dec) => { p.setValueAtTime(.0001, t); p.exponentialRampToValueAtTime(peak, t + a); p.exponentialRampToValueAtTime(.0001, t + a + dec); };
+
+    /* ---- Sortie : bus → compresseur doux → limiteur ---- */
+    const bus = gainN(.5);
+    const comp = ac.createDynamicsCompressor();
+    comp.threshold.value = -18; comp.knee.value = 10; comp.ratio.value = 2.2; comp.attack.value = .01; comp.release.value = .25;
+    const lim = ac.createDynamicsCompressor();
+    lim.threshold.value = -4; lim.knee.value = 0; lim.ratio.value = 20; lim.attack.value = .002; lim.release.value = .1;
+    const out = gainN(1);
+    bus.connect(comp); comp.connect(lim); lim.connect(out); out.connect(ac.destination);
+    out.gain.setValueAtTime(1, 39.05); out.gain.linearRampToValueAtTime(0, 39.98);
+
+    /* Réverbération (réponse impulsionnelle générée) et écho pointé 3/16 */
+    const ir = ac.createBuffer(2, Math.floor(SR * 2.4), SR);
+    for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < d.length; i++) { const x = i / d.length; d[i] = (rnd() * 2 - 1) * Math.pow(1 - x, 2.8) * Math.min(1, i / (SR * .006)); } }
+    const revSend = gainN(1), rev = ac.createConvolver(); rev.buffer = ir;
+    const revHp = filt('highpass', 260); revSend.connect(rev); rev.connect(revHp); revHp.connect(gainN(.5)).connect(bus);
+    const dlySend = gainN(1), dl = ac.createDelay(1); dl.delayTime.value = .375;
+    const dfb = gainN(.32), dlp = filt('lowpass', 3800), dhp = filt('highpass', 350);
+    dlySend.connect(dl); dl.connect(dlp); dlp.connect(dhp); dhp.connect(dfb); dfb.connect(dl);
+    dhp.connect(gainN(.45)).connect(bus);
+
+    /* Bus : batterie, musique (avec pompage sur la grosse caisse), effets */
+    const drums = gainN(.85); drums.connect(bus);
+    const duck = gainN(1); duck.connect(bus);
+    const sfx = gainN(.8); sfx.connect(bus);
+    /* Bus partagés (panoramique + envois) : peu de nœuds par note → calcul rapide */
+    const mk = (dest, pan, rv, dlv) => {
+      const g = gainN(1), p = ac.createStereoPanner(); p.pan.value = pan; g.connect(p); p.connect(dest);
+      if (rv) p.connect(gainN(rv)).connect(revSend);
+      if (dlv) p.connect(gainN(dlv)).connect(dlySend);
+      return g;
+    };
+    const B = {
+      padL: mk(duck, -.4, .32), padR: mk(duck, .4, .32),
+      arpL: mk(duck, -.28, .14, .22), arpR: mk(duck, .28, .14, .22),
+      soft: mk(duck, 0, .26, .3), lead: mk(duck, 0, .2, .3), leadBell: mk(duck, 0, .25, .2),
+      bellL: mk(sfx, -.3, .3, .18), bellC: mk(sfx, 0, .3, .18), bellR: mk(sfx, .3, .3, .18),
+      fx: mk(sfx, 0, .28), fxDry: mk(sfx, 0, 0),
+    };
+
+    /* Bruit partagé (charleston, clap, caisse claire, clics) : un seul générateur + enveloppes */
+    const noise = ac.createBuffer(1, SR * 2, SR);
+    { const d = noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = rnd() * 2 - 1; }
+    const loopNoise = () => { const s = ac.createBufferSource(); s.buffer = noise; s.loop = true; s.start(0, rnd() * 1.5); return s; };
+    const chain = (nodes, dest) => { let n = loopNoise(); nodes.forEach(x => { n.connect(x); n = x; }); const g = gainN(0); g.gain.value = .0001; n.connect(g); g.connect(dest); return g.gain; };
+    const hatC = chain([filt('highpass', 8800)], mk(drums, -.14, 0));
+    const hatO = chain([filt('highpass', 7200)], mk(drums, .2, 0));
+    const clapG = chain([filt('bandpass', 1500, .9), filt('highpass', 650)], mk(drums, 0, .18));
+    const snG = chain([filt('bandpass', 1900, .7)], mk(drums, 0, .14));
+    const kClick = chain([filt('highpass', 2600)], drums);
+    const tickN = chain([filt('bandpass', 5200, 3)], B.fxDry);
+    const clickN = chain([filt('highpass', 3500)], B.fxDry);
+    const snTone = ac.createOscillator(); snTone.frequency.value = 196; const snToneG = gainN(.0001); snTone.connect(snToneG); snToneG.connect(drums); snTone.start(0);
+
+    /* ---- File d'événements : les sons sont créés juste avant d'être joués ---- */
+    const EV = [];
+    const at = (t, fn) => EV.push({ t, fn });
+
+    /* ---------------- Instruments ---------------- */
+    function kick(t, v = 1) {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(56, t + .07); o.frequency.exponentialRampToValueAtTime(42, t + .32);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(1.0 * v, t + .004); g.gain.setTargetAtTime(.0001, t + .07, .085);
+      o.connect(g); g.connect(drums); o.start(t); o.stop(t + .55);
+    }
+    function kickAuto(t, v = 1) {   // parties automatisées partagées (clic + pompage)
+      env(kClick, t, .001, .16 * v, .014);
+      duck.gain.setValueAtTime(1, t); duck.gain.linearRampToValueAtTime(.4, t + .01); duck.gain.setTargetAtTime(1, t + .035, .08);
+    }
+    function clap(t, v = 1) {
+      const a = .5 * v; clapG.setValueAtTime(.0001, t);
+      [0, .011, .022].forEach(o => { clapG.setValueAtTime(a, t + o); clapG.exponentialRampToValueAtTime(a * .18, t + o + .0095); });
+      clapG.setValueAtTime(a * .75, t + .033); clapG.exponentialRampToValueAtTime(.0001, t + .24);
+    }
+    function snare(t, v = 1) { env(snG, t, .002, .34 * v, .11); env(snToneG.gain, t, .002, .16 * v, .07); }
+    function hat(t, v = 1, open = false) { env(open ? hatO : hatC, t, .0015, .2 * v, open ? .17 : .038); }
+    function tick(t, v = 1) { env(tickN, t, .0008, .22 * v, .022); }
+    function bass(t, m, d, v = 1) {
+      const f = mtof(m), o1 = ac.createOscillator(), o2 = ac.createOscillator(), lp = filt('lowpass', 240, 3.2), g = ac.createGain(), g2 = gainN(.6);
+      o1.type = 'sawtooth'; o1.frequency.value = f; o2.frequency.value = f;
+      lp.frequency.setValueAtTime(230, t); lp.frequency.exponentialRampToValueAtTime(1250, t + .012); lp.frequency.exponentialRampToValueAtTime(330, t + .2);
+      const a = .3 * v;
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(a, t + .006); g.gain.setValueAtTime(a * .85, t + Math.max(.03, d - .03)); g.gain.exponentialRampToValueAtTime(.0001, t + d + .04);
+      o1.connect(lp); lp.connect(g); o2.connect(g2); g2.connect(g); g.connect(duck);
+      o1.start(t); o2.start(t); o1.stop(t + d + .08); o2.stop(t + d + .08);
+    }
+    function pad(t, notes, d, v = 1, c0 = 1700, c1 = 1700) {
+      notes.forEach(m => [-8, 8].forEach(det => {
+        const o = ac.createOscillator(), lp = filt('lowpass', c0, .5), g = ac.createGain();
+        o.type = 'sawtooth'; o.frequency.value = mtof(m); o.detune.value = det + (rnd() - .5) * 5;
+        lp.frequency.setValueAtTime(c0, t); lp.frequency.linearRampToValueAtTime(c1, t + d);
+        const a = .034 * v;
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(a, t + .32); g.gain.setValueAtTime(a, t + d); g.gain.linearRampToValueAtTime(0, t + d + .85);
+        o.connect(lp); lp.connect(g); g.connect(det < 0 ? B.padL : B.padR);
+        o.start(t); o.stop(t + d + .9);
+      }));
+    }
+    function pluck(t, m, v, dest, bright = 5200) {
+      const f = mtof(m), o = ac.createOscillator(), o2 = ac.createOscillator(), lp = filt('lowpass', bright, 2), g = ac.createGain(), g2 = gainN(.3);
+      o.type = 'square'; o.frequency.value = f; o2.type = 'triangle'; o2.frequency.value = f * 2;
+      lp.frequency.setValueAtTime(bright, t); lp.frequency.exponentialRampToValueAtTime(650, t + .16);
+      env(g.gain, t, .003, .075 * v, .3);
+      o.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(dest);
+      o.start(t); o2.start(t); o.stop(t + .34); o2.stop(t + .34);
+    }
+    function bell(t, m, v = 1, d = 1.3, dest = B.bellC) {
+      const f = mtof(m), car = ac.createOscillator(), mod = ac.createOscillator(), mg = ac.createGain(), g = ac.createGain();
+      mod.frequency.value = f * 3.5; mg.gain.setValueAtTime(f * 2.1, t); mg.gain.exponentialRampToValueAtTime(f * .04, t + d * .6);
+      car.frequency.value = f; mod.connect(mg); mg.connect(car.frequency);
+      env(g.gain, t, .003, .14 * v, d);
+      car.connect(g); g.connect(dest);
+      car.start(t); mod.start(t); car.stop(t + d + .05); mod.stop(t + d + .05);
+    }
+    function noiseShot(t, dur, nodes, gainFn, dest) {
+      const s = ac.createBufferSource(); s.buffer = noise; s.loop = true;
+      let n = s; nodes.forEach(x => { n.connect(x); n = x; });
+      const g = ac.createGain(); gainFn(g.gain); n.connect(g); g.connect(dest);
+      s.start(t, rnd() * 1.5); s.stop(t + dur);
+    }
+    function riser(t0, t1, v = 1) {
+      const bp = filt('bandpass', 350, 1.6); bp.frequency.setValueAtTime(350, t0); bp.frequency.exponentialRampToValueAtTime(9000, t1);
+      noiseShot(t0, t1 - t0 + .02, [bp], p => { p.setValueAtTime(.0001, t0); p.exponentialRampToValueAtTime(.2 * v, t1 - .02); p.linearRampToValueAtTime(0, t1); }, B.fx);
+      const o = ac.createOscillator(), lp = filt('lowpass', 400), og = ac.createGain();
+      o.type = 'sawtooth'; o.frequency.setValueAtTime(110, t0); o.frequency.exponentialRampToValueAtTime(880, t1);
+      lp.frequency.setValueAtTime(400, t0); lp.frequency.exponentialRampToValueAtTime(5000, t1);
+      og.gain.setValueAtTime(.0001, t0); og.gain.exponentialRampToValueAtTime(.035 * v, t1 - .02); og.gain.linearRampToValueAtTime(0, t1);
+      o.connect(lp); lp.connect(og); og.connect(B.fxDry); o.start(t0); o.stop(t1 + .02);
+    }
+    function whoosh(tc, v = 1, d = .5) {     // tc = moment de la coupe (pic du souffle)
+      const t = tc - d * .55, bp = filt('bandpass', 3800, 1.3), p = ac.createStereoPanner();
+      bp.frequency.setValueAtTime(3800, t); bp.frequency.exponentialRampToValueAtTime(520, t + d);
+      p.pan.setValueAtTime(-.6, t); p.pan.linearRampToValueAtTime(.6, t + d); p.connect(B.fx);
+      noiseShot(t, d + .05, [bp], g => { g.setValueAtTime(.0001, t); g.exponentialRampToValueAtTime(.16 * v, t + d * .55); g.exponentialRampToValueAtTime(.0001, t + d); }, p);
+    }
+    function impact(t, v = 1) {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.frequency.setValueAtTime(68, t); o.frequency.exponentialRampToValueAtTime(31, t + .9);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.85 * v, t + .006); g.gain.setTargetAtTime(.0001, t + .08, .32);
+      o.connect(g); g.connect(B.fxDry); o.start(t); o.stop(t + 1.8);
+      const lp = filt('lowpass', 1600); lp.frequency.setValueAtTime(1600, t); lp.frequency.exponentialRampToValueAtTime(160, t + .6);
+      noiseShot(t, .9, [lp], p => env(p, t, .003, .45 * v, .6), B.fx);
+    }
+    function crash(t, v = 1) {
+      noiseShot(t, 2.4, [filt('highpass', 5200)], p => { p.setValueAtTime(.0001, t); p.exponentialRampToValueAtTime(.16 * v, t + .004); p.setTargetAtTime(.0001, t + .05, .55); }, B.fx);
+    }
+    function swell(tEnd, d = 1, v = 1) {
+      const t = tEnd - d, lp = filt('lowpass', 500); lp.frequency.setValueAtTime(500, t); lp.frequency.exponentialRampToValueAtTime(7000, tEnd);
+      noiseShot(t, d, [filt('bandpass', 1600, .5), lp], p => { p.setValueAtTime(.0001, t); p.exponentialRampToValueAtTime(.18 * v, tEnd - .01); p.linearRampToValueAtTime(0, tEnd); }, B.fxDry);
+    }
+    function click(t, v = 1) {
+      const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = 2400;
+      env(g.gain, t, .0008, .2 * v, .012); o.connect(g); g.connect(B.fxDry); o.start(t); o.stop(t + .03);
+      env(clickN, t, .0005, .28 * v, .008);
+    }
+    function pop(t, m, v = 1) {
+      const o = ac.createOscillator(), g = ac.createGain(), f = mtof(m);
+      o.frequency.setValueAtTime(f * 1.6, t); o.frequency.exponentialRampToValueAtTime(f, t + .035);
+      env(g.gain, t, .002, .12 * v, .12); o.connect(g); g.connect(B.bellC); o.start(t); o.stop(t + .2);
+      bell(t, m + 12, .45 * v, .6);
+    }
+    function powerOn(t) {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.frequency.setValueAtTime(320, t); o.frequency.exponentialRampToValueAtTime(1180, t + .2);
+      env(g.gain, t, .01, .1, .26); o.connect(g); g.connect(B.bellC); o.start(t); o.stop(t + .35);
+      bell(t + .08, 86, .55, 1.1, B.bellL); bell(t + .16, 93, .4, 1.1, B.bellR);
+    }
+    const chime = (t, notes, v = 1) => notes.forEach((m, i) => at(t + i * .065, () => bell(t + i * .065, m, v * .8, 1.1, i % 2 ? B.bellR : B.bellL)));
+
+    /* ---------------- Arrangement ---------------- */
+    PROG.forEach((pc, b) => {
+      const parts = Array.isArray(pc) ? pc : [pc], hd = 2 / parts.length;
+      parts.forEach((cn, hi) => {
+        const ch = CH[cn], ts = b * 2 + hi * hd;
+        let c0 = 1500, c1 = 1500, pv = 1;
+        if (ts < 4) { c0 = lerp(700, 2600, ts / 4); c1 = lerp(700, 2600, (ts + hd) / 4); pv = 1.9; }
+        else if (inR(ts, 32, 34)) { c0 = 700; c1 = 1100; pv = 1.2; }
+        else if (inR(ts, 34, 36)) { c0 = 1100; c1 = 4200; pv = 1.1; }
+        else if (inR(ts, 8, 10)) { c0 = 1200; c1 = 3600; }
+        if (ts < 38) at(ts, () => pad(ts, ch.n, hd, pv, c0, c1));
+        for (let k = 0; k < hd / .25; k++) {
+          const t = ts + k * .25; if (!BASS(t)) continue;
+          at(t, () => bass(t, ch.r + (k % 2 ? 12 : 0), .22, k % 2 ? .72 : 1));
+        }
+        const ext = [ch.n[0] + 12, ch.n[1] + 12, ch.n[2] + 12, ch.n[3] + 12, ch.n[0] + 24, ch.n[1] + 24];
+        const pat16 = [0, 1, 2, 3, 4, 3, 2, 1, 0, 2, 1, 3, 2, 4, 3, 5], pat8 = [0, 2, 1, 3, 2, 4, 3, 1];
+        for (let k = 0; k < hd / STEP; k++) {
+          const t = ts + k * STEP, st = Math.round((t % 2) / STEP);
+          if (ARP16(t)) at(t, () => pluck(t, ext[pat16[st % 16]], st % 4 === 0 ? .95 : .62, st % 2 ? B.arpR : B.arpL));
+          else if (ARP8(t) && st % 2 === 0) at(t, () => pluck(t, ext[pat8[(st / 2) % 8]], t < 4 ? lerp(.8, 1.15, t / 4) : .8, B.soft, t < 4 ? lerp(1400, 4200, t / 4) : 2600));
+        }
+        (MOTIF[cn] || []).forEach(([s, m]) => {
+          const t = ts + s * STEP; if (s * STEP >= hd || !LEAD(t)) return;
+          at(t, () => { pluck(t, m, .95, B.lead, 6500); bell(t, m, .32, .9, B.leadBell); });
+        });
+      });
+    });
+    for (let i = 0; i * STEP < 38; i++) {
+      const t = i * STEP, s = i % 16;
+      if (s % 4 === 0 && KICK(t)) { at(t, () => kick(t, 1)); kickAuto(t, 1); }
+      if ((s === 4 || s === 12) && CLAP(t)) clap(t, 1);
+      if (HATS(t)) {
+        if (t < 4) { if (s % 2 === 0) hat(t, s % 4 === 2 ? .5 : .28); }
+        else if (s % 4 === 2) hat(t, .85, true);
+        else hat(t, s % 2 ? .32 : .5);
+      }
+    }
+    for (let t = 9; t < 9.75; t += t < 9.5 ? .25 : .125) snare(t, lerp(.35, .9, (t - 9) / .75));
+    [34, 34.5, 35, 35.25, 35.5, 35.625].forEach(t => { at(t, () => kick(t, .9)); kickAuto(t, .9); });
+    for (let t = 34; t < 35.75; t += t < 35 ? .25 : t < 35.5 ? .125 : .0625) snare(t, lerp(.3, 1, (t - 34) / 1.75));
+
+    /* ---------------- Sons calés sur l'image ---------------- */
+    at(0, () => { bell(.08, 74, .7, 2, B.bellL); bell(.1, 81, .5, 2, B.bellR); bass(0, 38, 1.9, .55); });
+    TL.cuts.forEach(t => at(t - .3, () => whoosh(t, t === 16 ? 1.2 : .75)));
+    TL.needs.forEach((t, i) => at(t, () => pop(t, [74, 76, 78, 81][i], 1)));
+    for (let i = 0; i < 10; i++) tick(TL.chips + i * TL.chipStep, .9);
+    at(8, () => riser(8, 10, 1)); at(8.9, () => swell(10, 1.1, 1));
+    at(10, () => { impact(10, 1); crash(10, .9); bell(10, 81, .7, 2.2, B.bellL); bell(10, 86, .6, 2.2, B.bellR); });
+    click(TL.toggle, 1); at(TL.toggle, () => powerOn(TL.toggle + .02));
+    for (let t = 16.4; t < 17.35; t += .0625) tick(t, .3);
+    TL.status.forEach((t, i) => chime(t, [[81, 86], [83, 88], [78, 83]][i], .65));
+    at(TL.feed[0], () => bell(TL.feed[0], 88, .55, .9)); at(TL.feed[1], () => pop(TL.feed[1], 81, .8)); chime(TL.feed[2], [81, 85, 88], .75);
+    at(24, () => { impact(24, .5); crash(24, .5); });
+    TL.steps.forEach((t, i) => at(t, () => { impact(t, .32); bell(t, [74, 78, 81][i], .9, 1.6, B.bellL); bell(t, [81, 85, 88][i], .55, 1.6, B.bellR); }));
+    TL.checks.forEach((t, i) => at(t, () => pop(t, [78, 81, 86][i], .7)));
+    at(32, () => { impact(32, .75); crash(32, .45); bell(32, 74, .6, 2.4); bell(32, 81, .4, 2.4); });
+    at(34, () => riser(34, 36, 1.1)); at(35, () => swell(36, 1, 1));
+    at(36, () => { impact(36, 1); crash(36, 1); bell(36, 86, .7, 2.2, B.bellL); bell(36, 90, .55, 2.2, B.bellR); });
+    click(TL.ctaClick, 1); chime(TL.ctaClick + .06, [86, 90, 93], .7);
+    at(38, () => {
+      impact(38, .6); pad(38, [62, 66, 69, 74, 76], 1.7, 1.5, 2600, 1400); bass(38, 38, 1.5, .9);
+      bell(38, 74, .8, 2.3, B.bellL); bell(38, 81, .6, 2.3, B.bellR); bell(38, 86, .45, 2.3);
+    });
+
+    /* ---- Création des sons fenêtre par fenêtre pendant le calcul ---- */
+    EV.sort((a, b) => a.t - b.t);
+    const WIN = .5, Q = 128 / SR; let k = 0;
+    const flush = until => { while (k < EV.length && EV[k].t < until) EV[k++].fn(); };
+    flush(WIN + .01);
+    for (let w = WIN; w < LEN - .05; w += WIN) {
+      const ws = Math.floor(w / Q) * Q;
+      ac.suspend(ws).then(() => { flush(ws + WIN + .01); ac.resume(); });
+    }
+    const buf = await ac.startRendering();
+    /* Normalisation à -1 dB */
+    let peak = 0;
+    for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i++) { const a = Math.abs(d[i]); if (a > peak) peak = a; } }
+    const g = peak > 0 ? .89 / peak : 1;
+    for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] *= g; }
+    return buf;
+  }
+  return { render };
+})();
+
+</script>
+<script>
+/* ==========================================================================
+   scenes.js — les scènes de la vidéo (40 s)
+   Aucune couleur ici : tout vient de theme.css.
+   ========================================================================== */
+'use strict';
+
+/* ---- Coordonnées affichées à la fin (modifiables) ---- */
+const CONTENU = {
+  site: 'ibfautomate', tld: '.com',
+  email: 'contact@ibfautomate.com',
+  tel: '07 62 12 99 49',
+  zone: 'France entière',
+  delai: 'Réponse sous 24h',
+  cta: 'Réserver mon audit gratuit',
+};
+
+let STAGE;
+const SCENES = [];
+function scene(t0, t1, build) {
+  const root = el('div', 'scene'); STAGE.appendChild(root);
+  const s = { t0, t1, root, on: false, update: () => {}, layout: null };
+  build(s, root);
+  SCENES.push(s);
+  return s;
+}
+const lcol = (left = 130) => { const c = el('div', 'lcol'); c.style.left = left + 'px'; return c; };
+const tag = (label) => frag(`<div class="tag"><i></i>${label}</div>`);
+const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+/* Position d'un élément par rapport à un ancêtre (sans les transformations) */
+function offsetIn(e, anc) { let x = 0, y = 0; while (e && e !== anc) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return [x, y]; }
+
+/* ======================================================================
+   Fond, grain, flash
+   ====================================================================== */
+function buildBackground() {
+  const bg = el('div'); bg.id = 'bg';
+  bg.innerHTML = '<div class="grid"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="vig"></div>';
+  STAGE.appendChild(bg);
+  const grid = bg.querySelector('.grid'), blobs = [...bg.querySelectorAll('.blob')];
+  const K = [[0, .5], [9.6, .7], [10, 1.3], [12.8, 1], [13.2, .7], [16, .4], [24, .6], [31.5, .7], [32, 1.05], [35.8, 1.1], [36, 1.35], [40, 1.15]];
+  const glow = t => { for (let i = 0; i < K.length - 1; i++) if (t <= K[i + 1][0]) return lerp(K[i][1], K[i + 1][1], Ease.io2(prog(t, K[i][0], K[i + 1][0]))); return K[K.length - 1][1]; };
+  return t => {
+    put(grid, { x: -((t * 10) % 64), y: -((t * 6) % 64) });
+    const g = glow(t);
+    put(blobs[0], { x: 1520 + Math.sin(t * .21) * 230, y: 130 + Math.cos(t * .17) * 110, s: 1.15, o: Math.min(1, .85 * g) });
+    put(blobs[1], { x: 380 + Math.cos(t * .19) * 210, y: 690 + Math.sin(t * .23) * 90, s: .95, o: Math.min(1, .7 * g) });
+    put(blobs[2], { x: 960 + Math.sin(t * .13) * 320, y: 420 + Math.cos(t * .11) * 60, s: .75, o: Math.min(1, .45 * g) });
+  };
+}
+function buildGrain() {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const x = c.getContext('2d'), img = x.createImageData(256, 256), r = rng(7);
+  for (let i = 0; i < img.data.length; i += 4) { const v = 96 + r() * 159 | 0; img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255; }
+  x.putImageData(img, 0, 0);
+  const g = el('div'); g.id = 'grain'; g.style.backgroundImage = `url(${c.toDataURL()})`; STAGE.appendChild(g);
+  const r2 = rng(11), offs = [...Array(64)].map(() => [r2() * 256 | 0, r2() * 256 | 0]);
+  let last = -1;
+  return t => { const f = Math.floor(t * 24) % 64; if (f !== last) { g.style.backgroundPosition = `${offs[f][0]}px ${offs[f][1]}px`; last = f; } };
+}
+function buildFlash() {
+  const f = el('div'); f.id = 'flash'; STAGE.appendChild(f);
+  const HITS = [[10, .55], [16, .35], [32, .5], [36, .6]];
+  return t => { let o = 0; HITS.forEach(([a, k]) => { o = Math.max(o, k * (1 - Ease.o2(prog(t, a, a + .32))) * (t >= a ? 1 : 0)); }); put(f, { o }); };
+}
+
+/* ======================================================================
+   Les scènes
+   ====================================================================== */
+function buildScenes(stage) {
+  STAGE = stage;
+  const updBg = buildBackground();
+
+  /* ---------- 0 → 4 s : tuiles « sur mesure » (partagées par S1 et S2) ---------- */
+  scene(0, 4.14, (s, r) => {
+    const names = ['doc', 'invoice', 'cal', 'mail', 'card', 'chart', 'users', 'helmet'];
+    const tiles = names.map(n => { const d = el('div', 'tile', ico(n)); r.appendChild(d); return d; });
+    const lab = el('div', 'tile-lab', 'Sur mesure'); tiles[0].appendChild(lab);
+    const P1 = [[300, 200, -160], [1620, 175, -100], [230, 610, 60], [1700, 625, 30], [650, 92, -420], [1300, 728, -320], [1530, 410, -560], [440, 420, -600]];
+    const cell = 140, gap = 20, X0 = 1170, Y0 = 170;
+    const G = (c, rr, w = 1) => [X0 + c * (cell + gap), Y0 + rr * (cell + gap), w * cell + (w - 1) * gap, cell];
+    const LA = [G(0, 0), G(1, 0), G(2, 0), G(0, 1), G(1, 1), G(2, 1), G(0, 2), G(1, 2)];
+    const LB = [G(0, 0, 2), G(2, 0), G(0, 1), G(1, 1), G(2, 1), G(0, 2), G(1, 2), G(2, 2)];
+    s.update = lt => {
+      const pB = Ease.oX(prog(lt, 3.0, 3.55));
+      tiles.forEach((tile, i) => {
+        const tin = .05 + i * .07, pin = Ease.oX(prog(lt, tin, tin + 1.0));
+        const [cx, cy, cz] = P1[i];
+        let x = cx - 48, y = cy - 48 + Math.sin(lt * 1.4 + i * 1.7) * 9, w = 96, h = 96;
+        let z = lerp(-1600, cz, pin) + lt * 40, rz = (1 - pin) * 40 + Math.sin(lt * .9 + i) * 5;
+        let blur = Math.abs(z) / 110 + (1 - pin) * 8;
+        const pA = Ease.oX(prog(lt, 1.94 + i * .025, 2.62 + i * .025));
+        if (pA > 0) {
+          const A = LA[i], B = LB[i];
+          x = lerp(x, lerp(A[0], B[0], pB), pA); y = lerp(y, lerp(A[1], B[1], pB), pA);
+          w = lerp(w, lerp(A[2], B[2], pB), pA); h = lerp(h, lerp(A[3], B[3], pB), pA);
+          z = lerp(z, 0, pA); rz = lerp(rz, 0, pA); blur = lerp(blur, 0, pA);
+        }
+        const po = Ease.i2(prog(lt, 3.9, 4.12));
+        tile.style.left = x.toFixed(1) + 'px'; tile.style.top = y.toFixed(1) + 'px';
+        tile.style.width = w.toFixed(1) + 'px'; tile.style.height = h.toFixed(1) + 'px';
+        put(tile, { z, rz, y: -40 * po, o: pin * (1 - po), blur: blur + 10 * po });
+      });
+      tiles[0].style.setProperty('--hl', pB.toFixed(3));
+      lab.style.width = (pB * 168).toFixed(1) + 'px';
+    };
+  });
+
+  /* ---------- S1 · 0 → 2 s : « Une solution sur mesure » ---------- */
+  scene(0, 2.14, (s, r) => {
+    const c = el('div', 'center'); r.appendChild(c);
+    const t = txt('Une solution|{sur mesure}', 't-xl'); c.appendChild(t);
+    s.update = lt => {
+      put(c, { s: lerp(1.06, 1, Ease.o3(prog(lt, 0, 2))) });
+      words(t.words, lt, .1, .17, { y: 70, blur: 16, s: 1.06, d: .75 }, 1.9, { y: -50, blur: 12, d: .2 }, .02);
+      ul(t, 0, lt, .95, 1.5, 1.9);
+    };
+  });
+
+  /* ---------- S2 · 2 → 4 s : « qui s'adapte à vos besoins. » ---------- */
+  scene(2, 4.14, (s, r) => {
+    const col = lcol(130); r.appendChild(col);
+    const t = txt('qui s’adapte|à {vos besoins.}', 't-lg'); col.appendChild(t);
+    s.update = lt => {
+      put(col, { x: lerp(-24, 0, Ease.o3(prog(lt, 0, 2))) });
+      words(t.words, lt, .04, .12, { y: 60, blur: 14, d: .7 }, 1.9, { y: -40, blur: 10, d: .2 }, .015);
+      ul(t, 0, lt, .85, 1.35, 1.9);
+    };
+  });
+
+  /* ---------- S3 · 4 → 8 s : les besoins ---------- */
+  scene(4, 8.16, (s, r) => {
+    const tg = tag('Vos besoins au quotidien'); tg.style.position = 'absolute'; at(tg, 130, 100); r.appendChild(tg);
+    const LINES = ['Devis à réaliser,', 'factures à faire,', 'relances clients,', 'gestion de chantier…'];
+    const lines = LINES.map((L, i) => { const t = txt(L, 't-need'); t.style.position = 'absolute'; at(t, 130, 182 + i * 104); r.appendChild(t); return t; });
+    const stack = el('div', 'stack'), inner = el('div', 'stack-in'); stack.appendChild(inner); r.appendChild(stack);
+    const DATA = [
+      { ic: 'doc', t: 'Devis à réaliser', s: 'Rénovation cuisine · M. Laurent', p: 'À faire', k: 'hot', h: '08:42' },
+      { ic: 'invoice', t: 'Factures à faire', s: '3 chantiers terminés', p: 'En retard', k: 'warn', h: '09:15' },
+      { ic: 'bell', t: 'Relances clients', s: '5 paiements en attente', p: 'Urgent', k: 'hot', h: '10:03' },
+      { ic: 'helmet', t: 'Gestion de chantier', s: 'Planning · équipes · matériel', p: 'Cette semaine', k: 'soft', h: '11:30' },
+    ];
+    const cards = DATA.map((c, i) => {
+      const d = frag(`<div class="ncard"><span class="ping"></span><div class="nic">${ico(c.ic)}</div><div class="ntx"><b>${c.t}</b><small>${c.s}</small></div><div class="nright"><span class="pill ${c.k}">${c.p}</span><time>${c.h}</time></div></div>`);
+      d.style.top = (i * 128) + 'px'; inner.appendChild(d); return d;
+    });
+    const pings = cards.map(c => c.querySelector('.ping'));
+    s.update = lt => {
+      io(tg, lt, .02, 3.92, { y: 24, blur: 8, d: .5 }, { y: -24, d: .2 });
+      lines.forEach((L, i) => {
+        const a = TL.needs[i] - 4;
+        words(L.words, lt, a, .07, { y: 50, blur: 12, d: .55 }, 3.9, { y: -36, blur: 10, d: .2 }, .01);
+        const hot = lt >= a && (i === 3 || lt < TL.needs[i + 1] - 4);
+        if (L._hot !== hot) { L.classList.toggle('hot', hot); L._hot = hot; }
+      });
+      cards.forEach((c, i) => {
+        const a = TL.needs[i] - 4 + .06;
+        io(c, lt, a, 3.88 + i * .02, { y: 80, z: -300, rx: 22, blur: 16, s: .94, d: .75, by: Math.sin((lt + i) * 1.7) * 4 }, { y: -50, blur: 10, d: .22 });
+        const pp = prog(lt, a + .15, a + .9);
+        pings[i].style.setProperty('--pp', ((1 - pp) * (pp > 0 ? .6 : 0)).toFixed(3)); pings[i].style.setProperty('--ps', pp.toFixed(3));
+      });
+      put(stack, { s: lerp(1, 1.04, Ease.io2(prog(lt, 0, 4))), ry: lerp(4, -2, prog(lt, 0, 4)) });
+    };
+  });
+
+  /* ---------- S3b · 8 → 10 s : « Et bien d'autres… » ---------- */
+  scene(8, 10.02, (s, r) => {
+    const field = el('div', 'fill p3d'); r.appendChild(field);
+    const c = el('div', 'center'); r.appendChild(c);
+    const t = txt('Et bien [d’autres…]', 't-lg'); c.appendChild(t);
+    const CH = [['cal', 'Rendez-vous', 430, 205, 120], ['mail', 'Emails', 1500, 190, 40], ['card', 'Suivi des paiements', 1490, 640, 170],
+      ['clip', 'Planning', 360, 640, 70], ['pen', 'Contrats', 800, 112, -240], ['cart', 'Bons de commande', 1150, 712, -180],
+      ['invoice', 'Notes de frais', 1210, 108, -320], ['box', 'Stocks', 690, 728, -300], ['sms', 'SMS clients', 1760, 420, -420], ['star', 'Avis clients', 160, 405, -380]];
+    const chips = CH.map(([ic, label, x, y, z]) => { const d = frag(`<div class="chip"><span class="ci">${ico(ic)}</span>${label}</div>`); field.appendChild(d); return { d, x, y, z, w: 240, h: 74 }; });
+    s.layout = () => chips.forEach(ch => { ch.w = ch.d.offsetWidth; ch.h = ch.d.offsetHeight; });
+    s.update = lt => {
+      words(t.words, lt, .02, .13, { y: 60, blur: 14, s: 1.05, d: .7 }, 1.45, { y: 0, s: .55, blur: 16, d: .5, e: Ease.i3 });
+      chips.forEach((ch, i) => {
+        const a = TL.chips - 8 + i * TL.chipStep, p = Ease.oX(prog(lt, a, a + .9));
+        const pc = Ease.i3(prog(lt, 1.42 + i * .012, 1.96));
+        let x = lerp(960, ch.x, p), y = lerp(410, ch.y, p), z = lerp(-1500, ch.z, p) + Math.max(0, lt - a) * 55;
+        x = lerp(x, 960, pc); y = lerp(y, 410, pc); z = lerp(z, -900, pc);
+        const blur = Math.abs(z) / 95 * (1 - pc) + pc * 10 + (1 - p) * 6;
+        put(ch.d, { x: x - ch.w / 2, y: y - ch.h / 2, z, o: Math.min(1, p * 1.6) * (1 - pc), blur, s: 1 - pc * .5 });
+      });
+    };
+  });
+
+  /* ---------- S4 · 10 → 13 s : logo + « On s'occupe de tout. » ---------- */
+  scene(10, 13.14, (s, r) => {
+    const sh1 = el('div', 'shock'), sh2 = el('div', 'shock'); r.append(sh1, sh2);
+    const logo = makeLogo(); at(logo, 0, 0); r.appendChild(logo);
+    const col = lcol(860); r.appendChild(col);
+    const t = txt('On s’occupe|de {tout.}', 't-xl'); col.appendChild(t);
+    s.update = lt => {
+      logo.set(lt - .02);
+      const pm = Ease.ioX(prog(lt, .82, 1.36)), pe = Ease.i2(prog(lt, 2.86, 3.06));
+      const sc = lerp(1.04, .94, pm) * lerp(.72, 1, Ease.oB(prog(lt, 0, .5)));
+      put(logo, { x: lerp(960, 520, pm) - 210 - 150 * pe, y: 200, s: sc, o: 1 - pe, blur: 12 * pe });
+      put(sh1, { x: 960, y: 410, s: lerp(.3, 3.3, Ease.o3(prog(lt, 0, .9))), o: .55 * (1 - prog(lt, .05, .9)) * (lt >= 0 ? 1 : 0) });
+      put(sh2, { x: 960, y: 410, s: lerp(.3, 2.3, Ease.o3(prog(lt, .12, 1.0))), o: .35 * (1 - prog(lt, .15, 1.0)) * (lt >= .12 ? 1 : 0) });
+      words(t.words, lt, 1.0, .14, { y: 60, blur: 14, d: .7 }, 2.9, { x: -90, y: 0, blur: 14, d: .2 });
+      ul(t, 0, lt, 1.55, 2.05, 2.9);
+    };
+  });
+
+  /* ---------- S5a · 13 → 14,5 s : « Désormais, tout est centralisé » ---------- */
+  scene(13, 14.64, (s, r) => {
+    const col = lcol(130); r.appendChild(col);
+    const t1 = txt('Désormais,', 't-sm t-soft'), t2 = txt('tout est|{centralisé.}', 't-lg'); col.append(t1, t2);
+    t1.style.marginBottom = '10px';
+    const HX = 1340, HY = 410, RX = 330, RY = 250;
+    const SAT = [['doc', 'Devis', -150], ['invoice', 'Factures', -90], ['cal', 'Agenda', -30], ['mail', 'Emails', 30], ['card', 'Paiements', 90], ['helmet', 'Chantiers', 150]]
+      .map(([ic, lb, a]) => ({ ic, lb, x: HX + RX * Math.cos(a * Math.PI / 180), y: HY + RY * Math.sin(a * Math.PI / 180) }));
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('class', 'links'); svg.setAttribute('viewBox', '0 0 1920 820');
+    svg.innerHTML = SAT.map(p => `<path d="M${p.x.toFixed(1)} ${p.y.toFixed(1)}L${HX} ${HY}" pathLength="1" stroke-dasharray="1 1"/>`).join('') + SAT.map(() => '<circle r="5"/>').join('');
+    r.appendChild(svg);
+    const paths = [...svg.querySelectorAll('path')], dots = [...svg.querySelectorAll('circle')];
+    const sats = SAT.map(p => { const d = el('div', 'sat', ico(p.ic) + `<small>${p.lb}</small>`); r.appendChild(d); return d; });
+    const hub = el('div', 'hub'); at(hub, HX, HY); const hl = makeLogo(); hub.appendChild(hl); r.appendChild(hub);
+    s.update = lt => {
+      io(t1, lt, .08, 1.4, { y: 30, blur: 10, d: .5 }, { y: -30, blur: 8, d: .2 });
+      words(t2.words, lt, .2, .12, { y: 60, blur: 14, d: .7 }, 1.4, { y: -36, blur: 10, d: .2 });
+      ul(t2, 0, lt, .62, 1.02, 1.4);
+      const pex = Ease.i3(prog(lt, 1.3, 1.6));
+      io(hub, lt, .04, 1.42, { s: .5, y: 0, blur: 12, d: .6, e: Ease.oB }, { s: 1.35, y: 0, blur: 12, d: .2 });
+      SAT.forEach((p, i) => {
+        const a = .08 + i * .05, pin = Ease.oX(prog(lt, a, a + .62));
+        const sx = HX + (p.x - HX) * 2.4, sy = HY + (p.y - HY) * 2.4;
+        let x = lerp(sx, p.x, pin), y = lerp(sy, p.y, pin);
+        x = lerp(x, HX, pex); y = lerp(y, HY, pex);
+        put(sats[i], { x, y, z: (1 - pin) * -500, o: Math.min(1, pin * 1.5) * (1 - pex), blur: (1 - pin) * 14 + pex * 8, s: 1 - pex * .6 });
+        const pl = seg(lt, .42 + i * .03, .78 + i * .03, Ease.io2);
+        paths[i].style.strokeDashoffset = (1 - pl).toFixed(3); paths[i].style.opacity = ((pl > 0 ? .55 : 0) * (1 - pex)).toFixed(3);
+        const u = ((lt - .75) * 1.7 + i * .17) % 1;
+        dots[i].setAttribute('cx', lerp(p.x, HX, u).toFixed(1)); dots[i].setAttribute('cy', lerp(p.y, HY, u).toFixed(1));
+        dots[i].style.opacity = lt > .75 ? (Math.sin(u * Math.PI) * (1 - pex)).toFixed(3) : 0;
+      });
+    };
+  });
+
+  /* ---------- S5b · 14,5 → 16 s : « et automatisé pour vous. » ---------- */
+  scene(14.5, 16.05, (s, r) => {
+    const cam = el('div', 'fill'); cam.style.transformOrigin = '1509px 410px'; r.appendChild(cam);
+    const col = lcol(130); cam.appendChild(col);
+    const t = txt('et {automatisé}|pour vous.', 't-lg'); col.appendChild(t);
+    const card = frag(`<div class="tcard"><div><b>Automatisation</b><small>Devis · Factures · Relances</small><div class="state"><i></i><span>Désactivée</span></div></div><div class="sw"><div class="glow"></div><div class="fillc"></div><div class="knob"></div></div></div>`);
+    at(card, 1030, 292); cam.appendChild(card);
+    const knob = card.querySelector('.knob'), fillc = card.querySelector('.fillc'), glow = card.querySelector('.glow'), state = card.querySelector('.state'), stateTx = state.querySelector('span');
+    const cur = frag(CURSOR), rip = el('div', 'ripple'); cam.append(rip, cur);
+    const T = TL.toggle - 14.5;
+    s.update = lt => {
+      words(t.words, lt, .04, .12, { y: 60, blur: 14, d: .7 }, 1.25, { y: -30, blur: 10, d: .2 });
+      ul(t, 0, lt, .42, .86, 1.25);
+      io(card, lt, .05, null, { y: 60, z: -220, rx: 14, blur: 14, s: .94, d: .7 });
+      const pk = Ease.oB(prog(lt, T, T + .32));
+      put(knob, { x: 68 * pk });
+      put(fillc, { o: prog(lt, T, T + .18) });
+      const on = lt >= T + .04;
+      if (state._on !== on) { stateTx.textContent = on ? 'Activée' : 'Désactivée'; state.style.color = on ? 'var(--primary)' : ''; state._on = on; }
+      glow.style.boxShadow = `0 0 0 ${(bump(lt, T, .7) * 18).toFixed(1)}px var(--primary-a15)`;
+      // curseur
+      const pc = Ease.io3(prog(lt, .1, .46)), pa = Ease.io2(prog(lt, T + .3, T + .7));
+      const cx = lerp(lerp(1760, 1482, pc), 1560, pa), cy = lerp(lerp(790, 418, pc), 500, pa);
+      put(cur, { x: cx - 8, y: cy - 4, s: 1 - .16 * bump(lt, T - .05, .17), o: Math.min(1, prog(lt, .08, .2) * 2) * (1 - prog(lt, 1.0, 1.15)) });
+      put(rip, { x: 1482, y: 418, s: lerp(.2, 1.7, Ease.o3(prog(lt, T, T + .55))), o: .6 * (1 - prog(lt, T, T + .55)) * (lt >= T ? 1 : 0) });
+      // plongée dans l'interrupteur → CRM
+      const pz = Ease.iX(prog(lt, 1.12, 1.55));
+      put(cam, { s: 1 + pz * 1.8, blur: pz * 18, o: 1 - Ease.i2(prog(lt, 1.38, 1.55)) });
+    };
+  });
+
+  /* ---------- S6 · 16 → 24 s : le CRM ---------- */
+  scene(16, 24.14, (s, r) => {
+    const ROWS = [
+      { av: 'JM', c: 1, n: 'Julie Martin', k: 'Particulier', p: 'Cuisine', d: 'Devis D-1042', di: 'doc', m: '8 450 €', st: [[0, 'sent', 'Envoyé', 'mail'], [TL.status[0], 'ok', 'Signé', 'check']] },
+      { av: 'LT', n: 'SCI Les Tilleuls', k: 'Entreprise', p: 'Toiture', d: 'Facture F-2031', di: 'invoice', m: '12 400 €', st: [[0, 'sent', 'Envoyée', 'mail'], [TL.status[1], 'ok', 'Payée', 'check']] },
+      { av: 'BR', n: 'Boulangerie Roux', k: 'Commerce', p: 'Vitrine', d: 'Devis D-1043', di: 'doc', m: '3 290 €', st: [[0, 'draft', 'Brouillon'], [TL.status[2], 'sent', 'Envoyé', 'mail']] },
+      { av: 'TL', c: 1, n: 'Thomas Leroy', k: 'Particulier', p: 'Salle de bain', d: 'Facture F-2028', di: 'invoice', m: '5 180 €', st: [[0, 'late', 'En retard'], [TL.feed[1], 'auto', 'Relancé', 'refresh'], [TL.feed[2], 'ok', 'Payée', 'check']] },
+      { av: 'GP', n: 'Garage Petit', k: 'Entreprise', p: 'Extension', d: 'Devis D-1044', di: 'doc', m: '21 700 €', st: [[0, 'sent', 'Envoyé', 'mail']] },
+      { av: 'CB', c: 1, n: 'Claire Bernard', k: 'Particulier', p: 'Peinture', d: 'Facture F-2033', di: 'invoice', m: '1 960 €', st: [[0, 'ok', 'Payée', 'check']] },
+    ];
+    const FEED = [
+      { ic: 'cal', c: 'n', t: 'Rendez-vous confirmé', s: 'Jeu. 10:00 · Claire Bernard', h: '09:40', at: 16.95 },
+      { ic: 'mail', c: 'n', t: 'Devis envoyé', s: 'D-1044 · Garage Petit', h: '09:12', at: 17.1 },
+      { ic: 'check', c: 'ok', t: 'Facture payée', s: 'F-2033 · Claire Bernard', h: '08:55', at: 17.25 },
+      { ic: 'refresh', c: 'hot', t: 'Relance envoyée', s: 'Facture F-2028 · J+7', h: '10:30', at: TL.feed[0], ins: 1 },
+      { ic: 'card', c: 'ok', t: 'Paiement reçu', s: '5 180 € · Thomas Leroy', h: '11:02', at: TL.feed[2], ins: 1 },
+    ];
+    const KV = [
+      { v: 24, st: [[TL.status[2], 25]] },
+      { v: 18, st: [[TL.status[1], 19], [TL.feed[2], 20]] },
+      { v: 12, st: [[TL.feed[0], 13]] },
+      { v: 48260, st: [[TL.status[1], 60660], [TL.feed[2], 65840]], eur: 1 },
+    ];
+    const SPARK = ['M2 38L16 32L30 35L44 24L58 27L72 16L86 18L106 6', 'M2 34L18 36L34 26L50 28L66 18L82 20L106 8', 'M2 30L20 30L36 22L52 24L68 14L86 16L106 10', 'M2 40L18 34L34 36L50 22L66 24L82 12L106 4'];
+    const KL = [['Devis envoyés', '+6 cette semaine', ''], ['Factures payées', '92 % à l’heure', ''], ['Relances automatiques', 'Zéro oubli', 'p'], ['Encaissé ce mois', '+18 %', '']];
+    const rows = ROWS.map(w => `<div class="tr"><span class="hl"></span><div class="cl"><span class="av ${w.c ? 'c' : ''}">${w.av}</span><div><b>${w.n}</b><small>${w.k}</small></div></div><span>${w.p}</span><span class="doc">${ico(w.di)}${w.d}</span><span class="amt">${w.m}</span><span class="st"><span class="pill"></span></span></div>`).join('');
+    const feed = FEED.map(f => `<div class="fi"><span class="hl"></span><span class="fic ${f.c}">${ico(f.ic)}</span><div><b>${f.t}</b><small>${f.s}</small></div><time>${f.h}</time></div>`).join('');
+    const kpis = KL.map((k, i) => `<div class="kpi ${i === 3 ? 'hi' : ''}"><small>${k[0]}</small><b>0</b><span class="delta ${k[2]}">${k[1]}</span><svg viewBox="0 0 108 46"><path d="${SPARK[i]}" pathLength="1" stroke-dasharray="1 1"/></svg></div>`).join('');
+    const wrap = el('div', 'crm-wrap'); r.appendChild(wrap);
+    const crm = frag(`<div class="crm">
+      <div class="crm-bar"><i></i><i></i><i></i><span>${ico('lock')}Votre CRM — Clients</span></div>
+      <aside class="crm-side"><div class="crm-brand"><span class="mini"></span>Votre CRM</div>
+        <a>${ico('home')}Tableau de bord</a><a class="on">${ico('users')}Clients</a><a>${ico('doc')}Devis</a><a>${ico('invoice')}Factures</a><a>${ico('helmet')}Chantiers</a><a>${ico('cal')}Agenda</a><a>${ico('bell')}Relances<em>3</em></a>
+        <div class="crm-user"><span class="av c">JM</span><div><b>Julien M.</b><small>Gérant</small></div></div></aside>
+      <main class="crm-main">
+        <header class="crm-head"><div><h3>Clients</h3><small>Mis à jour à l’instant</small></div>
+          <div class="crm-tools"><span class="search">${ico('search')}Rechercher un client…</span><span class="autob">Relances auto<i class="msw"></i></span><span class="bellb">${ico('bell')}<em></em></span></div></header>
+        <section class="kpis">${kpis}</section>
+        <section class="crm-body">
+          <div class="panel crm-table"><div class="ph"><h4>Clients récents</h4><small>6 sur 128</small></div>
+            <div class="tr th"><span>Client</span><span>Projet</span><span>Document</span><span>Montant</span><span>Statut</span></div>${rows}</div>
+          <div class="panel crm-feed"><div class="ph"><h4>Relances automatiques</h4><i class="msw"></i></div><div class="feed">${feed}</div></div>
+        </section></main></div>`);
+    wrap.appendChild(crm);
+    crm.querySelector('.mini').replaceWith(makeLogo());
+    const fade = el('div', 'crm-fade'); r.appendChild(fade);
+    const capBox = el('div', 'abs'); at(capBox, 110, 0); capBox.style.top = '0'; capBox.style.bottom = '0'; r.appendChild(capBox);
+    const tg = tag('Votre CRM sur mesure'); tg.style.position = 'absolute'; at(tg, 0, 226); capBox.appendChild(tg);
+    const CAPS = ['Tous vos|{clients.}', 'Devis &|factures|{envoyés.}', 'Relances|{automatiques.}', 'Rien ne|{s’oublie.}'];
+    const caps = CAPS.map(c => { const x = txt(c, 't-sm'); x.style.position = 'absolute'; at(x, 0, 300); capBox.appendChild(x); return x; });
+    const trs = [...crm.querySelectorAll('.tr:not(.th)')], fis = [...crm.querySelectorAll('.fi')], kps = [...crm.querySelectorAll('.kpi')];
+    const kb = kps.map(k => k.querySelector('b')), ksp = kps.map(k => k.querySelector('path'));
+    const head = crm.querySelector('.crm-head'), kpiRow = crm.querySelector('.kpis');
+    let PT = [659, 558], PF = [1256, 558];
+    s.layout = () => {
+      const tb = crm.querySelector('.crm-table'), fd = crm.querySelector('.crm-feed');
+      const [tx, ty] = offsetIn(tb, crm), [fx, fy] = offsetIn(fd, crm);
+      PT = [tx + tb.offsetWidth / 2, ty + tb.offsetHeight / 2]; PF = [fx + fd.offsetWidth / 2, fy + fd.offsetHeight / 2];
+    };
+    const focus = (P, Q, sc, rx, ry) => ({ x: Q[0] - 1240 - (P[0] - 740) * sc, y: Q[1] - 410 - (P[1] - 410) * sc, s: sc, rx, ry, blur: 0, o: 1 });
+    const mix = (a, b, p) => { const o = {}; for (const k in a) o[k] = lerp(a[k], b[k], p); return o; };
+    s.update = (lt, t) => {
+      /* --- caméra --- */
+      const ENTER = { x: 260, y: 170, s: .72, rx: 22, ry: -28, blur: 16, o: 0 }, BASE = { x: 0, y: 0, s: .86, rx: 4, ry: -10, blur: 0, o: 1 };
+      const TABLE = focus(PT, [1215, 445], 1.32, 2, -5), FEEDP = focus(PF, [1335, 445], 1.42, 2, -4), BACK = { x: 24, y: 8, s: .845, rx: 3, ry: -5, blur: 0, o: 1 };
+      const EXIT = { x: -520, y: 0, s: .8, rx: 0, ry: 8, blur: 18, o: 0 };
+      let P = mix(ENTER, BASE, Ease.oX(prog(lt, 0, .8)));
+      P.s *= 1 + .02 * prog(lt, .8, 2);
+      P = mix(P, TABLE, Ease.ioX(prog(lt, 1.92, 2.38)));
+      P.s *= 1 + .02 * prog(lt, 2.4, 4);
+      P = mix(P, FEEDP, Ease.ioX(prog(lt, 3.92, 4.38)));
+      P.s *= 1 + .015 * prog(lt, 4.4, 6);
+      P = mix(P, BACK, Ease.io3(prog(lt, 5.9, 6.6)));
+      P.s *= 1 + .012 * prog(lt, 6.6, 7.7);
+      P = mix(P, EXIT, Ease.iX(prog(lt, 7.82, 8.12)));
+      P.blur += 12 * (bump(lt, 1.92, .46) + bump(lt, 3.92, .46)) + 5 * bump(lt, 5.9, .7);
+      put(wrap, P);
+      put(fade, { o: Ease.io2(prog(lt, 1.95, 2.3)) * (1 - Ease.io2(prog(lt, 5.9, 6.35))) });
+      /* --- légendes --- */
+      io(tg, lt, .15, 7.86, { y: 24, blur: 8, d: .5 }, { y: -24, d: .2 });
+      caps.forEach((c, i) => {
+        const a = i * 2, out = i < 3 ? a + 1.92 : 7.84;
+        words(c.words, lt, a + (i ? .1 : .3), .1, { y: 50, blur: 12, d: .6 }, out, { y: -30, blur: 10, d: .2 });
+        ul(c, 0, lt, a + .62, a + 1.08, out);
+      });
+      /* --- contenu vivant du CRM --- */
+      io(head, lt, .35, null, { y: 18, blur: 6, d: .5 });
+      io(kpiRow, lt, .42, null, { y: 22, blur: 6, d: .55 });
+      KV.forEach((k, i) => {
+        let v = k.v * Ease.o3(prog(t, 16.4, 17.35)), popT = -9;
+        let prev = k.v; k.st.forEach(([ts, val]) => { if (t >= ts) { v = lerp(prev, val, Ease.o3(prog(t, ts, ts + .55))); popT = ts; } prev = val; });
+        const txv = fmt(v) + (k.eur ? ' €' : '');
+        if (kb[i]._v !== txv) { kb[i].textContent = txv; kb[i]._v = txv; }
+        put(kb[i], { s: 1 + .14 * bump(t, popT, .45) });
+        const pk = seg(t, 16.5 + i * .08, 17.4 + i * .08, Ease.io2);
+        ksp[i].style.strokeDashoffset = (1 - pk).toFixed(3); ksp[i].style.visibility = pk > .002 ? 'visible' : 'hidden';
+      });
+      trs.forEach((tr, i) => {
+        io(tr, lt, .55 + i * .06, null, { y: 22, blur: 6, d: .5 });
+        const st = ROWS[i].st; let k = 0; st.forEach((e, j) => { if (t >= e[0]) k = j; });
+        const pill = tr.querySelector('.pill'), hl = tr.querySelector('.hl');
+        if (tr._k !== k) { pill.className = 'pill ' + st[k][1]; pill.innerHTML = (st[k][3] ? ico(st[k][3]) : '<i></i>') + st[k][2]; tr._k = k; }
+        const tc = st[k][0];
+        put(pill, { s: 1 + (k ? .24 * bump(t, tc, .42) : 0) });
+        hl.style.opacity = k ? (.95 * (1 - prog(t, tc + .35, tc + 1.6))).toFixed(3) : 0;
+      });
+      const RH = 72;
+      fis.forEach((fi, i) => {
+        const f = FEED[i]; let y = f.ins ? 0 : (i * RH);
+        FEED.forEach((g, j) => { if (g.ins && j !== i && g.at > (f.ins ? f.at : 0)) y += RH * Ease.oX(prog(t, g.at, g.at + .5)); });
+        const pa = Ease.oX(prog(t, f.at, f.at + .55));
+        put(fi, { y: y + (f.ins ? -28 : 18) * (1 - pa), s: f.ins ? lerp(.94, 1, pa) : 1, o: pa, blur: (1 - pa) * 6 });
+        if (f.ins) fi.querySelector('.hl').style.opacity = (pa * (1 - prog(t, f.at + .6, f.at + 1.8))).toFixed(3);
+      });
+    };
+  });
+
+  /* ---------- S7 · 24 → 32 s : processus en 3 étapes ---------- */
+  scene(24, 32.14, (s, r) => {
+    const c = el('div', 'center'); r.appendChild(c);
+    const title = txt('Notre processus|en {3 étapes.}', 't-lg'); c.appendChild(title);
+    const hd = tag('Notre processus en 3 étapes'); hd.style.position = 'absolute'; at(hd, 110, 62); r.appendChild(hd);
+    const track = el('div', 'fill p3d'); r.appendChild(track);
+    const STEPS = [
+      { n: '01', ic: 'search', t: 'Audit gratuit', s: 'On analyse vos besoins.', badge: 'Gratuit', viz: `<div class="vlist"><span><i>${ico('check')}</i>Besoins</span><span><i>${ico('check')}</i>Outils</span><span><i>${ico('check')}</i>Priorités</span></div>` },
+      { n: '02', ic: 'layout', t: 'Proposition|de maquette', s: 'Vous validez le rendu.', viz: '<div class="vwire"><span></span><span></span><span></span><span></span><span></span></div>' },
+      { n: '03', ic: 'rocket', t: 'Lancement|du projet', s: 'On s’occupe du reste.', viz: '<div class="vbar-row"><span>Mise en place</span><b class="pct">0 %</b></div><div class="vbar"><i></i></div>' },
+    ];
+    const cards = STEPS.map(st => {
+      const d = frag(`<div class="pcard"><div class="top"><div class="num">${st.n}${st.badge ? `<span class="pill hot">${st.badge}</span>` : ''}</div><div class="pic">${ico(st.ic)}</div></div><h5>${st.t.replace('|', '<br>')}</h5><p>${st.s}</p><div class="viz">${st.viz}</div><div class="done">${ico('check')}</div></div>`);
+      track.appendChild(d); return d;
+    });
+    const arrows = [0, 1].map(() => { const a = el('div', 'parrow', ico('arrow')); track.appendChild(a); return a; });
+    const stepper = frag('<div class="stepper"><div class="sn"><i></i>Audit</div><div class="sl"><b></b></div><div class="sn"><i></i>Maquette</div><div class="sl"><b></b></div><div class="sn"><i></i>Lancement</div></div>');
+    r.appendChild(stepper);
+    const sns = [...stepper.querySelectorAll('.sn')], sls = [...stepper.querySelectorAll('.sl b')];
+    const vl = [...cards[0].querySelectorAll('.vlist span')], vw = [...cards[1].querySelectorAll('.vwire span')];
+    const bar = cards[2].querySelector('.vbar i'), pct = cards[2].querySelector('.pct'), dones = cards.map(d => d.querySelector('.done'));
+    const S0 = TL.steps.map(x => x - 24), OV = TL.overview - 24;
+    const adv = lt => 700 * Ease.ioX(prog(lt, S0[1] - .05, S0[1] + .45)) + 700 * Ease.ioX(prog(lt, S0[2] - .05, S0[2] + .45));
+    const camX = lt => adv(lt) - 700 * Ease.io3(prog(lt, OV, OV + .6));
+    s.update = lt => {
+      words(title.words, lt, .04, .12, { y: 60, blur: 14, d: .7 }, 1.3, { y: -50, blur: 12, d: .22 }, .02);
+      ul(title, 0, lt, .62, 1.05, 1.3);
+      io(hd, lt, 1.42, 7.92, { y: 20, blur: 8, d: .5 }, { y: -20, d: .2 });
+      const k = 1 - Ease.io3(prog(lt, OV, OV + .6)), S = lerp(.68, 1, k), cx = camX(lt);
+      const v = (cx - camX(lt - 1 / 60)) * 60, mb = Math.min(16, Math.abs(v) / 260);
+      const pout = Ease.i2(prog(lt, 7.9, 8.12));
+      cards.forEach((cd, i) => {
+        const dx = i * 700 - cx, dn = dx / 700;
+        const pin = Ease.oX(prog(lt, S0[0] - .05 + i * .08, S0[0] + .7 + i * .08));
+        put(cd, { x: 960 + dx * S, y: 405 + (1 - pin) * 140 - pout * 30, z: -Math.abs(dn) * 320 * k - (1 - pin) * 600, ry: -clamp(dn, -1.5, 1.5) * 30 * k, s: S, o: (1 - Math.min(1, Math.abs(dn)) * .32 * k) * pin * (1 - pout), blur: Math.abs(dn) * 5 * k + mb + (1 - pin) * 12 + pout * 12 });
+        put(dones[i], { s: Ease.oB(prog(lt, TL.checks[i] - 24, TL.checks[i] - 24 + .35)) });
+      });
+      arrows.forEach((a, i) => put(a, { x: 960 + (i ? 238 : -238), y: 405, s: Ease.oB(prog(lt, OV + .3 + i * .1, OV + .65 + i * .1)), o: prog(lt, OV + .3, OV + .5) * (1 - pout) }));
+      // détails animés des cartes
+      vl.forEach((sp, j) => { const on = lt >= S0[0] + .45 + j * .22; if (sp._on !== on) { sp.classList.toggle('on', on); sp._on = on; } put(sp.firstChild, { s: 1 + .3 * bump(lt, S0[0] + .45 + j * .22, .3) }); });
+      vw.forEach((sp, j) => put(sp, { sy: Ease.oB(prog(lt, S0[1] + .35 + j * .07, S0[1] + .75 + j * .07)) }));
+      const pb = Ease.io2(prog(lt, S0[2] + .35, S0[2] + 1.35));
+      bar.style.width = (pb * 100).toFixed(1) + '%';
+      const ptx = Math.round(pb * 100) + ' %'; if (pct._v !== ptx) { pct.textContent = ptx; pct._v = ptx; }
+      // frise d'étapes
+      const pr = adv(lt) / 700;
+      io(stepper, lt, S0[0] + .1, OV - .1, { y: 20, blur: 6, d: .5 }, { y: 20, d: .3 });
+      sns.forEach((sn, i) => { const on = lt >= S0[0] && pr >= i - .5; if (sn._on !== on) { sn.classList.toggle('on', on); sn._on = on; } });
+      sls.forEach((b, i) => put(b, { sx: clamp(pr - i) }));
+    };
+  });
+
+  /* ---------- S8a · 32 → 33,5 s : « Contactez-nous. » ---------- */
+  scene(32, 33.64, (s, r) => {
+    const c = el('div', 'center'); r.appendChild(c);
+    const t = txt('Contactez-nous[.]', 't-xxl'); c.appendChild(t);
+    const L = el('div', 'sidel l'), R = el('div', 'sidel r'); r.append(L, R);
+    let half = 660;
+    s.layout = () => { half = t.offsetWidth / 2; };
+    s.update = lt => {
+      put(c, { s: lerp(1, 1.035, prog(lt, 0, 1.5)) });
+      words(t.words, lt, .02, .07, { y: 0, s: 1.25, blur: 18, d: .6 }, 1.4, { y: -40, blur: 12, d: .2 });
+      const pl = Ease.oX(prog(lt, .25, .85)), po = Ease.i2(prog(lt, 1.4, 1.6));
+      L.style.left = (960 - half - 60 - 190).toFixed(0) + 'px'; R.style.left = (960 + half + 60).toFixed(0) + 'px';
+      put(L, { sx: pl, o: 1 - po }); put(R, { sx: pl, o: 1 - po });
+    };
+  });
+
+  /* ---------- S8b · 33,5 → 36 s : « pour enfin décider d'agir. » ---------- */
+  scene(33.5, 36.02, (s, r) => {
+    const c = el('div', 'center'); r.appendChild(c);
+    const t = txt('pour enfin|{décider d’agir.}', 't-xl'); c.appendChild(t);
+    s.update = lt => {
+      const pz = Ease.iX(prog(lt, 2.18, 2.5));
+      put(c, { s: lerp(1, 1.05, Ease.io2(prog(lt, 0, 2.2))) * (1 + pz * .4), blur: 16 * pz, o: 1 - Ease.i2(prog(lt, 2.3, 2.5)) });
+      words(t.words, lt, .05, .16, { y: 60, blur: 14, d: .7 });
+      ul(t, 0, lt, .95, 1.5);
+    };
+  });
+
+  /* ---------- S9 · 36 → 40 s : logo, site, contact ---------- */
+  scene(36, DURATION + .01, (s, r) => {
+    const logo = makeLogo(); at(logo, 0, 0); r.appendChild(logo);
+    const line = el('div', 'endline'); r.appendChild(line);
+    const col = frag(`<div class="endcol"><div class="tag"><i></i>Parlons de votre projet</div><div class="url">${CONTENU.site}<span>${CONTENU.tld}</span></div><div class="btn"><span class="sheen"></span>${CONTENU.cta}${ico('arrow')}</div><div class="contacts"><span>${ico('mail')}${CONTENU.email}</span><span>${ico('phone')}${CONTENU.tel}</span></div><div class="fine">${CONTENU.zone}<i></i>${CONTENU.delai}</div></div>`);
+    r.appendChild(col);
+    const [tg, url, btn, contacts, fine] = col.children, sheen = btn.querySelector('.sheen');
+    const cur = frag(CURSOR), rip = el('div', 'ripple'); r.append(rip, cur);
+    let B = [1290, 455], BW = 560;
+    s.layout = () => { const [x, y] = offsetIn(btn, r); B = [x + btn.offsetWidth * .5, y + btn.offsetHeight * .5]; BW = btn.offsetWidth; };
+    const C = TL.ctaClick - 36;
+    r.style.transformOrigin = '960px 410px';
+    s.update = lt => {
+      put(r, { s: lerp(1, 1.025, Ease.io2(prog(lt, .8, 4))) });
+      logo.set(lt);
+      put(logo, { x: 530 - 210, y: 200, s: lerp(.86, 1, Ease.oX(prog(lt, 0, 1.0))) });
+      logo.shine(lt - 2.15);
+      put(line, { sy: Ease.io3(prog(lt, .35, .95)) });
+      io(tg, lt, .45, null, { y: 24, blur: 8 });
+      io(url, lt, .55, null, { y: 50, blur: 14, d: .7 });
+      io(btn, lt, .75, null, { y: 40, blur: 12, s: .92, d: .7, bs: 1 - .05 * bump(lt, C - .03, .24) });
+      io(contacts, lt, .95, null, { y: 30, blur: 10 });
+      io(fine, lt, 1.1, null, { y: 24, blur: 8 });
+      put(sheen, { x: lerp(-200, BW + 60, Ease.io2(prog(lt, C, C + .6))) });
+      const pc = Ease.io3(prog(lt, 1.22, 1.84)), pa = Ease.io2(prog(lt, C + .45, C + 1.1));
+      const cx = lerp(lerp(1830, B[0] + 70, pc), B[0] + 190, pa), cy = lerp(lerp(800, B[1] + 6, pc), B[1] + 110, pa);
+      put(cur, { x: cx - 8, y: cy - 4, s: 1 - .16 * bump(lt, C - .05, .17), o: Math.min(1, prog(lt, 1.2, 1.35) * 2) * (1 - prog(lt, C + 1.0, C + 1.4)) });
+      put(rip, { x: B[0] + 70, y: B[1] + 6, s: lerp(.2, 1.8, Ease.o3(prog(lt, C, C + .6))), o: .6 * (1 - prog(lt, C, C + .6)) * (lt >= C ? 1 : 0) });
+    };
+  });
+
+  const updGrain = buildGrain();
+  const updFlash = buildFlash();
+  return t => { updBg(t); updGrain(t); updFlash(t); };
+}
+
+/* Mesures réelles une fois les polices chargées */
+function layoutScenes() {
+  SCENES.forEach(s => { s.root.style.display = 'block'; });
+  layoutUnderlines(STAGE);
+  SCENES.forEach(s => { if (s.layout) s.layout(); });
+  SCENES.forEach(s => { s.root.style.display = s.on ? 'block' : 'none'; });
+}
+
+/* Dessine l'image au temps t */
+let GLOBAL_UPDATE = null;
+function renderAt(t) {
+  t = clamp(t, 0, DURATION);
+  GLOBAL_UPDATE(t);
+  for (const s of SCENES) {
+    const on = t >= s.t0 && t < s.t1;
+    if (on !== s.on) { s.root.style.display = on ? 'block' : 'none'; s.on = on; }
+    if (on) s.update(t - s.t0, t);
+  }
+}
+
+</script>
+<script>
+/* ==========================================================================
+   main.js — lecture, clavier, plein écran, export
+   ========================================================================== */
+'use strict';
+(() => {
+  const stage = document.getElementById('stage');
+  const $ = id => document.getElementById(id);
+  const startEl = $('start'), statusEl = startEl.querySelector('.status'), hud = $('hud'), hbar = $('hbar'), htime = $('htime'), toastEl = $('toast');
+  GLOBAL_UPDATE = buildScenes(stage);
+  startEl.querySelector('.logo-slot').replaceWith(makeLogo());
+
+  /* ---- Cadre 21:9 centré, à l'échelle de la fenêtre ---- */
+  let VIEW = null;
+  function fit() {
+    const s = Math.min(innerWidth / W, innerHeight / H);
+    stage.style.transform = VIEW ? `scale(${VIEW[2] * s}) translate(${-VIEW[0]}px, ${-VIEW[1]}px)`
+      : `translate(${((innerWidth - W * s) / 2).toFixed(2)}px, ${((innerHeight - H * s) / 2).toFixed(2)}px) scale(${s.toFixed(5)})`;
+  }
+  addEventListener('resize', fit); fit();
+  /* Outils de prévisualisation (console) : __seek(12.5) affiche l'image à 12,5 s ; __view(x, y, zoom) agrandit une zone */
+  window.__seek = t => { pause(); pausedAt = clamp(t, 0, DURATION); renderAt(pausedAt); };
+  window.__view = (x, y, z) => { VIEW = x == null ? null : [x, y, z]; fit(); };
+  window.__state = () => ({ t: +clock().toFixed(3), playing, audio: actx ? actx.state : 'aucun', ready });
+
+  /* ---- Horloge : celle de la carte son quand la musique joue ---- */
+  const params = new URLSearchParams(location.search);
+  let actx = null, gain = null, buffer = null, src = null;
+  let playing = false, pausedAt = params.has('t') ? parseFloat(params.get('t')) || 0 : 0;
+  let startAt = 0, startOffset = 0, perfStart = 0, ready = false, started = false, onEnd = null;
+  const now = () => performance.now() / 1000;
+
+  function clock() {
+    if (!playing) return pausedAt;
+    if (src && actx) {
+      let ct = actx.currentTime;
+      if (actx.getOutputTimestamp) {
+        const ts = actx.getOutputTimestamp();
+        if (ts.contextTime > 0 && ts.performanceTime > 0) ct = ts.contextTime + (performance.now() - ts.performanceTime) / 1000;
+      }
+      return startOffset + (ct - startAt);
+    }
+    return startOffset + (now() - perfStart);
+  }
+  function ensureAudio() {
+    if (actx) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    actx = new AC(); gain = actx.createGain(); gain.connect(actx.destination);
+  }
+  function stopAudio() { if (src) { try { src.stop(); } catch (e) { /* déjà arrêté */ } src.disconnect(); src = null; } }
+  function play(from = pausedAt) {
+    from = clamp(from, 0, DURATION);
+    if (from >= DURATION - .05) from = 0;
+    stopAudio();
+    if (actx && buffer) {
+      if (actx.state === 'suspended') actx.resume();
+      src = actx.createBufferSource(); src.buffer = buffer; src.connect(gain);
+      startAt = actx.currentTime + .05; startOffset = from;
+      src.start(startAt, Math.min(from, buffer.duration - .01));
+    } else { perfStart = now(); startOffset = from; }
+    playing = true;
+  }
+  function pause() { if (!playing) return; pausedAt = clamp(clock(), 0, DURATION); playing = false; stopAudio(); }
+  function seek(t) { t = clamp(t, 0, DURATION); if (playing) play(t); else pausedAt = t; }
+
+  /* ---- Boucle d'affichage ---- */
+  function frame() {
+    let t = clock();
+    if (playing && t >= DURATION) {
+      t = DURATION; pausedAt = DURATION; playing = false; stopAudio();
+      if (onEnd) { const f = onEnd; onEnd = null; f(); }
+    }
+    renderAt(Math.max(0, t));
+    if (hud.classList.contains('on')) { htime.textContent = Math.max(0, t).toFixed(2) + ' s'; if (document.activeElement !== hbar) hbar.value = t; }
+    requestAnimationFrame(frame);
+  }
+
+  /* ---- Préparation : polices + musique ---- */
+  const fontsReady = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(r => setTimeout(r, 4000))]);
+  fontsReady.then(() => { layoutScenes(); renderAt(pausedAt); });
+  Promise.all([fontsReady, Music.render().then(b => { buffer = b; }).catch(e => { console.error(e); })]).then(() => {
+    ready = true; startEl.classList.remove('busy');
+    statusEl.textContent = buffer ? 'Cliquez pour lancer la vidéo' : 'Cliquez pour lancer (musique indisponible sur ce navigateur)';
+    if (params.has('play')) { startEl.style.display = 'none'; started = true; play(pausedAt); }
+  });
+  /* Intégrée dans un site (iframe) ou ?embed : pas de boutons d'export */
+  if (params.has('embed') || window.self !== window.top) document.body.classList.add('embed');
+  /* Clic sur l'image : pause / reprise */
+  stage.addEventListener('click', () => {
+    if (!started || rec) return;
+    ensureAudio();
+    if (playing) { pause(); toast('Pause — cliquez pour reprendre', 1500); } else play();
+  });
+  if (params.has('t')) startEl.style.display = 'none';
+  if (params.has('hud')) hud.classList.add('on');
+  requestAnimationFrame(frame);
+
+  function start() {
+    if (!ready) return;
+    ensureAudio();
+    startEl.style.display = 'none'; started = true;
+    play(0); idle();
+  }
+  startEl.addEventListener('click', e => { if (!e.target.closest('button')) start(); });
+
+  /* ---- Curseur masqué pendant la lecture ---- */
+  let idleT = 0;
+  function idle() { document.body.classList.remove('nocursor'); clearTimeout(idleT); idleT = setTimeout(() => { if (started) document.body.classList.add('nocursor'); }, 1400); }
+  addEventListener('mousemove', idle);
+
+  function toast(msg, ms = 3200) { toastEl.textContent = msg; toastEl.classList.add('on'); clearTimeout(toastEl._t); toastEl._t = setTimeout(() => toastEl.classList.remove('on'), ms); }
+
+  /* ---- Clavier ---- */
+  const JUMPS = [0, TL.s3, TL.s3b, TL.s4, TL.s5a, TL.s6, TL.s7, TL.s8a, TL.s9];
+  addEventListener('keydown', e => {
+    if (e.target === hbar && e.key.startsWith('Arrow')) return;
+    const k = e.key.toLowerCase();
+    if (rec && rec.waiting && k === 'enter') { e.preventDefault(); rec.go(); return; }
+    if (!started && (k === ' ' || k === 'enter')) { e.preventDefault(); start(); return; }
+    if (k === ' ') { e.preventDefault(); ensureAudio(); playing ? pause() : play(); }
+    else if (k === 'r') { ensureAudio(); play(0); }
+    else if (k === 'f') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen().catch(() => {}); }
+    else if (k === 'h') hud.classList.toggle('on');
+    else if (k === 'm') { if (gain) { gain.gain.value = gain.gain.value > 0 ? 0 : 1; toast(gain.gain.value ? 'Son activé' : 'Son coupé', 1200); } }
+    else if (k === 'arrowleft') seek(clock() - (e.shiftKey ? 5 : 1));
+    else if (k === 'arrowright') seek(clock() + (e.shiftKey ? 5 : 1));
+    else if (/^[1-9]$/.test(k)) { if (!started) { startEl.style.display = 'none'; started = true; ensureAudio(); } seek(JUMPS[+k - 1]); if (!playing) play(JUMPS[+k - 1]); }
+  });
+  hbar.addEventListener('input', () => seek(parseFloat(hbar.value)));
+
+  /* ---- Musique seule en .wav ---- */
+  startEl.querySelector('.wav').addEventListener('click', () => {
+    if (!buffer) { toast('La musique est encore en préparation…'); return; }
+    const n = buffer.length, ch = buffer.numberOfChannels, sr = buffer.sampleRate, data = new DataView(new ArrayBuffer(44 + n * ch * 2));
+    const ws = (o, s) => { for (let i = 0; i < s.length; i++) data.setUint8(o + i, s.charCodeAt(i)); };
+    ws(0, 'RIFF'); data.setUint32(4, 36 + n * ch * 2, true); ws(8, 'WAVE'); ws(12, 'fmt '); data.setUint32(16, 16, true); data.setUint16(20, 1, true);
+    data.setUint16(22, ch, true); data.setUint32(24, sr, true); data.setUint32(28, sr * ch * 2, true); data.setUint16(32, ch * 2, true); data.setUint16(34, 16, true);
+    ws(36, 'data'); data.setUint32(40, n * ch * 2, true);
+    const chans = [...Array(ch)].map((_, c) => buffer.getChannelData(c));
+    for (let i = 0, o = 44; i < n; i++) for (let c = 0; c < ch; c++, o += 2) data.setInt16(o, Math.max(-1, Math.min(1, chans[c][i])) * 32767, true);
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type: 'audio/wav' })); a.download = 'IBFautomate-musique.wav'; a.click();
+  });
+
+  /* ---- Export vidéo (Chrome / Edge) : capture de cet onglet, recadrée sur le cadre 21:9 ---- */
+  let rec = null;
+  startEl.querySelector('.rec').addEventListener('click', async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia || !window.MediaRecorder) { toast('L’export vidéo nécessite Chrome ou Edge sur ordinateur. Sinon, enregistrez l’écran en plein écran.', 5000); return; }
+    if (!ready || !buffer) { toast('Patientez, la musique se prépare…'); return; }
+    ensureAudio();
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getDisplayMedia({ video: { frameRate: 60 }, audio: false, preferCurrentTab: true, selfBrowserSurface: 'include', surfaceSwitching: 'exclude' });
+    } catch (e) { toast('Enregistrement annulé.'); return; }
+    const track = stream.getVideoTracks()[0];
+    const dest = actx.createMediaStreamDestination(); gain.connect(dest);
+    const mixed = new MediaStream([track, ...dest.stream.getAudioTracks()]);
+    const types = ['video/mp4;codecs=avc1.640033,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm'];
+    const mime = types.find(m => MediaRecorder.isTypeSupported(m)) || '';
+    const mr = new MediaRecorder(mixed, { mimeType: mime, videoBitsPerSecond: 24e6, audioBitsPerSecond: 256e3 });
+    const chunks = []; mr.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+    mr.onstop = () => {
+      stream.getTracks().forEach(t => t.stop()); try { gain.disconnect(dest); } catch (e) { /* rien */ }
+      const ext = mime.includes('mp4') ? 'mp4' : 'webm';
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(chunks, { type: mime || 'video/webm' })); a.download = 'IBFautomate-video.' + ext; a.click();
+      toast('Vidéo enregistrée : IBFautomate-video.' + ext, 6000); rec = null;
+    };
+    track.addEventListener('ended', () => { if (mr.state === 'recording') { pause(); mr.stop(); } });
+    startEl.style.display = 'none'; hud.classList.remove('on'); started = true; pause(); pausedAt = 0;
+    let cropped = false;
+    try { if (window.CropTarget && track.cropTo) { await track.cropTo(await CropTarget.fromElement(stage)); cropped = true; } } catch (e) { console.warn(e); }
+    rec = {
+      waiting: true,
+      go: () => {
+        rec.waiting = false; document.body.classList.add('nocursor');
+        setTimeout(() => { mr.start(200); play(0); onEnd = () => setTimeout(() => mr.stop(), 350); }, 600);
+      },
+    };
+    toast((cropped ? '' : 'Astuce : en plein écran le cadre sera plus net. ') + 'Passez en plein écran (F) puis appuyez sur Entrée pour lancer l’enregistrement.', 8000);
+  });
+})();
+
+</script>
+</body>
+</html>
