@@ -2,15 +2,17 @@
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
-import { ArrowLeft, Play, Smartphone, X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 
 const PROMO_SRC = "/video/promo-corail.html?embed";
 
-/* Téléphone tenu droit (arrivée par QR code) : écran « Tournez votre téléphone ».
+/* Téléphone tenu droit (arrivée par QR code) : la vidéo s'affiche à l'endroit, au format vertical 9:16.
+   Le bouton plein écran du lecteur la passe à l'horizontale (21:9), plein écran.
    Téléphone en paysage : la vidéo s'ouvre directement en plein écran.
-   Ordinateur : vidéo 21:9 en grand ; le bouton plein écran du lecteur passe en plein écran.
-   Un seul cadre (iframe) est utilisé partout : changer d'orientation ne relance pas la vidéo. */
+   Ordinateur : vidéo 21:9 en grand.
+   Le lecteur choisit lui-même son format (vertical ou horizontal) selon la forme du cadre ;
+   un seul cadre (iframe) est utilisé partout : changer d'orientation ne relance pas la vidéo. */
 const PORTRAIT_PHONE = "(orientation: portrait) and (max-width: 1024px)";
 const LANDSCAPE_PHONE = "(orientation: landscape) and (max-height: 500px)";
 
@@ -37,7 +39,7 @@ export function VideoPage() {
       const prev = prevDevice.current;
       // Téléphone qu'on vient de tourner en paysage : plein écran directement.
       if (next === "landscape" && prev !== "landscape") setFs(true);
-      // Retour en portrait : on revient à l'écran « Tournez votre téléphone ».
+      // Retour en portrait : la vidéo reprend sa place, au format vertical.
       if (next === "portrait" && prev === "landscape") setFs(false);
       prevDevice.current = next;
       setDevice(next);
@@ -121,25 +123,31 @@ export function VideoPage() {
     };
   }, [overlay, postState]);
 
-  const hidden = device === "portrait" && !overlay; // écran « Tournez votre téléphone »
-  const rotate = overlay && viewport.h > viewport.w; // plein écran demandé, téléphone encore droit
+  const portrait = device === "portrait";
+  const rotate = overlay && viewport.h > viewport.w; // plein écran demandé, téléphone encore droit : vidéo à l'horizontale
 
   const shellStyle: CSSProperties = overlay
     ? { position: "fixed", inset: 0, zIndex: 200, background: "#000", padding: 0, borderRadius: 0 }
-    : hidden
-      ? { position: "fixed", inset: 0, visibility: "hidden", pointerEvents: "none" }
-      : { position: "relative", width: "100%", maxWidth: device === "landscape" ? "min(100%, calc((100svh - 6rem) * 21 / 9))" : "min(100%, calc((100svh - 10rem) * 21 / 9))" };
+    : {
+        position: "relative",
+        width: "100%",
+        maxWidth: portrait
+          ? "min(100%, calc((100svh - 8.5rem) * 9 / 16))"
+          : device === "landscape"
+            ? "min(100%, calc((100svh - 6rem) * 21 / 9))"
+            : "min(100%, calc((100svh - 10rem) * 21 / 9))",
+      };
 
   const frameStyle: CSSProperties = overlay
     ? rotate
       ? { position: "absolute", left: "50%", top: "50%", width: viewport.h, height: viewport.w, transform: "translate(-50%, -50%) rotate(90deg)" }
       : { position: "absolute", inset: 0 }
-    : { position: "relative", width: "100%", aspectRatio: "21 / 9" };
+    : { position: "relative", width: "100%", aspectRatio: portrait ? "9 / 16" : "21 / 9" };
 
   return (
     <section
       className={`relative flex min-h-[100svh] flex-col items-center justify-center px-3 sm:px-6 lg:px-8 ${
-        device === "landscape" ? "pb-4 pt-20" : "pb-10 pt-24 sm:pt-28"
+        device === "landscape" ? "pb-4 pt-20" : portrait ? "pb-6 pt-24" : "pb-10 pt-24 sm:pt-28"
       }`}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -153,25 +161,10 @@ export function VideoPage() {
       </div>
 
       <div className="relative mx-auto flex w-full max-w-[1400px] flex-col items-center">
-        {device === "portrait" && (
-          <div className="island w-full max-w-sm px-6 py-10 text-center">
-            <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-3xl bg-brand/10">
-              <Smartphone className="ibf-turn h-12 w-12 text-brand-emerald" aria-hidden />
-            </div>
-            <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--text)]">{t.video.rotateTitle}</h1>
-            <p className="mt-3 text-[var(--text-muted)]">{t.video.rotateText}</p>
-            <button type="button" onClick={openFullscreen} className="btn-primary mx-auto mt-8 !w-auto">
-              <Play className="h-4 w-4" aria-hidden />
-              {t.video.launch}
-            </button>
-          </div>
-        )}
-
         <div
           ref={shellRef}
-          className={overlay || hidden ? "" : "island overflow-hidden p-1 sm:p-2"}
+          className={overlay ? "" : "island overflow-hidden p-1 sm:p-2"}
           style={shellStyle}
-          aria-hidden={hidden || undefined}
         >
           <div
             className={overlay ? "" : "overflow-hidden rounded-[14px] bg-[#050807] sm:rounded-[18px]"}
@@ -185,7 +178,6 @@ export function VideoPage() {
                 title={t.video.iframeTitle}
                 allow="autoplay; fullscreen"
                 allowFullScreen
-                tabIndex={hidden ? -1 : undefined}
                 onLoad={postState}
               />
             )}
@@ -202,8 +194,8 @@ export function VideoPage() {
           </div>
         </div>
 
-        <div className="mt-6 flex justify-center sm:mt-8">
-          <Link href="/" className={device === "portrait" ? "text-sm font-medium text-[var(--text-muted)] underline-offset-4 hover:underline" : "btn-primary !w-auto"}>
+        <div className={portrait ? "mt-4 flex justify-center" : "mt-6 flex justify-center sm:mt-8"}>
+          <Link href="/" className={portrait ? "text-sm font-medium text-[var(--text-muted)] underline-offset-4 hover:underline" : "btn-primary !w-auto"}>
             <span className="inline-flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" aria-hidden />
               {t.video.back}

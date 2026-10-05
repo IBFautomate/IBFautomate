@@ -298,22 +298,3 @@
     max-height: 300px;
   }
 }
-
-/* Page /video : icône « tournez votre téléphone » */
-@layer utilities {
-  @keyframes ibf-turn {
-    0%, 22% { transform: rotate(0deg); }
-    45%, 78% { transform: rotate(-90deg); }
-    100% { transform: rotate(0deg); }
-  }
-
-  .ibf-turn {
-    animation: ibf-turn 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ibf-turn {
-      animation: none;
-    }
-  }
-}
