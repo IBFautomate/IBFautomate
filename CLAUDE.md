@@ -33,7 +33,8 @@ Pas de portfolio / réalisations. Pas de prix affichés. Tous les CTA tarifaires
 ```
 src/
   app/
-    layout.tsx          # fonts Space Grotesk + Inter, ThemeProvider, metadata
+    layout.tsx          # fonts Space Grotesk + Inter (next/font/local), ThemeProvider, metadata
+    fonts/              # inter-latin.woff2, space-grotesk-latin.woff2 (hébergées, SIL OFL)
     page.tsx            # assemblage des sections
     globals.css         # tokens CSS, îlots glass, boutons, marquee
     icon.svg
@@ -87,6 +88,7 @@ Ancres : `#top`, `#services`, `#processus`, `#avis`, `#faq`, `#devis`.
 | Logos Slack/Calendar en PNG | Fichiers `public/slack.png` et `public/Calendar.png` |
 | Déploiement via dashboard Vercel | Pas via `vercel --prod` CLI (mauvaise approche pour ce projet) |
 | i18n FR/EN | LanguageProvider ; FR par défaut |
+| Polices hébergées (next/font/local), pas Google Fonts | Avec next/font/google, une mise à jour des fichiers chez Google a désaccordé la page et le CSS en cache sur Vercel (classes __variable_ sans règle → police de secours) |
 | Palette verte (site et vidéo promo identiques) | `brand` = #00E676, `brand.emerald` = #10B981, `brand.deep` = #047857, `brand.dark` = #064E3B dans `tailwind.config.js` + `globals.css`. La vidéo promo utilise les mêmes verts (essai en rose corail abandonné : tout est resté vert pour la cohérence) |
 | Vidéo promo en MP4 (pas de lecteur HTML) | Fichiers exportés depuis le projet vidéo (Bureau) ; lecture native = pas de plantage sur téléphone. iPhone : plein écran via le lecteur vidéo natif (`webkitEnterFullscreen`) |
 | Image de partage en PNG sur ibfautomate.com | `metadataBase` = https://ibfautomate.com ; `og.png` (les réseaux sociaux ne lisent pas le SVG) |
