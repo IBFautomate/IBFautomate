@@ -28,8 +28,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ["var(--font-space-grotesk)", "sans-serif"],
-        sans: ["var(--font-inter)", "sans-serif"],
+        /* repli dans var() : si la variable de police manquait, on garde une police sans empattements (jamais Times) */
+        display: ["var(--font-space-grotesk, ui-sans-serif)", "sans-serif"],
+        sans: ["var(--font-inter, ui-sans-serif)", "sans-serif"],
       },
       backgroundImage: {
         "brand-gradient":

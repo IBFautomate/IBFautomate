@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import "./globals.css";
 
+/* Polices du site : les classes `variable` générées ici doivent correspondre au CSS de la même compilation.
+   Si un déploiement Vercel affiche une police de secours, modifier ce fichier force sa recompilation. */
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
