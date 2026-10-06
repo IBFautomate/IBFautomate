@@ -13,20 +13,18 @@ module.exports = {
       },
       colors: {
         night: {
-          DEFAULT: "#0D0E11",
-          surface: "#15171C",
+          DEFAULT: "#050807",
+          surface: "#0A0F0D",
         },
         day: {
-          DEFAULT: "#FBFBFC",
-          text: "#15171C",
+          DEFAULT: "#F7FAF8",
+          text: "#0A0F0D",
         },
-        /* Rose corail de la vidéo promo (même palette que le projet vidéo) */
         brand: {
-          DEFAULT: "#F06060",
-          light: "#FB9A8E",
-          deep: "#B54447",
-          dark: "#6A252A",
-          soft: "#FFF0EF",
+          DEFAULT: "#00E676",
+          emerald: "#10B981",
+          dark: "#064E3B",
+          deep: "#047857",
         },
       },
       fontFamily: {
@@ -35,11 +33,11 @@ module.exports = {
       },
       backgroundImage: {
         "brand-gradient":
-          "linear-gradient(135deg, #FB9A8E 0%, #F06060 45%, #B54447 100%)",
+          "linear-gradient(135deg, #00E676, #059669, #064E3B)",
       },
       boxShadow: {
-        "glow-brand": "0 0 24px rgba(240, 96, 96, 0.35)",
-        "glow-brand-sm": "0 0 12px rgba(240, 96, 96, 0.25)",
+        "glow-brand": "0 0 24px rgba(0, 230, 118, 0.35)",
+        "glow-brand-sm": "0 0 12px rgba(0, 230, 118, 0.25)",
       },
       borderRadius: {
         island: "22px",

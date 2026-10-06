@@ -46,7 +46,7 @@ export function Process() {
             style={{
               height: reduce ? "100%" : height,
               backgroundImage:
-                "linear-gradient(180deg, #FB9A8E, #F06060, #B54447)",
+                "linear-gradient(180deg, #00E676, #059669, #064E3B)",
             }}
             aria-hidden
           />

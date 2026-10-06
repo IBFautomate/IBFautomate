@@ -182,21 +182,21 @@ export function Hero() {
         className="orb left-[-20%] top-16 h-[280px] w-[280px] animate-float sm:left-[-10%] sm:top-20 sm:h-[420px] sm:w-[420px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(240,96,96,0.5), transparent 70%)",
+            "radial-gradient(circle, rgba(0,230,118,0.55), transparent 70%)",
         }}
       />
       <div
         className="orb right-[-15%] top-32 h-[240px] w-[240px] animate-float-alt sm:right-[-5%] sm:top-40 sm:h-[380px] sm:w-[380px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(251,154,142,0.5), transparent 70%)",
+            "radial-gradient(circle, rgba(16,185,129,0.45), transparent 70%)",
         }}
       />
       <div
         className="orb bottom-10 left-1/3 hidden h-[300px] w-[300px] animate-float sm:block"
         style={{
           background:
-            "radial-gradient(circle, rgba(181,68,71,0.42), transparent 70%)",
+            "radial-gradient(circle, rgba(6,78,59,0.5), transparent 70%)",
           animationDelay: "-4s",
         }}
       />
@@ -210,7 +210,7 @@ export function Hero() {
           style={{
             borderColor: "var(--island-border)",
             background: "var(--island)",
-            color: "#B54447",
+            color: "#047857",
           }}
         >
           <span className="dark:text-brand">{t.hero.badge}</span>

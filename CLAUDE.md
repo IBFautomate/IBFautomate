@@ -87,7 +87,7 @@ Ancres : `#top`, `#services`, `#processus`, `#avis`, `#faq`, `#devis`.
 | Logos Slack/Calendar en PNG | Fichiers `public/slack.png` et `public/Calendar.png` |
 | Déploiement via dashboard Vercel | Pas via `vercel --prod` CLI (mauvaise approche pour ce projet) |
 | i18n FR/EN | LanguageProvider ; FR par défaut |
-| Palette rose corail de la vidéo promo | `brand` = #F06060 (clair #FB9A8E, foncé #B54447, très foncé #6A252A) dans `tailwind.config.js` + `globals.css` ; fonds/textes neutres. Vert seulement pour la validation du formulaire et les logos d'outils tiers |
+| Palette verte (site et vidéo promo identiques) | `brand` = #00E676, `brand.emerald` = #10B981, `brand.deep` = #047857, `brand.dark` = #064E3B dans `tailwind.config.js` + `globals.css`. La vidéo promo utilise les mêmes verts (essai en rose corail abandonné : tout est resté vert pour la cohérence) |
 | Vidéo promo en MP4 (pas de lecteur HTML) | Fichiers exportés depuis le projet vidéo (Bureau) ; lecture native = pas de plantage sur téléphone. iPhone : plein écran via le lecteur vidéo natif (`webkitEnterFullscreen`) |
 | Image de partage en PNG sur ibfautomate.com | `metadataBase` = https://ibfautomate.com ; `og.png` (les réseaux sociaux ne lisent pas le SVG) |
 
@@ -105,7 +105,7 @@ Ancres : `#top`, `#services`, `#processus`, `#avis`, `#faq`, `#devis`.
 
 ## Terminés
 
-- [x] Site one-page complet (design rose corail aligné sur la vidéo promo, glassmorphism, thème jour/nuit)
+- [x] Site one-page complet (design vert/noir, glassmorphism, thème jour/nuit ; vidéo promo aux mêmes verts)
 - [x] i18n FR/EN
 - [x] Widget WhatsApp (bulle 3s, sessionStorage, `wa.me/0762129949`)
 - [x] Formulaire devis → Resend + webhook CRM

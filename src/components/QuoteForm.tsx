@@ -84,7 +84,7 @@ export function QuoteForm() {
         className="orb right-[10%] top-20 h-[360px] w-[360px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(240,96,96,0.32), transparent 70%)",
+            "radial-gradient(circle, rgba(0,230,118,0.35), transparent 70%)",
         }}
       />
 

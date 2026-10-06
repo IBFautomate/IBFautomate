@@ -513,7 +513,7 @@ export function VideoPage() {
         <div
           className="absolute left-1/2 top-1/3 h-96 w-96 -translate-x-1/2 rounded-full blur-3xl"
           style={{
-            background: "radial-gradient(circle, rgba(240,96,96,0.18), transparent 70%)",
+            background: "radial-gradient(circle, rgba(0,230,118,0.18), transparent 70%)",
             opacity: "var(--orb-opacity)",
           }}
         />
@@ -558,7 +558,7 @@ export function VideoPage() {
             <div className="absolute inset-0 z-[5]" onClick={onSurface} aria-hidden />
 
             {started && waiting && (
-              <Loader2 aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 z-10 h-10 w-10 -translate-x-1/2 -translate-y-1/2 animate-spin text-[#F06060]" />
+              <Loader2 aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 z-10 h-10 w-10 -translate-x-1/2 -translate-y-1/2 animate-spin text-[#10B981]" />
             )}
 
             {/* Écran de départ */}
@@ -591,7 +591,7 @@ export function VideoPage() {
                   className="relative mx-1.5 h-10 min-w-[48px] flex-1 cursor-pointer touch-none rounded-full outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 >
                   <span className="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-white/25" />
-                  <span ref={fillRef} className="absolute left-0 top-1/2 h-1 w-0 -translate-y-1/2 rounded-full bg-[#F06060]" />
+                  <span ref={fillRef} className="absolute left-0 top-1/2 h-1 w-0 -translate-y-1/2 rounded-full bg-brand" />
                   <span ref={knobRef} className="absolute left-0 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow" />
                 </div>
                 <button type="button" onClick={toggleMute} aria-label={muted ? t.video.unmute : t.video.mute} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition hover:bg-white/15">
