@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import "./globals.css";
 
-/* Polices du site : les classes `variable` générées ici doivent correspondre au CSS de la même compilation.
-   Si un déploiement Vercel affiche une police de secours, modifier ce fichier force sa recompilation. */
-const inter = Inter({
-  subsets: ["latin"],
+/* Polices hébergées dans le site (Inter, Space Grotesk — licence SIL OFL, sous-ensemble latin, fichiers variables).
+   Pas de téléchargement chez Google Fonts pendant la compilation : les noms de classe générés restent
+   identiques d'un déploiement à l'autre (avec Google Fonts, une mise à jour des fichiers chez Google
+   pouvait désaccorder la page et le CSS en cache sur Vercel → police de secours). */
+const inter = localFont({
+  src: "./fonts/inter-latin.woff2",
+  weight: "100 900",
+  style: "normal",
   variable: "--font-inter",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
+const spaceGrotesk = localFont({
+  src: "./fonts/space-grotesk-latin.woff2",
+  weight: "300 700",
+  style: "normal",
   variable: "--font-space-grotesk",
   display: "swap",
 });
