@@ -1,10 +1,12 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BellRing, Palette, Smartphone } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { FadeIn, Stagger, StaggerItem } from "./Motion";
 import { useLanguage } from "./LanguageProvider";
+
+const FEATURE_ICONS = [Smartphone, Palette, BellRing];
 
 function ClayRocket({ className }: { className?: string }) {
   return (
@@ -296,13 +298,15 @@ export function MobileApp() {
             <p className="mt-4 text-[var(--text-muted)]">{t.mobile.subtitle}</p>
 
             <Stagger className="mt-8 space-y-4">
-              {t.mobile.features.map((feature) => (
+              {t.mobile.features.map((feature, i) => {
+                const Icon = FEATURE_ICONS[i] ?? Smartphone;
+                return (
                 <StaggerItem key={feature.title}>
                   <article
                     className="island flex gap-4 p-4 sm:p-5"
                   >
                     <div className="icon-box shrink-0">
-                      <span className="font-display text-sm font-bold">+</span>
+                      <Icon className="h-5 w-5 text-brand-deep dark:text-brand" aria-hidden />
                     </div>
                     <div>
                       <h3 className="font-display text-base font-bold tracking-tight">
@@ -314,7 +318,8 @@ export function MobileApp() {
                     </div>
                   </article>
                 </StaggerItem>
-              ))}
+                );
+              })}
             </Stagger>
 
             <a href="#devis" className="btn-primary mt-8 sm:!w-auto">
