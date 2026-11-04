@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { useLanguage } from "./LanguageProvider";
 import { HeroPromoVideo } from "./HeroPromoVideo";
+import { FounderAvatar } from "./FounderAvatar";
 
 type ToolLogo = {
   name: string;
@@ -248,8 +249,29 @@ export function Hero() {
           </a>
         </motion.div>
 
+        <motion.a
+          href="#fondateur"
+          className="island island-hover mt-7 inline-flex max-w-full items-center gap-3 !rounded-2xl py-2 pl-2 pr-4 text-left sm:mt-9 sm:!rounded-full sm:py-1.5 sm:pl-1.5 sm:pr-5"
+          initial={reduce ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85, duration: 0.5 }}
+        >
+          <FounderAvatar
+            className="h-11 w-11 ring-2 ring-brand/60"
+            alt=""
+          />
+          <span className="min-w-0">
+            <span className="font-display block text-sm font-semibold leading-snug">
+              {t.hero.founder}
+            </span>
+            <span className="block text-xs leading-snug text-[var(--text-muted)]">
+              {t.hero.founderSub}
+            </span>
+          </span>
+        </motion.a>
+
         <motion.p
-          className="mt-6 px-2 text-xs leading-relaxed text-[var(--text-muted)] sm:mt-8 sm:text-sm"
+          className="mt-4 px-2 text-xs leading-relaxed text-[var(--text-muted)] sm:mt-5 sm:text-sm"
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.5 }}

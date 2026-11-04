@@ -16,6 +16,7 @@ export function Navbar() {
   const links = [
     { href: "#services", label: t.nav.services },
     { href: "#processus", label: t.nav.process },
+    { href: "#fondateur", label: t.nav.about },
     { href: "#avis", label: t.nav.reviews },
     { href: "#faq", label: t.nav.faq },
   ];

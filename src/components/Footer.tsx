@@ -9,6 +9,7 @@ export function Footer() {
   const quickLinks = [
     { href: "#services", label: t.nav.services },
     { href: "#processus", label: t.nav.process },
+    { href: "#fondateur", label: t.nav.about },
     { href: "#avis", label: t.nav.reviews },
     { href: "#faq", label: t.nav.faq },
     { href: "#devis", label: t.footer.quote },
@@ -76,14 +77,14 @@ export function Footer() {
             <ul className="mt-4 space-y-3">
               <li>
                 <a
-                  href="mailto:IBFautomate@outlook.com"
+                  href="mailto:contact@ibfautomate.com"
                   className="inline-flex max-w-full items-center gap-2 break-all text-sm text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--text)]"
                 >
                   <Mail
                     className="h-4 w-4 shrink-0 text-brand-deep dark:text-brand"
                     aria-hidden
                   />
-                  IBFautomate@outlook.com
+                  contact@ibfautomate.com
                 </a>
               </li>
               <li>

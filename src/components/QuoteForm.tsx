@@ -6,6 +6,7 @@ import { CheckCircle2, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { FadeIn } from "./Motion";
 import { useLanguage } from "./LanguageProvider";
 import { isEuropeanPhoneNumber } from "@/lib/phone";
+import { FounderAvatar } from "./FounderAvatar";
 
 export function QuoteForm() {
   const { t, locale } = useLanguage();
@@ -100,8 +101,17 @@ export function QuoteForm() {
         <div className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-12">
           <FadeIn className="h-full">
             <div className="flex h-full flex-col justify-between gap-5">
+              <div className="island flex flex-1 items-center gap-4 p-5">
+                <FounderAvatar className="h-12 w-12 ring-2 ring-brand/60" alt="" />
+                <div>
+                  <p className="font-display font-semibold">{t.quote.founderTitle}</p>
+                  <p className="text-sm text-[var(--text-muted)]">
+                    {t.quote.founderText}
+                  </p>
+                </div>
+              </div>
               <a
-                href="mailto:IBFautomate@outlook.com"
+                href="mailto:contact@ibfautomate.com"
                 className="island island-hover flex flex-1 items-center gap-4 p-5"
               >
                 <span className="icon-box">
@@ -112,7 +122,7 @@ export function QuoteForm() {
                     {t.quote.email}
                   </p>
                   <p className="font-display font-semibold">
-                    IBFautomate@outlook.com
+                    contact@ibfautomate.com
                   </p>
                 </div>
               </a>

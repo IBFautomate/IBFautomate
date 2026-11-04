@@ -5,6 +5,7 @@ import { Services } from "@/components/Services";
 import { MobileApp } from "@/components/MobileApp";
 import { ProjectBoost } from "@/components/ProjectBoost";
 import { Process } from "@/components/Process";
+import { Founder } from "@/components/Founder";
 import { Testimonials } from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
 import { QuoteForm } from "@/components/QuoteForm";
@@ -22,6 +23,7 @@ export default function HomePage() {
         <MobileApp />
         <ProjectBoost />
         <Process />
+        <Founder />
         <Testimonials />
         <FAQ />
         <QuoteForm />

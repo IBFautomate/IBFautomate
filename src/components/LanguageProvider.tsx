@@ -17,6 +17,7 @@ const translations = {
     nav: {
       services: "Services",
       process: "Processus",
+      about: "À propos",
       reviews: "Avis",
       faq: "FAQ",
       quote: "Demander un devis",
@@ -41,6 +42,8 @@ const translations = {
       cta: "Démarrer",
       secondary: "Découvrir nos services",
       trust: "Projets livrés · 100 % satisfaction · Réponse sous 24h",
+      founder: "Votre interlocuteur : Imrane, fondateur",
+      founderSub: "Je réponds personnellement à chaque demande",
     },
     stats: {
       label: "Le constat",
@@ -175,6 +178,33 @@ const translations = {
         },
       ],
     },
+    founder: {
+      label: "Le fondateur",
+      title: "Votre interlocuteur",
+      role: "Fondateur d'IBFautomate",
+      photoAlt: "Imrane Ben Fakir, fondateur d'IBFautomate",
+      sceneAlt: "Imrane à son bureau, en appel avec un client",
+      paragraphs: [
+        "Je m'appelle Imrane Ben Fakir. J'ai créé IBFautomate avec une idée simple : vous faire gagner du temps grâce à des outils qui fonctionnent vraiment dans votre quotidien.",
+        "Quand vous me contactez, c'est moi qui vous réponds, qui étudie votre besoin et qui suis votre projet jusqu'au bout. Pas de standard, pas de discours commercial : un échange direct, des explications claires et des engagements tenus.",
+      ],
+      commitments: [
+        {
+          title: "Un seul interlocuteur",
+          text: "Vous parlez directement avec la personne qui construit votre projet.",
+        },
+        {
+          title: "Des explications claires",
+          text: "Chaque choix est expliqué simplement, sans jargon technique.",
+        },
+        {
+          title: "Un suivi après livraison",
+          text: "Je reste disponible une fois votre projet en ligne.",
+        },
+      ],
+      cta: "Parler de mon projet",
+      whatsapp: "M'écrire sur WhatsApp",
+    },
     reviews: {
       label: "Avis clients",
       title: "Ils nous font confiance",
@@ -251,6 +281,8 @@ const translations = {
       delayValue: "Réponse sous 24h",
       zone: "Zone",
       zoneValue: "France entière",
+      founderTitle: "C'est moi qui lis votre demande",
+      founderText: "Imrane, fondateur. Réponse personnelle sous 24h.",
       name: "Nom complet",
       subject: "Sujet",
       message: "Message",
@@ -308,6 +340,7 @@ const translations = {
     nav: {
       services: "Services",
       process: "Process",
+      about: "About",
       reviews: "Reviews",
       faq: "FAQ",
       quote: "Request a quote",
@@ -332,6 +365,8 @@ const translations = {
       cta: "Get started",
       secondary: "Explore our services",
       trust: "Projects delivered · 100% satisfaction · Reply within 24h",
+      founder: "You'll talk to Imrane, the founder",
+      founderSub: "I personally answer every request",
     },
     stats: {
       label: "The reality",
@@ -466,6 +501,33 @@ const translations = {
         },
       ],
     },
+    founder: {
+      label: "The founder",
+      title: "Who you'll work with",
+      role: "Founder of IBFautomate",
+      photoAlt: "Imrane Ben Fakir, founder of IBFautomate",
+      sceneAlt: "Imrane at his desk, on a call with a client",
+      paragraphs: [
+        "I'm Imrane Ben Fakir. I founded IBFautomate with a simple idea: save you time with tools that actually work in your day-to-day business.",
+        "When you reach out, I'm the one who answers, studies your needs and follows your project all the way through. No call center, no sales pitch: direct conversation, clear explanations and commitments kept.",
+      ],
+      commitments: [
+        {
+          title: "One single contact",
+          text: "You talk directly with the person building your project.",
+        },
+        {
+          title: "Clear explanations",
+          text: "Every choice is explained simply, without technical jargon.",
+        },
+        {
+          title: "Support after delivery",
+          text: "I stay available once your project is live.",
+        },
+      ],
+      cta: "Discuss my project",
+      whatsapp: "Message me on WhatsApp",
+    },
     reviews: {
       label: "Client reviews",
       title: "They trust us",
@@ -542,6 +604,8 @@ const translations = {
       delayValue: "Reply within 24h",
       zone: "Area",
       zoneValue: "All of France",
+      founderTitle: "I read your request myself",
+      founderText: "Imrane, founder. Personal reply within 24h.",
       name: "Full name",
       subject: "Subject",
       message: "Message",

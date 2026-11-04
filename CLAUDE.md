@@ -47,6 +47,8 @@ src/
     MobileApp.tsx
     ProjectBoost.tsx
     Process.tsx
+    Founder.tsx         # section « Le fondateur » (#fondateur) : scène bureau + portrait réel
+    FounderAvatar.tsx   # portrait public/fondateur.jpg (repli initiales « IB »)
     Testimonials.tsx
     FAQ.tsx
     QuoteForm.tsx       # formulaire devis → /api/contact
@@ -62,14 +64,15 @@ src/
     phone.ts            # validation numéros européens
 public/
   slack.png, Calendar.png, og.svg, og.png (image de partage 1200×630)
+  fondateur.jpg (vrai portrait studio), fondateur-bureau.jpg (scène bureau générée par IA, de dos)
   video/                # promo-verticale.mp4, promo-horizontale.mp4, logo-ibfautomate.svg
 .env.example            # RESEND_API_KEY, CRM_WEBHOOK_SECRET
 .env.local              # secrets (gitignored)
 ```
 
-Sections page (ordre) : Navbar → Hero → Stats → Services → MobileApp → ProjectBoost → Process → Testimonials → FAQ → QuoteForm → Footer → WhatsAppWidget.
+Sections page (ordre) : Navbar → Hero → Stats → Services → MobileApp → ProjectBoost → Process → Founder → Testimonials → FAQ → QuoteForm → Footer → WhatsAppWidget.
 
-Ancres : `#top`, `#services`, `#processus`, `#avis`, `#faq`, `#devis`.
+Ancres : `#top`, `#services`, `#processus`, `#fondateur`, `#avis`, `#faq`, `#devis`.
 
 ## Décisions importantes
 
@@ -118,6 +121,7 @@ Ancres : `#top`, `#services`, `#processus`, `#avis`, `#faq`, `#devis`.
 - [x] Repo GitHub + pushes sur `main`
 - [x] Projet Vercel lié au repo GitHub
 - [x] Page /video (QR code) : vidéo promo MP4, verticale sur téléphone, plein écran horizontal
+- [x] Section fondateur + portrait (Hero, devis) ; email affiché = contact@ibfautomate.com (MX ImprovMX)
 
 ## À faire
 
@@ -160,7 +164,7 @@ CRM_WEBHOOK_SECRET=...   # = WEBHOOK_SECRET du CRM
 ```
 
 Contacts affichés sur le site :
-- Email : `IBFautomate@outlook.com`
+- Email : `contact@ibfautomate.com` (affiché sur le site ; les devis arrivent toujours sur Outlook + Gmail)
 - Téléphone : `07 62 12 99 49`
 - WhatsApp : `0762129949`
 
