@@ -1,245 +1,309 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ArrowRight, BellRing, Palette, Smartphone } from "lucide-react";
+import {
+  ArrowRight,
+  BarChart3,
+  BatteryFull,
+  BellRing,
+  CalendarDays,
+  Camera,
+  Cloud,
+  CreditCard,
+  FileText,
+  Globe,
+  LayoutDashboard,
+  ListChecks,
+  Mail,
+  MessageCircle,
+  MessageSquare,
+  Palette,
+  Phone,
+  Receipt,
+  Settings,
+  Signal,
+  Smartphone,
+  StickyNote,
+  TrendingUp,
+  Users,
+  Wifi,
+  type LucideIcon,
+} from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { FadeIn, Stagger, StaggerItem } from "./Motion";
-import { useLanguage } from "./LanguageProvider";
+import { useLanguage, type Dictionary } from "./LanguageProvider";
+import { FounderAvatar } from "./FounderAvatar";
 
 const FEATURE_ICONS = [Smartphone, Palette, BellRing];
 
-function ClayRocket({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 80 80"
-      className={className}
-      aria-hidden
-      fill="none"
-    >
-      <ellipse cx="40" cy="72" rx="18" ry="5" fill="rgba(0,0,0,0.12)" />
-      <path
-        d="M40 8c-8 14-12 28-12 42 0 6 5 10 12 10s12-4 12-10c0-14-4-28-12-42Z"
-        fill="url(#clayRocketBody)"
-      />
-      <circle cx="40" cy="32" r="7" fill="url(#clayRocketWindow)" />
-      <path
-        d="M28 48 18 58l10 4 6-10Zm24 0 10 10-10 4-6-10Z"
-        fill="url(#clayRocketFin)"
-      />
-      <path
-        d="M36 58c0 4 2 8 4 10 2-2 4-6 4-10H36Z"
-        fill="url(#clayRocketFlame)"
-      />
-      <defs>
-        <linearGradient id="clayRocketBody" x1="28" y1="8" x2="52" y2="60">
-          <stop stopColor="#34d399" />
-          <stop offset="1" stopColor="#059669" />
-        </linearGradient>
-        <linearGradient id="clayRocketWindow" x1="33" y1="25" x2="47" y2="39">
-          <stop stopColor="#a7f3d0" />
-          <stop offset="1" stopColor="#6ee7b7" />
-        </linearGradient>
-        <linearGradient id="clayRocketFin" x1="18" y1="48" x2="62" y2="62">
-          <stop stopColor="#10b981" />
-          <stop offset="1" stopColor="#047857" />
-        </linearGradient>
-        <linearGradient id="clayRocketFlame" x1="36" y1="58" x2="44" y2="68">
-          <stop stopColor="#fbbf24" />
-          <stop offset="1" stopColor="#f97316" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
+type PhoneTexts = Dictionary["mobile"]["phone"];
 
-function ClayChatBubble({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 80 80"
-      className={className}
-      aria-hidden
-      fill="none"
-    >
-      <ellipse cx="40" cy="68" rx="20" ry="5" fill="rgba(0,0,0,0.1)" />
-      <path
-        d="M14 18h52a10 10 0 0 1 10 10v22a10 10 0 0 1-10 10H36l-12 12v-12H14a10 10 0 0 1-10-10V28a10 10 0 0 1 10-10Z"
-        fill="url(#clayChatBody)"
-      />
-      <circle cx="28" cy="39" r="4" fill="#ecfdf5" />
-      <circle cx="40" cy="39" r="4" fill="#ecfdf5" />
-      <circle cx="52" cy="39" r="4" fill="#ecfdf5" />
-      <defs>
-        <linearGradient id="clayChatBody" x1="14" y1="18" x2="66" y2="60">
-          <stop stopColor="#6ee7b7" />
-          <stop offset="1" stopColor="#10b981" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-function ClayBell({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 80 80"
-      className={className}
-      aria-hidden
-      fill="none"
-    >
-      <ellipse cx="40" cy="70" rx="16" ry="4" fill="rgba(0,0,0,0.1)" />
-      <path
-        d="M40 12c-12 0-20 10-20 22v16l-6 8h52l-6-8V34c0-12-8-22-20-22Z"
-        fill="url(#clayBellBody)"
-      />
-      <rect x="34" y="8" width="12" height="8" rx="4" fill="#047857" />
-      <circle cx="40" cy="62" r="6" fill="url(#clayBellClapper)" />
-      <defs>
-        <linearGradient id="clayBellBody" x1="20" y1="12" x2="60" y2="58">
-          <stop stopColor="#fcd34d" />
-          <stop offset="1" stopColor="#f59e0b" />
-        </linearGradient>
-        <linearGradient id="clayBellClapper" x1="34" y1="56" x2="46" y2="68">
-          <stop stopColor="#fde68a" />
-          <stop offset="1" stopColor="#d97706" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-function ClayCompass({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 80 80"
-      className={className}
-      aria-hidden
-      fill="none"
-    >
-      <ellipse cx="40" cy="68" rx="22" ry="5" fill="rgba(0,0,0,0.1)" />
-      <circle cx="40" cy="38" r="26" fill="url(#clayCompassRing)" />
-      <circle cx="40" cy="38" r="18" fill="url(#clayCompassFace)" />
-      <path d="M40 24 44 38 40 52 36 38Z" fill="url(#clayCompassNeedle)" />
-      <circle cx="40" cy="38" r="3" fill="#ecfdf5" />
-      <defs>
-        <linearGradient id="clayCompassRing" x1="14" y1="12" x2="66" y2="64">
-          <stop stopColor="#a78bfa" />
-          <stop offset="1" stopColor="#7c3aed" />
-        </linearGradient>
-        <linearGradient id="clayCompassFace" x1="22" y1="20" x2="58" y2="56">
-          <stop stopColor="#ede9fe" />
-          <stop offset="1" stopColor="#c4b5fd" />
-        </linearGradient>
-        <linearGradient id="clayCompassNeedle" x1="36" y1="24" x2="44" y2="52">
-          <stop stopColor="#00e676" />
-          <stop offset="1" stopColor="#ef4444" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-function ClayStar({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 80 80"
-      className={className}
-      aria-hidden
-      fill="none"
-    >
-      <ellipse cx="40" cy="68" rx="18" ry="4" fill="rgba(0,0,0,0.1)" />
-      <path
-        d="M40 10 46 30l20 2-15 12 5 19-16-10-16 10 5-19-15-12 20-2Z"
-        fill="url(#clayStarBody)"
-      />
-      <defs>
-        <linearGradient id="clayStarBody" x1="24" y1="10" x2="56" y2="53">
-          <stop stopColor="#f472b6" />
-          <stop offset="1" stopColor="#db2777" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-function PhoneMockup({
-  variant,
+/** Cadre de téléphone réaliste : bord métal, Dynamic Island, barre d'état, indicateur d'accueil. */
+function PhoneFrame({
+  children,
   className,
-  dashboardLabel,
+  light = true,
 }: {
-  variant: "dashboard" | "profile";
+  children: ReactNode;
   className?: string;
-  dashboardLabel: string;
+  light?: boolean;
 }) {
   return (
     <div
-      className={`mobile-phone relative overflow-hidden rounded-[2rem] border p-2 shadow-2xl ${className ?? ""}`}
-      style={{
-        borderColor: "var(--island-border)",
-        background: "var(--bg-surface)",
-      }}
+      className={`mobile-phone aspect-[9/19.5] rounded-[3.4em] p-[0.55em] text-[6.6px] sm:text-[9.4px] ${className ?? ""}`}
+      aria-hidden
     >
-      <div
-        className="relative overflow-hidden rounded-[1.6rem]"
-        style={{ background: "linear-gradient(160deg, #0a0f0d 0%, #064e3b 100%)" }}
-      >
-        <div className="flex items-center justify-between px-4 pb-2 pt-3">
-          <span className="text-[10px] font-medium text-white/70">9:41</span>
-          <div className="mx-auto h-4 w-16 rounded-full bg-black/40" />
-          <span className="text-[10px] font-medium text-white/70">100%</span>
-        </div>
+      {/* boutons latéraux */}
+      <span className="absolute -left-[0.25em] top-[17%] h-[6%] w-[0.3em] rounded-l bg-[#2b302d]" />
+      <span className="absolute -left-[0.25em] top-[26%] h-[9%] w-[0.3em] rounded-l bg-[#2b302d]" />
+      <span className="absolute -right-[0.25em] top-[22%] h-[12%] w-[0.3em] rounded-r bg-[#2b302d]" />
 
-        {variant === "dashboard" ? (
-          <div className="space-y-3 px-4 pb-6 pt-2">
-            <p className="font-display text-sm font-bold text-white">
-              {dashboardLabel}
-            </p>
-            <div className="rounded-2xl bg-white/10 p-3 backdrop-blur">
-              <div className="h-2 w-16 rounded-full bg-brand/80" />
-              <div className="mt-3 h-16 rounded-xl bg-gradient-to-r from-brand/30 to-emerald-900/40" />
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="rounded-xl bg-white/8 p-2">
-                <div className="h-8 w-8 rounded-lg bg-brand/40" />
-                <div className="mt-2 h-1.5 w-10 rounded-full bg-white/30" />
-              </div>
-              <div className="rounded-xl bg-white/8 p-2">
-                <div className="h-8 w-8 rounded-lg bg-pink-400/40" />
-                <div className="mt-2 h-1.5 w-10 rounded-full bg-white/30" />
-              </div>
-            </div>
-            <div className="flex gap-2">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="h-10 flex-1 rounded-xl bg-white/6"
-                />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-3 px-4 pb-6 pt-2">
-            <div className="mx-auto h-14 w-14 rounded-full bg-gradient-to-br from-brand to-emerald-800" />
-            <div className="mx-auto h-2 w-20 rounded-full bg-white/40" />
-            <div className="mx-auto h-1.5 w-14 rounded-full bg-white/20" />
-            <div className="mt-4 space-y-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2 rounded-xl bg-white/8 p-2"
-                >
-                  <div className="h-7 w-7 rounded-lg bg-brand/30" />
-                  <div className="h-1.5 flex-1 rounded-full bg-white/25" />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+      <div className="relative h-full w-full overflow-hidden rounded-[2.9em] bg-black">
+        {children}
+
+        <div className="absolute left-1/2 top-[0.85em] z-30 h-[2.3em] w-[32%] -translate-x-1/2 rounded-full bg-black" />
+        <div
+          className={`absolute inset-x-0 top-0 z-20 flex items-center justify-between px-[2.2em] pt-[1.25em] text-[1.1em] font-semibold ${
+            light ? "text-white" : "text-[#0a0f0d]"
+          }`}
+        >
+          <span>9:41</span>
+          <span className="flex items-center gap-[0.3em]">
+            <Signal className="h-[1.05em] w-[1.05em]" strokeWidth={2.6} />
+            <Wifi className="h-[1.05em] w-[1.05em]" strokeWidth={2.6} />
+            <BatteryFull className="h-[1.3em] w-[1.3em]" strokeWidth={2.2} />
+          </span>
+        </div>
+        <div
+          className={`absolute bottom-[0.7em] left-1/2 z-30 h-[0.45em] w-[36%] -translate-x-1/2 rounded-full ${
+            light ? "bg-white/85" : "bg-black/70"
+          }`}
+        />
       </div>
     </div>
   );
 }
 
-function FloatingClay({
+function AppIcon({
+  icon: Icon,
+  bg,
+  label,
+  badge,
+  children,
+}: {
+  icon?: LucideIcon;
+  bg: string;
+  label?: string;
+  badge?: string;
+  children?: ReactNode;
+}) {
+  return (
+    <div className="flex min-w-0 flex-col items-center gap-[0.45em]">
+      <div
+        className="relative flex aspect-square w-full items-center justify-center rounded-[24%] shadow-[0_0.25em_0.6em_rgba(0,0,0,0.35)]"
+        style={{ background: bg }}
+      >
+        <span className="pointer-events-none absolute inset-0 rounded-[24%] bg-gradient-to-b from-white/25 via-transparent to-transparent" />
+        {children ?? (Icon && <Icon className="relative h-[50%] w-[50%] text-white" strokeWidth={2.2} />)}
+        {badge && (
+          <span className="absolute -right-[0.45em] -top-[0.45em] flex h-[1.7em] min-w-[1.7em] items-center justify-center rounded-full bg-[#FF3B30] px-[0.35em] text-[0.95em] font-semibold text-white ring-[0.15em] ring-black/20">
+            {badge}
+          </span>
+        )}
+      </div>
+      {label && (
+        <span className="w-full truncate text-center text-[0.95em] font-medium leading-none text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.55)]">
+          {label}
+        </span>
+      )}
+    </div>
+  );
+}
+
+const BRAND_BG = "linear-gradient(135deg, #00E676 0%, #059669 55%, #064E3B 100%)";
+
+function IbfMark() {
+  return (
+    <span className="relative font-display text-[1.25em] font-bold tracking-tight text-[#03140C]">
+      IBF
+    </span>
+  );
+}
+
+/** Écran d'accueil : widget IBF CRM, grille d'apps, dock. */
+function HomeScreen({ p }: { p: PhoneTexts }) {
+  const a = p.apps;
+  return (
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          "radial-gradient(circle at 25% 18%, rgba(16,185,129,0.85), transparent 45%), radial-gradient(circle at 85% 75%, rgba(4,120,87,0.9), transparent 55%), linear-gradient(180deg, #03140C, #021009)",
+      }}
+    >
+      <div className="px-[1.6em] pt-[4.6em]">
+        {/* widget */}
+        <div className="rounded-[1.9em] bg-white/15 p-[1.2em] ring-1 ring-white/15 backdrop-blur-md">
+          <div className="flex items-center gap-[0.5em]">
+            <span
+              className="flex h-[1.9em] w-[1.9em] items-center justify-center rounded-[0.5em] text-[0.8em]"
+              style={{ background: BRAND_BG }}
+            >
+              <span className="font-display text-[0.75em] font-bold text-[#03140C]">IBF</span>
+            </span>
+            <span className="text-[0.95em] font-semibold uppercase tracking-wide text-white/80">
+              {a.crm}
+            </span>
+          </div>
+          <p className="mt-[0.5em] font-display text-[3.1em] font-bold leading-none text-white">3</p>
+          <p className="mt-[0.2em] text-[1em] font-medium text-white/85">{p.widgetCount}</p>
+          <p className="mt-[0.7em] flex items-center gap-[0.4em] text-[0.95em] text-white/70">
+            <CalendarDays className="h-[1.1em] w-[1.1em]" />
+            {p.widgetNext}
+          </p>
+        </div>
+
+        {/* apps */}
+        <div className="mt-[1.6em] grid grid-cols-4 gap-x-[1.25em] gap-y-[1.3em]">
+          <AppIcon bg={BRAND_BG} label={a.crm} badge="3">
+            <IbfMark />
+          </AppIcon>
+          <AppIcon icon={FileText} bg="linear-gradient(160deg,#60A5FA,#1D4ED8)" label={a.quotes} />
+          <AppIcon icon={Receipt} bg="linear-gradient(160deg,#FDBA74,#EA580C)" label={a.invoices} />
+          <AppIcon bg="#ffffff" label={a.calendar}>
+            <span className="flex flex-col items-center leading-none">
+              <span className="text-[0.75em] font-semibold text-[#EF4444]">{a.calendarDay}</span>
+              <span className="mt-[0.1em] text-[2em] font-light text-[#111]">4</span>
+            </span>
+          </AppIcon>
+          <AppIcon icon={Users} bg="linear-gradient(160deg,#C4B5FD,#7C3AED)" label={a.clients} />
+          <AppIcon icon={BarChart3} bg="linear-gradient(160deg,#5EEAD4,#0F766E)" label={a.stats} />
+          <AppIcon icon={CreditCard} bg="linear-gradient(160deg,#374151,#030712)" label={a.payments} />
+          <AppIcon icon={ListChecks} bg="linear-gradient(160deg,#FB7185,#E11D48)" label={a.tasks} badge="2" />
+          <AppIcon icon={StickyNote} bg="linear-gradient(160deg,#FDE68A,#F59E0B)" label={a.notes} />
+          <AppIcon icon={Cloud} bg="linear-gradient(160deg,#7DD3FC,#0EA5E9)" label={a.drive} />
+          <AppIcon icon={Camera} bg="linear-gradient(160deg,#D1D5DB,#6B7280)" label={a.camera} />
+          <AppIcon icon={Settings} bg="linear-gradient(160deg,#9CA3AF,#374151)" label={a.settings} />
+        </div>
+
+        <div className="mt-[1.4em] flex justify-center gap-[0.5em]">
+          <span className="h-[0.55em] w-[0.55em] rounded-full bg-white" />
+          <span className="h-[0.55em] w-[0.55em] rounded-full bg-white/40" />
+        </div>
+      </div>
+
+      {/* dock */}
+      <div className="absolute inset-x-[1em] bottom-[1.7em] grid grid-cols-4 gap-x-[1.25em] rounded-[2.2em] bg-white/20 px-[1.1em] py-[1em] ring-1 ring-white/15 backdrop-blur-md">
+        <AppIcon icon={Phone} bg="linear-gradient(160deg,#86EFAC,#16A34A)" />
+        <AppIcon icon={MessageCircle} bg="linear-gradient(160deg,#4ADE80,#15803D)" />
+        <AppIcon icon={Mail} bg="linear-gradient(160deg,#93C5FD,#2563EB)" />
+        <AppIcon icon={Globe} bg="linear-gradient(160deg,#E0F2FE,#38BDF8)" />
+      </div>
+    </div>
+  );
+}
+
+const LEADS = [
+  { name: "Boulangerie Martin", initials: "BM", color: "#10B981", status: "new" },
+  { name: "Garage Dupuis", initials: "GD", color: "#F59E0B", status: "quote" },
+  { name: "Cabinet Leroy", initials: "CL", color: "#8B5CF6", status: "won" },
+] as const;
+
+const BARS = [42, 66, 50, 82, 61, 94, 74];
+
+/** Écran de l'app IBF CRM ouverte. */
+function CrmScreen({ p, title }: { p: PhoneTexts; title: string }) {
+  const statusLabel = { new: p.statusNew, quote: p.statusQuote, won: p.statusWon };
+  const statusStyle = {
+    new: "bg-[#00E676]/15 text-[#00E676]",
+    quote: "bg-amber-400/15 text-amber-300",
+    won: "bg-emerald-400/20 text-emerald-200",
+  };
+  return (
+    <div className="absolute inset-0 bg-[#07100C] text-white">
+      <div className="px-[1.6em] pt-[4.6em]">
+        <div className="flex items-center justify-between">
+          <div className="min-w-0">
+            <p className="text-[1em] text-white/55">{p.hello}</p>
+            <p className="truncate font-display text-[1.75em] font-bold leading-tight">{title}</p>
+          </div>
+          <FounderAvatar className="h-[3.2em] w-[3.2em] ring-[0.15em] ring-[#00E676]/70" initialsClassName="text-[1em]" alt="" />
+        </div>
+
+        <div className="mt-[1.2em] grid grid-cols-2 gap-[0.8em]">
+          {[
+            { label: p.leads, value: "128", delta: "+12 %" },
+            { label: p.revenue, value: "24,6 k€", delta: "+8 %" },
+          ].map((k) => (
+            <div key={k.label} className="rounded-[1.2em] bg-white/[0.06] p-[1em] ring-1 ring-white/10">
+              <p className="truncate text-[0.85em] text-white/55">{k.label}</p>
+              <p className="mt-[0.25em] font-display text-[1.6em] font-bold leading-none">{k.value}</p>
+              <p className="mt-[0.45em] inline-flex items-center gap-[0.25em] rounded-full bg-[#00E676]/15 px-[0.5em] py-[0.15em] text-[0.8em] font-semibold text-[#00E676]">
+                <TrendingUp className="h-[1em] w-[1em]" />
+                {k.delta}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-[0.8em] rounded-[1.2em] bg-white/[0.06] p-[1em] ring-1 ring-white/10">
+          <p className="text-[0.95em] font-semibold">{p.activity}</p>
+          <div className="mt-[0.8em] flex h-[6.5em] items-end gap-[0.55em]">
+            {BARS.map((h, i) => (
+              <div key={i} className="flex flex-1 flex-col items-center gap-[0.35em]">
+                <div
+                  className="w-full rounded-[0.35em]"
+                  style={{
+                    height: `${h * 0.05}em`,
+                    background:
+                      i === 5
+                        ? "linear-gradient(180deg,#00E676,#059669)"
+                        : "linear-gradient(180deg,rgba(0,230,118,0.55),rgba(5,150,105,0.25))",
+                  }}
+                />
+                <span className="text-[0.75em] text-white/45">{p.days[i]}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-[1em] flex items-center justify-between">
+          <p className="text-[1em] font-semibold">{p.recent}</p>
+          <p className="text-[0.85em] font-medium text-[#00E676]">{p.seeAll}</p>
+        </div>
+        <div className="mt-[0.5em] space-y-[0.5em]">
+          {LEADS.map((l) => (
+            <div key={l.name} className="flex items-center gap-[0.7em] rounded-[1em] bg-white/[0.04] p-[0.6em] ring-1 ring-white/[0.07]">
+              <span
+                className="flex h-[2.5em] w-[2.5em] shrink-0 items-center justify-center rounded-full text-[0.85em] font-bold text-white"
+                style={{ background: l.color }}
+              >
+                {l.initials}
+              </span>
+              <p className="min-w-0 flex-1 truncate text-[0.95em] font-medium">{l.name}</p>
+              <span className={`shrink-0 rounded-full px-[0.55em] py-[0.2em] text-[0.75em] font-semibold ${statusStyle[l.status]}`}>
+                {statusLabel[l.status]}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* barre d'onglets */}
+      <div className="absolute inset-x-0 bottom-0 flex items-start justify-around border-t border-white/10 bg-[#07100C]/90 px-[1em] pb-[2.6em] pt-[0.9em] backdrop-blur">
+        {[LayoutDashboard, Users, CalendarDays, MessageSquare, Settings].map((Icon, i) => (
+          <Icon
+            key={i}
+            className={`h-[1.8em] w-[1.8em] ${i === 0 ? "text-[#00E676]" : "text-white/45"}`}
+            strokeWidth={2}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Floating({
   children,
   className,
   delay = 0,
@@ -257,9 +321,9 @@ function FloatingClay({
   return (
     <motion.div
       className={className}
-      animate={{ y: [0, -10, 0], rotate: [0, 2, 0] }}
+      animate={{ y: [0, -8, 0] }}
       transition={{
-        duration: 4 + delay,
+        duration: 5 + delay,
         repeat: Infinity,
         ease: "easeInOut",
         delay,
@@ -328,49 +392,35 @@ export function MobileApp() {
             </a>
           </FadeIn>
 
-          <FadeIn delay={0.15} className="relative mx-auto w-full max-w-[300px] overflow-hidden sm:max-w-md sm:overflow-visible lg:max-w-none">
-            <div className="mobile-showcase relative mx-auto aspect-[4/5] max-h-[320px] w-full max-w-[380px] sm:max-h-[520px]">
-              <PhoneMockup
-                variant="dashboard"
-                dashboardLabel={t.mobile.dashboard}
-                className="absolute left-[2%] top-8 z-20 w-[44%] -rotate-6 sm:left-0 sm:w-[46%]"
-              />
-              <PhoneMockup
-                variant="profile"
-                dashboardLabel={t.mobile.dashboard}
-                className="absolute right-[2%] top-0 z-10 w-[44%] rotate-6 sm:right-0 sm:w-[46%]"
-              />
+          <FadeIn delay={0.15} className="relative mx-auto w-full max-w-[320px] sm:max-w-[480px] lg:max-w-none">
+            <div className="relative mx-auto h-[370px] w-full max-w-[320px] sm:h-[560px] sm:max-w-[480px]">
+              <PhoneFrame className="absolute right-[2%] top-0 z-10 w-[150px] rotate-[5deg] sm:right-0 sm:w-[232px]">
+                <HomeScreen p={t.mobile.phone} />
+              </PhoneFrame>
+              <PhoneFrame className="absolute left-[2%] top-[30px] z-20 w-[150px] -rotate-[4deg] sm:left-0 sm:top-[44px] sm:w-[232px]">
+                <CrmScreen p={t.mobile.phone} title={t.mobile.dashboard} />
+              </PhoneFrame>
 
-              <FloatingClay
-                className="clay-illustration absolute -left-1 top-0 z-30 hidden w-16 sm:block sm:w-20"
-                delay={0}
+              <Floating
+                className="absolute -right-2 bottom-[2%] z-30 hidden w-[230px] sm:block lg:-right-8"
+                delay={0.4}
               >
-                <ClayRocket />
-              </FloatingClay>
-              <FloatingClay
-                className="clay-illustration absolute right-0 top-14 z-30 w-10 sm:right-0 sm:top-16 sm:w-[4.5rem]"
-                delay={0.5}
-              >
-                <ClayBell />
-              </FloatingClay>
-              <FloatingClay
-                className="clay-illustration absolute bottom-28 left-0 z-30 w-10 sm:bottom-32 sm:-left-3 sm:w-16"
-                delay={1}
-              >
-                <ClayChatBubble />
-              </FloatingClay>
-              <FloatingClay
-                className="clay-illustration absolute bottom-20 right-0 z-30 hidden w-14 sm:block sm:w-[4.5rem]"
-                delay={1.5}
-              >
-                <ClayCompass />
-              </FloatingClay>
-              <FloatingClay
-                className="clay-illustration absolute bottom-4 left-1/3 z-30 w-9 sm:w-14"
-                delay={0.8}
-              >
-                <ClayStar />
-              </FloatingClay>
+                <div className="island flex items-center gap-3 p-3 shadow-xl" aria-hidden>
+                  <span
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
+                    style={{ background: BRAND_BG }}
+                  >
+                    <span className="font-display text-[10px] font-bold text-[#03140C]">IBF</span>
+                  </span>
+                  <div className="min-w-0 text-left">
+                    <p className="flex items-center justify-between gap-2 text-[11px] text-[var(--text-muted)]">
+                      <span className="font-semibold text-[var(--text)]">{t.mobile.phone.apps.crm}</span>
+                      {t.mobile.phone.notifTime}
+                    </p>
+                    <p className="truncate text-xs font-medium">{t.mobile.phone.notifText}</p>
+                  </div>
+                </div>
+              </Floating>
             </div>
           </FadeIn>
         </div>
