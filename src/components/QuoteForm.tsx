@@ -355,6 +355,16 @@ export function QuoteForm() {
                           : "Envoi en cours…"
                         : t.quote.submit}
                     </button>
+                    <p className="text-xs leading-relaxed text-[var(--text-muted)]">
+                      {t.quote.privacyNotice}{" "}
+                      <a
+                        href="/confidentialite"
+                        className="font-medium text-brand-deep underline underline-offset-2 dark:text-brand"
+                      >
+                        {t.quote.privacyLink}
+                      </a>
+                      .
+                    </p>
                   </motion.form>
                 )}
               </AnimatePresence>

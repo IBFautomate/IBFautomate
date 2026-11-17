@@ -36,6 +36,8 @@ src/
     layout.tsx          # fonts Space Grotesk + Inter (next/font/local), ThemeProvider, metadata
     fonts/              # inter-latin.woff2, space-grotesk-latin.woff2 (hébergées, SIL OFL)
     page.tsx            # assemblage des sections
+    confidentialite/    # page Politique de confidentialité (RGPD)
+    mentions-legales/   # page Mentions légales (LCEN)
     globals.css         # tokens CSS, îlots glass, boutons, marquee
     icon.svg
     api/contact/route.ts
@@ -60,8 +62,12 @@ src/
     ThemeProvider.tsx / ThemeToggle.tsx
     LanguageProvider.tsx / LanguageToggle.tsx
     Motion.tsx          # FadeIn, Stagger
+    LegalPage.tsx       # gabarit des pages légales (FR/EN)
+  content/
+    legal.ts            # textes des pages légales FR/EN
   lib/
     phone.ts            # validation numéros européens
+    legal.ts            # infos éditeur (statut EI micro-entreprise ; SIRET/adresse vides = lignes masquées)
 public/
   slack.png, Calendar.png, og.svg, og.png (image de partage 1200×630)
   fondateur.jpg (vrai portrait studio), fondateur-bureau.jpg (scène bureau générée par IA, de dos)
@@ -122,6 +128,7 @@ Ancres : `#top`, `#services`, `#processus`, `#fondateur`, `#avis`, `#faq`, `#dev
 - [x] Projet Vercel lié au repo GitHub
 - [x] Page /video (QR code) : vidéo promo MP4, verticale sur téléphone, plein écran horizontal
 - [x] Section fondateur + portrait (Hero, devis) ; email affiché = contact@ibfautomate.com (MX ImprovMX)
+- [x] Pages /confidentialite et /mentions-legales (liens footer + mention sous le formulaire) ; aucun cookie de suivi → pas de bandeau
 
 ## À faire
 
@@ -130,6 +137,7 @@ Ancres : `#top`, `#services`, `#processus`, `#fondateur`, `#avis`, `#faq`, `#dev
 - [ ] Committer `.env.example` s’il n’est pas encore sur `main`
 - [ ] Nettoyer fichiers legacy hors stack Next si inutiles (`Index.html`, `ibfautomate-source-complet.md`)
 - [ ] Vérifier dashboard Vercel : domaine custom, env, dernier déploiement OK
+- [ ] Mentions légales : ajouter SIRET + adresse (domiciliation possible) dans `src/lib/legal.ts` — légalement attendus
 
 ## Problèmes connus
 

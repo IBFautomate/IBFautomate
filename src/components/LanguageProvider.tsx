@@ -337,6 +337,9 @@ const translations = {
       zone: "Zone",
       zoneValue: "France entière",
       founderTitle: "C'est moi qui lis votre demande",
+      privacyNotice:
+        "Vos données servent uniquement à répondre à votre demande et ne sont jamais revendues. Vous pouvez y accéder ou les faire supprimer à tout moment :",
+      privacyLink: "politique de confidentialité",
       founderText: "Imrane, fondateur. Réponse personnelle sous 24h.",
       name: "Nom complet",
       subject: "Sujet",
@@ -715,6 +718,9 @@ const translations = {
       zone: "Area",
       zoneValue: "All of France",
       founderTitle: "I read your request myself",
+      privacyNotice:
+        "Your data is only used to answer your request and is never sold. You can access or delete it at any time:",
+      privacyLink: "privacy policy",
       founderText: "Imrane, founder. Personal reply within 24h.",
       name: "Full name",
       subject: "Subject",

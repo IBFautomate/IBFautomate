@@ -110,14 +110,14 @@ export function Footer() {
           <p>{t.footer.rights}</p>
           <p>
             <a
-              href="#devis"
+              href="/mentions-legales"
               className="transition-colors duration-300 hover:text-[var(--text)]"
             >
               {t.footer.legal}
             </a>
             <span className="mx-2">·</span>
             <a
-              href="#devis"
+              href="/confidentialite"
               className="transition-colors duration-300 hover:text-[var(--text)]"
             >
               {t.footer.privacy}
